@@ -19,6 +19,7 @@ import Testimonials from '../components/Testimonials';
 import FAQ from '../components/FAQ';
 import Footer from '../components/Footer';
 import LandingPageTheme from '../themes/LandingPageTheme';
+import CryptoCardComponent from '../components/CardComponent';
 
 interface ToggleCustomThemeProps {
   showCustomTheme: Boolean;
@@ -64,13 +65,13 @@ function ToggleCustomTheme({
 }
 
 export default function LandingPage() {
-  const [mode, setMode] = React.useState<PaletteMode>('light');
+  const [mode, setMode] = React.useState<PaletteMode>('dark');
   const [showCustomTheme, setShowCustomTheme] = React.useState(true);
   const LPtheme = createTheme(LandingPageTheme(mode));
   const defaultTheme = createTheme({ palette: { mode } });
 
   const toggleColorMode = () => {
-    setMode((prev) => (prev === 'dark' ? 'light' : 'dark'));
+    setMode('dark');
   };
 
   const toggleCustomTheme = () => {
@@ -78,14 +79,13 @@ export default function LandingPage() {
   };
 
   return (
-    <ThemeProvider theme={showCustomTheme ? LPtheme : defaultTheme}>
-      <CssBaseline />
+    <ThemeProvider theme={defaultTheme}>
+      <Box sx={{ bgcolor: 'background.default' }}>
       <AppAppBar mode={mode} toggleColorMode={toggleColorMode} />
       <Hero />
-      <Box sx={{ bgcolor: 'background.default' }}>
         <LogoCollection />
+        <CryptoCardComponent />
         <MoneySafeguarding />
-        <AddFullSizeImage />
         <Divider />
         <DashboardFeatures />
         <Divider />
@@ -94,10 +94,6 @@ export default function LandingPage() {
         <FAQ />
         <Divider />
       </Box>
-      <ToggleCustomTheme
-        showCustomTheme={showCustomTheme}
-        toggleCustomTheme={toggleCustomTheme}
-      />
     </ThemeProvider>
   );
 }
