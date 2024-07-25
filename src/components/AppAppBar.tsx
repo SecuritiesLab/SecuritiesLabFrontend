@@ -25,11 +25,9 @@ interface AppAppBarProps {
 }
 
 const menus = [
-  { id: 'Products', label: 'Products', items: ["Safeguarding", 'Payment using stable coin', 'Deposit as a service'] },
-  { id: 'Software', label: 'Software', items: ['Software', 'Software'] },
-  { id: 'Highlights', label: 'Highlights', items: ['Highlights', 'Highlights'] },
-  { id: 'About Us', label: 'About Us', items: ['About Us', 'About Us'] },
-  { id: 'faq', label: 'FAQ', items: ['FAQ 1', 'FAQ 2'] }
+  { id: 'products', label: 'Products', items: ["Safeguarding", 'Deposit as a Service', 'Stablecoin Wallets'] },
+  { id: 'faq', label: 'FAQ' },
+  { id: 'features', label: 'Features' }
 ];
 
 function AppAppBar({ mode, toggleColorMode }: AppAppBarProps) {
@@ -43,15 +41,18 @@ function AppAppBar({ mode, toggleColorMode }: AppAppBarProps) {
 
   const scrollToSection = (sectionId: string) => {
     const sectionElement = document.getElementById(sectionId);
-    const offset = 128;
     if (sectionElement) {
-      const targetScroll = sectionElement.offsetTop - offset;
-      sectionElement.scrollIntoView({ behavior: 'smooth' });
+      // Adjust the offset based on your header or navigation bar height
+      const offset = 128;
+      const targetPosition = sectionElement.getBoundingClientRect().top + window.scrollY - offset;
+      console.log(`Target position for ${sectionId}: ${targetPosition}`);
       window.scrollTo({
-        top: targetScroll,
+        top: targetPosition,
         behavior: 'smooth',
       });
       setOpen(false);
+    } else {
+      console.warn(`Element with ID ${sectionId} not found.`);
     }
   };
 
@@ -111,16 +112,18 @@ function AppAppBar({ mode, toggleColorMode }: AppAppBarProps) {
               style={logoStyle}
               alt="logo of sitemark"
             />
-            <Box
-              sx={{
-                display: { xs: 'none', md: 'flex' },
-                ml: 2,
-                alignItems: 'center',
-                gap: 2,
-              }}
-            >
-              {menus.map(menu => (
-                <React.Fragment key={menu.id}>
+          </Box>
+          <Box
+            sx={{
+              display: { xs: 'none', md: 'flex' },
+              ml: 'auto', // Add this line to push menu items to the right
+              alignItems: 'center',
+              gap: 2,
+            }}
+          >
+            {menus.map(menu => (
+              <React.Fragment key={menu.id}>
+                {menu.items ? (
                   <Button
                     aria-controls={`${menu.id}-menu`}
                     aria-haspopup="true"
@@ -131,6 +134,17 @@ function AppAppBar({ mode, toggleColorMode }: AppAppBarProps) {
                       {menu.label}
                     </Typography>
                   </Button>
+                ) : (
+                  <Button
+                    onClick={() => scrollToSection(menu.id)}
+                    sx={{ py: '6px', px: '12px' }}
+                  >
+                    <Typography variant="body2" color="text.primary">
+                      {menu.label}
+                    </Typography>
+                  </Button>
+                )}
+                {menu.items && (
                   <Menu
                     id={`${menu.id}-menu`}
                     anchorEl={anchorEl}
@@ -142,41 +156,35 @@ function AppAppBar({ mode, toggleColorMode }: AppAppBarProps) {
                     sx={{ zIndex: 1300 }} // Ensure dropdowns appear above other elements
                   >
                     {menu.items.map(item => (
-                      <MenuItem key={item} onClick={() => scrollToSection(item.toLowerCase().replace(/\s+/g, ''))}>
+                      <MenuItem
+                        key={item}
+                        onClick={() => scrollToSection(item.toLowerCase().replace(/\s+/g, '-'))}
+                      >
                         {item}
                       </MenuItem>
                     ))}
                   </Menu>
-                </React.Fragment>
-              ))}
-            </Box>
+                )}
+              </React.Fragment>
+            ))}
           </Box>
           <Box
             sx={{
               display: { xs: 'none', md: 'flex' },
               gap: 0.5,
               alignItems: 'center',
+              ml: 2 // Add margin-left to create space between FAQ and the button
             }}
           >
-            <Button
-              color="primary"
-              variant="text"
-              size="small"
-              component="a"
-              href="/material-ui/getting-started/templates/sign-in/"
-              target="_blank"
-            >
-              Sign in
-            </Button>
             <Button
               color="primary"
               variant="contained"
               size="small"
               component="a"
-              href="/material-ui/getting-started/templates/sign-up/"
+              href="https://jk979qb2k3e.typeform.com/to/Ppni4Nxk"
               target="_blank"
             >
-              Sign up
+              Get early access
             </Button>
           </Box>
           <Box sx={{ display: { sm: '', md: 'none' } }}>
@@ -209,9 +217,22 @@ function AppAppBar({ mode, toggleColorMode }: AppAppBarProps) {
                   <ToggleColorMode mode={mode} toggleColorMode={toggleColorMode} />
                 </Box>
                 {menus.map(menu => (
-                  <MenuItem key={menu.id} onClick={() => scrollToSection(menu.id)}>
-                    {menu.label}
-                  </MenuItem>
+                  <React.Fragment key={menu.id}>
+                    {menu.items ? (
+                      menu.items.map(item => (
+                        <MenuItem
+                          key={item}
+                          onClick={() => scrollToSection(item.toLowerCase().replace(/\s+/g, '-'))}
+                        >
+                          {item}
+                        </MenuItem>
+                      ))
+                    ) : (
+                      <MenuItem onClick={() => scrollToSection(menu.id)}>
+                        {menu.label}
+                      </MenuItem>
+                    )}
+                  </React.Fragment>
                 ))}
                 <Divider />
                 <MenuItem>
@@ -219,23 +240,11 @@ function AppAppBar({ mode, toggleColorMode }: AppAppBarProps) {
                     color="primary"
                     variant="contained"
                     component="a"
-                    href="/material-ui/getting-started/templates/sign-up/"
+                    href="https://jk979qb2k3e.typeform.com/to/Ppni4Nxk"
                     target="_blank"
                     sx={{ width: '100%' }}
                   >
-                    Sign up
-                  </Button>
-                </MenuItem>
-                <MenuItem>
-                  <Button
-                    color="primary"
-                    variant="outlined"
-                    component="a"
-                    href="/material-ui/getting-started/templates/sign-in/"
-                    target="_blank"
-                    sx={{ width: '100%' }}
-                  >
-                    Sign in
+                    Get early access
                   </Button>
                 </MenuItem>
               </Box>

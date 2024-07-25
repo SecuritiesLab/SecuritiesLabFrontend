@@ -4,11 +4,8 @@ import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import Chip from '@mui/material/Chip';
 import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
-import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
 import DevicesRoundedIcon from '@mui/icons-material/DevicesRounded';
 import EdgesensorHighRoundedIcon from '@mui/icons-material/EdgesensorHighRounded';
 import ViewQuiltRoundedIcon from '@mui/icons-material/ViewQuiltRounded';
@@ -18,25 +15,19 @@ const items = [
     icon: <ViewQuiltRoundedIcon />,
     title: 'Streamlined Client Experience',
     description:
-      'Explore our client-friendly treasury management dashboard with an intuitive UI/UX for seamless navigation and efficient financial oversight. Simplifying complex tasks, it boosts productivity and user satisfaction."',
-    imageLight: 'url("/static/images/templates/templates-images/dash-light.png")',
-    imageDark: 'url("/static/images/templates/templates-images/dash-dark.png")',
+      'Explore our client-friendly treasury management dashboard with an intuitive UI/UX for seamless navigation and efficient financial oversight. Simplifying complex tasks, it boosts productivity.',
   },
   {
     icon: <EdgesensorHighRoundedIcon />,
     title: 'Predictive AI analytics',
     description:
       'Optimize treasury management with predictive AI analysis, providing real-time forecasts and insights. Empower data-driven decision-making with tailored trend analysis for enhanced financial planning.',
-    imageLight: 'url("/static/images/templates/templates-images/mobile-light.png")',
-    imageDark: 'url("/static/images/templates/templates-images/mobile-dark.png")',
   },
   {
     icon: <DevicesRoundedIcon />,
     title: 'Easy API integration',
     description:
       'Easily integrate our treasury management dashboard via user-friendly APIs, enhancing your website with powerful financial capabilities. Simplify operations and boost efficiency with our tailored API integration solution.',
-    imageLight: 'url("/static/images/templates/templates-images/devices-light.png")',
-    imageDark: 'url("/static/images/templates/templates-images/devices-dark.png")',
   },
 ];
 
@@ -51,220 +42,95 @@ export default function DashboardFeatures() {
 
   return (
     <Container id="features" sx={{ py: { xs: 8, sm: 16 } }}>
-      <Grid container spacing={6}>
-        <Grid item xs={12} md={6}>
-          <div>
-            <Typography component="h2" variant="h4" color="text.primary">
-            AI-Enhanced Dashboard Features
-            </Typography>
-            <Typography
-              variant="body1"
-              color="text.secondary"
-              sx={{ mb: { xs: 2, sm: 4 } }}
-            >
-              Explore a suite of features including automated cash management, real-time analytics, risk assessment, and customizable reporting—all designed to optimize your financial operations with precision and ease.
-            </Typography>
-          </div>
-          <Grid container item gap={1} sx={{ display: { xs: 'auto', sm: 'none' } }}>
-            {items.map(({ title }, index) => (
-              <Chip
-                key={index}
-                label={title}
-                onClick={() => handleItemClick(index)}
-                sx={{
-                  borderColor: (theme) => {
-                    if (theme.palette.mode === 'light') {
-                      return selectedItemIndex === index ? 'primary.light' : '';
-                    }
-                    return selectedItemIndex === index ? 'primary.light' : '';
-                  },
-                  background: (theme) => {
-                    if (theme.palette.mode === 'light') {
-                      return selectedItemIndex === index ? 'none' : '';
-                    }
-                    return selectedItemIndex === index ? 'none' : '';
-                  },
-                  backgroundColor: selectedItemIndex === index ? 'primary.main' : '',
-                  '& .MuiChip-label': {
-                    color: selectedItemIndex === index ? '#fff' : '',
-                  },
-                }}
-              />
-            ))}
-          </Grid>
-          <Box
-            component={Card}
+      <Box sx={{ textAlign: 'center', mb: 4 }}>
+        <Typography component="h2" variant="h4" color="text.primary">
+          AI-Enhanced Dashboard Features
+        </Typography>
+        <Typography
+          variant="body1"
+          color="text.secondary"
+          sx={{ mb: { xs: 2, sm: 4 } }}
+        >
+          Explore a suite of features including automated cash management, real-time analytics, risk assessment, and customizable reporting—all designed to optimize your financial operations with precision and ease.
+        </Typography>
+      </Box>
+      <Stack
+        direction="column"
+        justifyContent="center"
+        alignItems="center"
+        spacing={2}
+        useFlexGap
+        sx={{ width: '100%' }}
+      >
+        {items.map(({ icon, title, description }, index) => (
+          <Card
+            key={index}
             variant="outlined"
+            component={Button}
+            onClick={() => handleItemClick(index)}
             sx={{
-              display: { xs: 'auto', sm: 'none' },
-              mt: 4,
+              p: 3,
+              width: '100%',
+              maxWidth: '800px',
+              background: 'none',
+              backgroundColor:
+                selectedItemIndex === index ? 'action.selected' : undefined,
+              borderColor: (theme) => {
+                if (theme.palette.mode === 'light') {
+                  return selectedItemIndex === index
+                    ? 'primary.light'
+                    : 'grey.200';
+                }
+                return selectedItemIndex === index ? 'primary.dark' : 'grey.800';
+              },
             }}
           >
             <Box
               sx={{
-                backgroundImage: (theme) =>
-                  theme.palette.mode === 'light'
-                    ? items[selectedItemIndex].imageLight
-                    : items[selectedItemIndex].imageDark,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                minHeight: 280,
+                width: '100%',
+                display: 'flex',
+                textAlign: 'left',
+                flexDirection: { xs: 'column', md: 'row' },
+                alignItems: { md: 'center' },
+                gap: 2.5,
               }}
-            />
-            <Box sx={{ px: 2, pb: 2 }}>
-              <Typography color="text.primary" variant="body2" fontWeight="bold">
-                {selectedFeature.title}
-              </Typography>
-              <Typography color="text.secondary" variant="body2" sx={{ my: 0.5 }}>
-                {selectedFeature.description}
-              </Typography>
-              <Link
-                color="primary"
-                variant="body2"
-                fontWeight="bold"
+            >
+              <Box
                 sx={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  '& > svg': { transition: '0.2s' },
-                  '&:hover > svg': { transform: 'translateX(2px)' },
-                }}
-              >
-                <span>Learn more</span>
-                <ChevronRightRoundedIcon
-                  fontSize="small"
-                  sx={{ mt: '1px', ml: '2px' }}
-                />
-              </Link>
-            </Box>
-          </Box>
-          <Stack
-            direction="column"
-            justifyContent="center"
-            alignItems="flex-start"
-            spacing={2}
-            useFlexGap
-            sx={{ width: '100%', display: { xs: 'none', sm: 'flex' } }}
-          >
-            {items.map(({ icon, title, description }, index) => (
-              <Card
-                key={index}
-                variant="outlined"
-                component={Button}
-                onClick={() => handleItemClick(index)}
-                sx={{
-                  p: 3,
-                  height: 'fit-content',
-                  width: '100%',
-                  background: 'none',
-                  backgroundColor:
-                    selectedItemIndex === index ? 'action.selected' : undefined,
-                  borderColor: (theme) => {
+                  color: (theme) => {
                     if (theme.palette.mode === 'light') {
                       return selectedItemIndex === index
-                        ? 'primary.light'
-                        : 'grey.200';
+                        ? 'primary.main'
+                        : 'grey.300';
                     }
-                    return selectedItemIndex === index ? 'primary.dark' : 'grey.800';
+                    return selectedItemIndex === index
+                      ? 'primary.main'
+                      : 'grey.700';
                   },
                 }}
               >
-                <Box
-                  sx={{
-                    width: '100%',
-                    display: 'flex',
-                    textAlign: 'left',
-                    flexDirection: { xs: 'column', md: 'row' },
-                    alignItems: { md: 'center' },
-                    gap: 2.5,
-                  }}
+                {icon}
+              </Box>
+              <Box sx={{ textTransform: 'none' }}>
+                <Typography
+                  color="text.primary"
+                  variant="body2"
+                  fontWeight="bold"
                 >
-                  <Box
-                    sx={{
-                      color: (theme) => {
-                        if (theme.palette.mode === 'light') {
-                          return selectedItemIndex === index
-                            ? 'primary.main'
-                            : 'grey.300';
-                        }
-                        return selectedItemIndex === index
-                          ? 'primary.main'
-                          : 'grey.700';
-                      },
-                    }}
-                  >
-                    {icon}
-                  </Box>
-                  <Box sx={{ textTransform: 'none' }}>
-                    <Typography
-                      color="text.primary"
-                      variant="body2"
-                      fontWeight="bold"
-                    >
-                      {title}
-                    </Typography>
-                    <Typography
-                      color="text.secondary"
-                      variant="body2"
-                      sx={{ my: 0.5 }}
-                    >
-                      {description}
-                    </Typography>
-                    <Link
-                      color="primary"
-                      variant="body2"
-                      fontWeight="bold"
-                      sx={{
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        '& > svg': { transition: '0.2s' },
-                        '&:hover > svg': { transform: 'translateX(2px)' },
-                      }}
-                      onClick={(event) => {
-                        event.stopPropagation();
-                      }}
-                    >
-                      <span>Learn more</span>
-                      <ChevronRightRoundedIcon
-                        fontSize="small"
-                        sx={{ mt: '1px', ml: '2px' }}
-                      />
-                    </Link>
-                  </Box>
-                </Box>
-              </Card>
-            ))}
-          </Stack>
-        </Grid>
-        <Grid
-          item
-          xs={12}
-          md={6}
-          sx={{ display: { xs: 'none', sm: 'flex' }, width: '100%' }}
-        >
-          <Card
-            variant="outlined"
-            sx={{
-              height: '100%',
-              width: '100%',
-              display: { xs: 'none', sm: 'flex' },
-              pointerEvents: 'none',
-            }}
-          >
-            <Box
-              sx={{
-                m: 'auto',
-                width: 420,
-                height: 500,
-                backgroundSize: 'contain',
-                backgroundImage: (theme) =>
-                  theme.palette.mode === 'light'
-                    ? items[selectedItemIndex].imageLight
-                    : items[selectedItemIndex].imageDark,
-              }}
-            />
+                  {title}
+                </Typography>
+                <Typography
+                  color="text.secondary"
+                  variant="body2"
+                  sx={{ my: 0.5 }}
+                >
+                  {description}
+                </Typography>
+              </Box>
+            </Box>
           </Card>
-        </Grid>
-      </Grid>
+        ))}
+      </Stack>
     </Container>
   );
 }

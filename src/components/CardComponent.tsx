@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Button, Typography, Container, Grid, Card } from '@mui/material';
+import { Box, Typography, Container, Card } from '@mui/material';
 
 const CryptoCardComponent = () => {
   return (
@@ -15,7 +15,7 @@ const CryptoCardComponent = () => {
         sx={{
           display: 'flex',
           alignItems: 'center',
-          justifyContent: 'space-between',
+          justifyContent: 'center',
           borderRadius: '8px',
           padding: '24px',
           color: '#FFFFFF',
@@ -24,35 +24,10 @@ const CryptoCardComponent = () => {
           width: '100%',
         }}
       >
-        <Box sx={{ flex: 1 }}>
-          <Typography variant="h1" sx={{ fontSize: '80px', fontWeight: 'bold' }}>
-            2%
-          </Typography>
-        </Box>
-
-        <Box sx={{ flex: 2, textAlign: 'left' }}>
+        <Box sx={{ textAlign: 'center' }}>
           <Typography variant="h4" sx={{ fontWeight: 'bold' }}>
-            Spend crypto, get cash back
+            We enable financial institutions and businesses to diversify revenue streams and enhance customer retention through turnkey AI-driven treasury management and access to tokenized securities.
           </Typography>
-          <Typography variant="body1" sx={{ marginY: '16px' }}>
-            Earn 2% Cashback with Bleep's Crypto Card on every purchase you make, whether it's online or in-store. Available with Apple Pay and Google Pay.
-          </Typography>
-          <Box sx={{ display: 'flex', gap: '16px' }}>
-            <Button variant="outlined" sx={{ color: '#FFFFFF', borderColor: '#FFFFFF' }}>
-              Compare
-            </Button>
-            <Button variant="contained" sx={{ backgroundColor: '#1A73E8' }}>
-              Get started
-            </Button>
-          </Box>
-        </Box>
-
-        <Box sx={{ flex: 1, textAlign: 'right' }}>
-          <img
-            src="https://via.placeholder.com/150"
-            alt="Crypto Card"
-            style={{ borderRadius: '8px', width: '100%', maxWidth: '200px' }}
-          />
         </Box>
       </Card>
     </Container>

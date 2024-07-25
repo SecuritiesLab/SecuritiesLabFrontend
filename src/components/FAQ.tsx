@@ -52,7 +52,7 @@ export default function FAQ() {
             id="panel1d-header"
           >
             <Typography component="h3" variant="subtitle2">
-              How do I contact customer support if I have a question or issue?
+            How does Securities Lab benefit fintech companies?
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
@@ -61,10 +61,7 @@ export default function FAQ() {
               gutterBottom
               sx={{ maxWidth: { sm: '100%', md: '70%' } }}
             >
-              You can reach our customer support team by emailing
-              <Link> support@email.com </Link>
-              or calling our toll-free number. We&apos;re here to assist you
-              promptly.
+Our platform offers seamless connectivity to asset managers, AI-driven treasury management tools, and access to both traditional and tokenized securities. This enables fintech companies to optimize idle funds, reduce risk, ensure regulatory compliance, and create new revenue streams.
             </Typography>
           </AccordionDetails>
         </Accordion>
@@ -78,7 +75,7 @@ export default function FAQ() {
             id="panel2d-header"
           >
             <Typography component="h3" variant="subtitle2">
-              Can I return the product if it doesn&apos;t meet my expectations?
+            How does your AI-driven treasury management tool work?
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
@@ -87,9 +84,7 @@ export default function FAQ() {
               gutterBottom
               sx={{ maxWidth: { sm: '100%', md: '70%' } }}
             >
-              Absolutely! We offer a hassle-free return policy. If you&apos;re not
-              completely satisfied, you can return the product within [number of
-              days] days for a full refund or exchange.
+Our AI-driven treasury management tool optimizes idle fund usage by analyzing financial data, forecasting cash flow needs, and providing risk management solutions. This ensures that funds are used efficiently while complying with regulatory requirements.
             </Typography>
           </AccordionDetails>
         </Accordion>
@@ -103,7 +98,7 @@ export default function FAQ() {
             id="panel3d-header"
           >
             <Typography component="h3" variant="subtitle2">
-              What makes your product stand out from others in the market?
+            What types of securities can I access through Securities Lab? 
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
@@ -112,9 +107,7 @@ export default function FAQ() {
               gutterBottom
               sx={{ maxWidth: { sm: '100%', md: '70%' } }}
             >
-              Our product distinguishes itself through its adaptability, durability,
-              and innovative features. We prioritize user satisfaction and
-              continually strive to exceed expectations in every aspect.
+You can access both traditional securities like money market funds and innovative tokenized securities, including tokenized money market funds, debt markets, real estate, carbon markets, luxury goods, and commodities.
             </Typography>
           </AccordionDetails>
         </Accordion>
@@ -128,7 +121,7 @@ export default function FAQ() {
             id="panel4d-header"
           >
             <Typography component="h3" variant="subtitle2">
-              Is there a warranty on the product, and what does it cover?
+            How do I integrate my systems with Securities Lab?
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
@@ -137,10 +130,30 @@ export default function FAQ() {
               gutterBottom
               sx={{ maxWidth: { sm: '100%', md: '70%' } }}
             >
-              Yes, our product comes with a [length of warranty] warranty. It covers
-              defects in materials and workmanship. If you encounter any issues
-              covered by the warranty, please contact our customer support for
-              assistance.
+Integration with Securities Lab is flexible and can be tailored to your needs. You can choose to use our platform independently or combine it with our API for a more customized solution. We provide detailed documentation and support to help you seamlessly connect your existing systems.
+            </Typography>
+          </AccordionDetails>
+        </Accordion>
+        <Accordion
+          expanded={expanded === 'panel4'}
+          onChange={handleChange('panel4')}
+        >
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel4d-content"
+            id="panel4d-header"
+          >
+            <Typography component="h3" variant="subtitle2">
+            What are the costs associated with using Securities Lab?
+            </Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Typography
+              variant="body2"
+              gutterBottom
+              sx={{ maxWidth: { sm: '100%', md: '70%' } }}
+            >
+Pricing for our services varies based on your specific needs and the scale of integration. Please contact our sales team for a customized quote that fits your requirements.
             </Typography>
           </AccordionDetails>
         </Accordion>
