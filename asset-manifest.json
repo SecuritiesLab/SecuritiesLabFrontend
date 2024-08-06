@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/SecuritiesLabFrontend/static/css/main.f855e6bc.css",
+    "main.js": "/SecuritiesLabFrontend/static/js/main.366d07a6.js",
+    "static/js/453.7eccc546.chunk.js": "/SecuritiesLabFrontend/static/js/453.7eccc546.chunk.js",
+    "index.html": "/SecuritiesLabFrontend/index.html",
+    "main.f855e6bc.css.map": "/SecuritiesLabFrontend/static/css/main.f855e6bc.css.map",
+    "main.366d07a6.js.map": "/SecuritiesLabFrontend/static/js/main.366d07a6.js.map",
+    "453.7eccc546.chunk.js.map": "/SecuritiesLabFrontend/static/js/453.7eccc546.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.f855e6bc.css",
+    "static/js/main.366d07a6.js"
+  ]
+}
