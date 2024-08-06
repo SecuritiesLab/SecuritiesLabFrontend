@@ -26,8 +26,8 @@ interface AppAppBarProps {
 
 const menus = [
   { id: 'products', label: 'Products', items: ["Safeguarding", 'Deposit as a Service', 'Stablecoin Wallets'] },
-  { id: 'faq', label: 'FAQ' },
-  { id: 'features', label: 'Features' }
+  { id: 'features', label: 'Features' },
+  { id: 'faq', label: 'FAQ' }
 ];
 
 function AppAppBar({ mode, toggleColorMode }: AppAppBarProps) {

@@ -1,21 +1,21 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
-
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
 
 const logoStyle = {
   width: '140px',
   height: 'auto',
-  marginBottom: '16px', // Add margin below the logo
+  marginBottom: '16px', // Added margin bottom for space below the logo
 };
 
 export default function Footer() {
   return (
     <Box
       sx={{
-        position: 'relative',
+        position: 'fixed',
         bottom: 0,
         left: 0,
         width: '100%',
@@ -25,9 +25,9 @@ export default function Footer() {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        py: 2, // Adjust padding for top and bottom
+        py: 4, // Increased padding for more space inside the footer
         boxShadow: 0,
-        pb: 10, // Add padding-bottom for space below LinkedIn text
+        zIndex: 1300, // Ensures footer is above other content
       }}
     >
       <Container
@@ -36,6 +36,7 @@ export default function Footer() {
           flexDirection: 'column',
           alignItems: 'center',
           textAlign: 'center',
+          mb: 4, // Add bottom margin to create extra space below the container
         }}
       >
         <Link href="https://www.linkedin.com/company/securities-lab" target="_blank" rel="noopener noreferrer">
@@ -45,10 +46,10 @@ export default function Footer() {
               alt="logo of sitemark"
             />
         </Link>
-        <Typography variant="body2" color="text.secondary" mt={1}>
-          Follow us on 
+        <Typography variant="body2" color="text.secondary" mt={1} sx={{ display: 'flex', alignItems: 'center' }}>
+          Follow us on{' '}
           <Link href="https://www.linkedin.com/company/securities-lab" target="_blank" rel="noopener noreferrer">
-          LinkedIn
+            <LinkedInIcon fontSize="small" sx={{ ml: 0.5 }} />
           </Link>
         </Typography>
       </Container>

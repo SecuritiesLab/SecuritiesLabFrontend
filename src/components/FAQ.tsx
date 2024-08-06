@@ -23,6 +23,7 @@ export default function FAQ() {
       sx={{
         pt: { xs: 4, sm: 12 },
         pb: { xs: 8, sm: 16 },
+        mb: { xs: 6, sm: 12 }, // Increased margin-bottom values
         position: 'relative',
         display: 'flex',
         flexDirection: 'column',
@@ -52,7 +53,7 @@ export default function FAQ() {
             id="panel1d-header"
           >
             <Typography component="h3" variant="subtitle2">
-            How does Securities Lab benefit fintech companies?
+              How does Securities Lab benefit fintech companies?
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
@@ -61,7 +62,7 @@ export default function FAQ() {
               gutterBottom
               sx={{ maxWidth: { sm: '100%', md: '70%' } }}
             >
-Our platform offers seamless connectivity to asset managers, AI-driven treasury management tools, and access to both traditional and tokenized securities. This enables fintech companies to optimize idle funds, reduce risk, ensure regulatory compliance, and create new revenue streams.
+              Our platform offers seamless connectivity to asset managers, AI-driven treasury management tools, and access to both traditional and tokenized securities. This enables fintech companies to optimize idle funds, reduce risk, ensure regulatory compliance, and create new revenue streams.
             </Typography>
           </AccordionDetails>
         </Accordion>
@@ -75,7 +76,7 @@ Our platform offers seamless connectivity to asset managers, AI-driven treasury 
             id="panel2d-header"
           >
             <Typography component="h3" variant="subtitle2">
-            How does your AI-driven treasury management tool work?
+              How does your AI-driven treasury management tool work?
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
@@ -84,7 +85,7 @@ Our platform offers seamless connectivity to asset managers, AI-driven treasury 
               gutterBottom
               sx={{ maxWidth: { sm: '100%', md: '70%' } }}
             >
-Our AI-driven treasury management tool optimizes idle fund usage by analyzing financial data, forecasting cash flow needs, and providing risk management solutions. This ensures that funds are used efficiently while complying with regulatory requirements.
+              Our AI-driven treasury management tool optimizes idle fund usage by analyzing financial data, forecasting cash flow needs, and providing risk management solutions. This ensures that funds are used efficiently while complying with regulatory requirements.
             </Typography>
           </AccordionDetails>
         </Accordion>
@@ -98,7 +99,7 @@ Our AI-driven treasury management tool optimizes idle fund usage by analyzing fi
             id="panel3d-header"
           >
             <Typography component="h3" variant="subtitle2">
-            What types of securities can I access through Securities Lab? 
+              What types of securities can I access through Securities Lab? 
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
@@ -107,7 +108,7 @@ Our AI-driven treasury management tool optimizes idle fund usage by analyzing fi
               gutterBottom
               sx={{ maxWidth: { sm: '100%', md: '70%' } }}
             >
-You can access both traditional securities like money market funds and innovative tokenized securities, including tokenized money market funds, debt markets, real estate, carbon markets, luxury goods, and commodities.
+              You can access both traditional securities like money market funds and innovative tokenized securities, including tokenized money market funds, debt markets, real estate, carbon markets, luxury goods, and commodities.
             </Typography>
           </AccordionDetails>
         </Accordion>
@@ -121,7 +122,7 @@ You can access both traditional securities like money market funds and innovativ
             id="panel4d-header"
           >
             <Typography component="h3" variant="subtitle2">
-            How do I integrate my systems with Securities Lab?
+              How do I integrate my systems with Securities Lab?
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
@@ -130,21 +131,21 @@ You can access both traditional securities like money market funds and innovativ
               gutterBottom
               sx={{ maxWidth: { sm: '100%', md: '70%' } }}
             >
-Integration with Securities Lab is flexible and can be tailored to your needs. You can choose to use our platform independently or combine it with our API for a more customized solution. We provide detailed documentation and support to help you seamlessly connect your existing systems.
+              Integration with Securities Lab is flexible and can be tailored to your needs. You can choose to use our platform independently or combine it with our API for a more customized solution. We provide detailed documentation and support to help you seamlessly connect your existing systems.
             </Typography>
           </AccordionDetails>
         </Accordion>
         <Accordion
-          expanded={expanded === 'panel4'}
-          onChange={handleChange('panel4')}
+          expanded={expanded === 'panel5'}
+          onChange={handleChange('panel5')}
         >
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel4d-content"
-            id="panel4d-header"
+            aria-controls="panel5d-content"
+            id="panel5d-header"
           >
             <Typography component="h3" variant="subtitle2">
-            What are the costs associated with using Securities Lab?
+              What are the costs associated with using Securities Lab?
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
@@ -153,7 +154,7 @@ Integration with Securities Lab is flexible and can be tailored to your needs. Y
               gutterBottom
               sx={{ maxWidth: { sm: '100%', md: '70%' } }}
             >
-Pricing for our services varies based on your specific needs and the scale of integration. Please contact our sales team for a customized quote that fits your requirements.
+              Pricing for our services varies based on your specific needs and the scale of integration. Please contact our sales team for a customized quote that fits your requirements.
             </Typography>
           </AccordionDetails>
         </Accordion>
