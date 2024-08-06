@@ -47,7 +47,7 @@ export default function Hero() {
           theme.palette.mode === 'light' ? 'primary.main' : 'primary.light',
         }}
       >
-        AI powered yield bearing
+        AI-Driven Yield Solutions for
       </Typography>
       <Typography
         component="div"
@@ -58,7 +58,7 @@ export default function Hero() {
             theme.palette.mode === 'light' ? 'primary.main' : 'primary.light',
         }}
       >
-        embedded finance
+         Modern Finance
       </Typography>
     </Typography>
           <Typography
@@ -66,9 +66,7 @@ export default function Hero() {
             color="text.secondary"
             sx={{ alignSelf: 'center', width: { sm: '100%', md: '80%' } }}
           >
-            Enabling financial institutions and businesses to diversify revenue streams
-            and enhance customers retention through turnkey AI-driven treasury management
-            and access to tokenized securities.
+Optimize your treasury management and access tokenized securities with ease
           </Typography>
           <Stack
             direction={{ xs: 'column', sm: 'row' }}
@@ -77,28 +75,19 @@ export default function Hero() {
             useFlexGap
             sx={{ pt: 2, width: { xs: '100%', sm: 'auto' } }}
           >
-            <TextField
-              id="outlined-basic"
-              hiddenLabel
-              size="small"
-              variant="outlined"
-              aria-label="Enter your email address"
-              placeholder="Your email address"
-              inputProps={{
-                autoComplete: 'off',
-                'aria-label': 'Enter your email address',
-              }}
-            />
-            <Button variant="contained" color="primary">
-              Get details
-            </Button>
+                  <Button
+                    color="primary"
+                    variant="contained"
+                    component="a"
+                    href="https://jk979qb2k3e.typeform.com/to/Ppni4Nxk"
+                    target="_blank"
+                    sx={{ width: '100%' }}
+                  >
+                    Get early access
+                  </Button>
           </Stack>
           <Typography variant="caption" textAlign="center" sx={{ opacity: 0.8 }}>
             By clicking &quot;Start now&quot; you agree to our&nbsp;
-            <Link href="#" color="primary">
-              Terms & Conditions
-            </Link>
-            .
           </Typography>
         </Stack>
       </Container>

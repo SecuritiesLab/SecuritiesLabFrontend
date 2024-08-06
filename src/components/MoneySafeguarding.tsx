@@ -9,93 +9,50 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import { useTheme } from '@mui/system';
 
+const safeguarding = [
+  {
+    title: "Seamless Multicurrency Options",
+    text: "Effortlessly manage safeguarding in multiple currencies with top asset managers. Enjoy the convenience of instant access and reliable performance."
+  },
+  {
+    title: "AI-Driven Optimization",
+    text: "Optimize idle cash usage with AI tools designed to reduce risk and ensure compliance. Maintain regulatory peace of mind with intelligent treasury management."
+  },
+  {
+    title: "Flexible Integration",
+    text: "Choose between seamless API integration or utilizing our intuitive platform. Adaptable solutions to fit your specific operational needs."
+  },
+]
 
-const moneySafeguarding = [
+const DepositAsAService = [
   {
-    avatar: <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />,
-    name: 'Remy Sharp',
-    occupation: 'Senior Engineer',
-    testimonial:
-      "Allocate funds to eligible traditional and tokenized assets.",
+    title: "Effortless Account Opening",
+    text: "Open deposit accounts for your end customers effortlessly to enrich your product offering. Retain customers by helping them monetize their cash flow."
   },
   {
-    avatar: <Avatar alt="Travis Howard" src="/static/images/avatar/2.jpg" />,
-    name: 'Travis Howard',
-    occupation: 'Lead Product Designer',
-    testimonial:
-      "Manage treasury via our Saaas",
+    title: "Diverse Securities Selection",
+    text: "Offer a wide range of securities to meet your customers' needs, including money market funds, tokenized securities, and bonds, providing the desired exposure."
   },
   {
-    avatar: <Avatar alt="Cindy Baker" src="/static/images/avatar/3.jpg" />,
-    name: 'Cindy Baker',
-    occupation: 'CTO',
-    testimonial:
-      'Safeguard easily in T+0 assets (MMF, 0-risk instruments under Basel III) via our SaaS',
-  }
-];
+    title: "Competitive Edge",
+    text: "Stay ahead of major fintech competitors and keep pace with market evolution. Monetizing cash flow is now a must-have for financial institutions."
+  },
+]
 
-const problems = [
+const StableCoinWallet = [
   {
-    title:
-      "Low Yield on Safeguarding Solutions",
-      data: "Fintechs often encounter safeguarding solutions that offer minimal returns. This necessitates a robust treasury management system to effectively optimize and monitor idle funds."
+    title: "Instant Wallet Creation",
+    text: "Create stablecoin wallets effortlessly for your end customers with a click of a button, simplifying the onboarding process."
   },
   {
-    title:
-      "Scalability Issues for Asset Managers",
-      data: "Asset managers face challenges in scaling their operations to onboard fintechs and their end customers efficiently. This results in complex and costly deposit solutions."
+    title: "Seamless Transactions",
+    text: "Facilitate fast, transparent, and secure transactions using stablecoins, ensuring a modern and efficient payment solution."
   },
   {
-    title:
-      "Need for New Revenue Streams",
-      data: "Fintechs typically operate in low-profit environments and require innovative revenue streams to monetize their cash flow, making traditional deposit solutions challenging and expensive."
-  }
-];
-
-const solutions = [
-  {
-    title: 'Seamless Connectivity',
-    subtitle: 'Our smart SaaS platform connects financial institutions and businesses with asset managers.',
-    data:
-      "Enjoy embedded access to liquid assets for safeguarding and end customer deposits.",
+    title: "Enhanced Security",
+    text: "Offer your end customers enhanced security features with stablecoin wallets, ensuring their transactions and assets are protected."
   },
-  {
-    title: 'Advanced Management Tools',
-    subtitle: 'AI-driven treasury management tools optimize idle fund usage.',
-    data:
-      "These essential tools reduce risk, ensure compliance with strict capital and safeguarding requirements, and provide regulatory peace of mind.",
-  },
-  {
-    title: 'Access to Traditional and Tokenized Securities',
-    subtitle: 'Facilitates access to both traditional and tokenized securities.',
-    data:
-      'Embrace the speed of tokenization and unlock new opportunities for fintechs to further monetize their transaction flow.',
-  }
-];
-
-
-const optimizing = [
-  {
-    testimonial:
-      "Simplify reconciliation and treasury management on your assets.",
-  },
-  {
-    testimonial:
-      "Simplify reconciliation and treasury management on your assets.",
-  }
-];
-
-
-const empower = [
-  {
-    testimonial:
-      "Enable customers to earn yield on idle cash via innovative products.",
-  },
-  {
-    testimonial:
-      "New revenue streams for your entity.",
-  }
-];
+]
 
 export default function MoneySafeguarding() {
   const theme = useTheme();
@@ -113,20 +70,21 @@ export default function MoneySafeguarding() {
       }}
     >
       <Box 
+      id = "safeguarding"
         sx={{
           width: { sm: '100%', md: '60%' },
           textAlign: { sm: 'left', md: 'center' },
         }}
       >
         <Typography component="h2" variant="h4" color="text.primary">
-          Challenges
+        Safeguarding Solutions
         </Typography>
         <Typography variant="body1" color="text.secondary">
-        Facing low yields, scalability issues, and the need for new revenue streams.
+        Often difficult to open, costly, and not generating yield, safeguarding accounts present significant challenges. Our solution changes this landscape.
         </Typography>
       </Box>
       <Grid container spacing={2} justifyContent="center">
-        {problems.map((problem, index) => (
+        {safeguarding.map((data, index) => (
           <Grid item xs={12} sm={6} md={4} key={index} sx={{ display: 'flex' }}>
             <Card
               sx={{
@@ -146,12 +104,12 @@ export default function MoneySafeguarding() {
                 }}
               >
                 <CardHeader
-                  title={problem.title}
+                  title={data.title}
                 />
               </Box>
               <CardContent>
                 <Typography variant="body2" color="text.secondary">
-                  {problem.data}
+                  {data.text}
                 </Typography>
               </CardContent>
             </Card>
@@ -160,20 +118,21 @@ export default function MoneySafeguarding() {
       </Grid>
 
       <Box
+      id = "deposit-as-a-service"
         sx={{
           width: { sm: '100%', md: '60%' },
           textAlign: { sm: 'left', md: 'center' },
         }}
       >
         <Typography component="h2" variant="h4" color="text.primary">
-          SecuritiesLab Solution
+        Deposit as a Service
         </Typography>
         <Typography variant="body1" color="text.secondary">
-        Innovative connectivity, advanced management tools, and access to both traditional and tokenized securities.
+        Empower your offerings by enabling yield-bearing deposits for your end customers with our innovative solution.
         </Typography>
       </Box>
       <Grid container spacing={2} justifyContent="center">
-        {solutions.map((solution, index) => (
+        {DepositAsAService.map((data, index) => (
           <Grid item xs={12} sm={6} md={4} key={index} sx={{ display: 'flex' }}>
             <Card
               sx={{
@@ -193,13 +152,60 @@ export default function MoneySafeguarding() {
                 }}
               >
                 <CardHeader
-                  title={solution.title}
-                  subheader={solution.subtitle}
+                  title={data.title}
                 />
               </Box>
               <CardContent>
                 <Typography variant="body2" color="text.secondary">
-                  {solution.data}
+                  {data.text}
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
+
+      <Box
+      id = "stablecoin-wallets"
+        sx={{
+          width: { sm: '100%', md: '60%' },
+          textAlign: { sm: 'left', md: 'center' },
+        }}
+      >
+        <Typography component="h2" variant="h4" color="text.primary">
+        Stablecoin Wallets
+        </Typography>
+        <Typography variant="body1" color="text.secondary">
+        Embrace the future of payments by offering exposure to tokenized assets and enabling seamless transactions with stablecoins. Experience speed, transparency, and ease of use.
+        </Typography>
+      </Box>
+      <Grid container spacing={2} justifyContent="center">
+        {StableCoinWallet.map((data, index) => (
+          <Grid item xs={12} sm={6} md={4} key={index} sx={{ display: 'flex' }}>
+            <Card
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                flexGrow: 1,
+                p: 1,
+              }}
+            >
+                            <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  pr: 2,
+                }}
+              >
+                <CardHeader
+                  title={data.title}
+                />
+              </Box>
+              <CardContent>
+                <Typography variant="body2" color="text.secondary">
+                  {data.text}
                 </Typography>
               </CardContent>
             </Card>

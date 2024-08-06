@@ -1,7 +1,11 @@
 import React from 'react';
-import { Box, Button, Typography, Container, Grid, Card } from '@mui/material';
+import { Box, Typography, Container, Card } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
+import StarIcon from '@mui/icons-material/Star';
 
 const CryptoCardComponent = () => {
+  const theme = useTheme();
+
   return (
     <Container
       sx={{
@@ -9,50 +13,78 @@ const CryptoCardComponent = () => {
         pb: { xs: 8, sm: 16 },
         display: 'flex',
         justifyContent: 'center',
+        mb: { xs: 6, sm: 12 },
       }}
     >
       <Card
         sx={{
           display: 'flex',
           alignItems: 'center',
-          justifyContent: 'space-between',
-          borderRadius: '8px',
-          padding: '24px',
-          color: '#FFFFFF',
+          justifyContent: 'center',
+          borderRadius: 2,
+          padding: 4,
+          color: theme.palette.text.primary,
           minHeight: '300px',
           maxWidth: '1200px',
           width: '100%',
+          position: 'relative',
+          backgroundColor: theme.palette.background.paper,
+          boxShadow: theme.shadows[5],
         }}
       >
-        <Box sx={{ flex: 1 }}>
-          <Typography variant="h1" sx={{ fontSize: '80px', fontWeight: 'bold' }}>
-            2%
-          </Typography>
-        </Box>
-
-        <Box sx={{ flex: 2, textAlign: 'left' }}>
-          <Typography variant="h4" sx={{ fontWeight: 'bold' }}>
-            Spend crypto, get cash back
-          </Typography>
-          <Typography variant="body1" sx={{ marginY: '16px' }}>
-            Earn 2% Cashback with Bleep's Crypto Card on every purchase you make, whether it's online or in-store. Available with Apple Pay and Google Pay.
-          </Typography>
-          <Box sx={{ display: 'flex', gap: '16px' }}>
-            <Button variant="outlined" sx={{ color: '#FFFFFF', borderColor: '#FFFFFF' }}>
-              Compare
-            </Button>
-            <Button variant="contained" sx={{ backgroundColor: '#1A73E8' }}>
-              Get started
-            </Button>
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: 2,
+            flexDirection: { xs: 'column', sm: 'row' },
+          }}
+        >
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <Box
+              sx={{
+                background: `linear-gradient(90deg, ${theme.palette.primary.light}, ${theme.palette.primary.main})`,
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                fontSize: '9rem',
+                fontWeight: 'bold',
+                display: 'inline-block',
+                textAlign: 'center',
+                textShadow: `2px 2px 4px ${theme.palette.grey[700]}`,
+                lineHeight: 1,
+                mb: 1,
+              }}
+            >
+              5.1%
+            </Box>
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 0.5,
+                fontSize: '1rem',
+                color: theme.palette.text.secondary,
+              }}
+            >
+              <StarIcon sx={{ fontSize: '1.2rem', color: theme.palette.primary.main }} />
+              <Typography variant="caption">
+                Conditions apply
+              </Typography>
+            </Box>
           </Box>
-        </Box>
-
-        <Box sx={{ flex: 1, textAlign: 'right' }}>
-          <img
-            src="https://via.placeholder.com/150"
-            alt="Crypto Card"
-            style={{ borderRadius: '8px', width: '100%', maxWidth: '200px' }}
-          />
+          <Box sx={{ textAlign: 'center', maxWidth: '800px' }}>
+            <Typography variant="h5" sx={{ fontWeight: 'bold', color: theme.palette.text.primary }}>
+              We enable financial institutions and businesses to diversify revenue streams and enhance customer retention through turnkey AI-driven treasury management and access to tokenized securities.
+            </Typography>
+          </Box>
         </Box>
       </Card>
     </Container>

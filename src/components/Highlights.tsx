@@ -23,7 +23,7 @@ const items = [
     icon: <ConstructionRoundedIcon />,
     title: 'Data privacy',
     description:
-      'ICO Registered, implementing industry best practises throughout',
+      'Unified Financial Connectivity, implementing industry best practises throughout',
   },
   {
     icon: <ThumbUpAltRoundedIcon />,
@@ -81,8 +81,7 @@ export default function Highlights() {
             Highlights
           </Typography>
           <Typography variant="body1" sx={{ color: 'grey.400' }}>
-            Explore why our product stands out: Data security, experienced team and innovation. Enjoy reliable customer support and
-            precision in every detail.
+          Enhance connectivity with our API or platform, unifying your account data to manage bank accounts seamlessly and gain a comprehensive view of your financial situation.
           </Typography>
         </Box>
         <Grid container spacing={2.5}>

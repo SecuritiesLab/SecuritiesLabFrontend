@@ -93,6 +93,7 @@ export default function LandingPage() {
         <Divider />
         <FAQ />
         <Divider />
+        <Footer/>
       </Box>
     </ThemeProvider>
   );
