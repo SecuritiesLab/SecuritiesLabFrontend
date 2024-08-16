@@ -86,9 +86,6 @@ Optimize your treasury management and access tokenized securities with ease
                     Get early access
                   </Button>
           </Stack>
-          <Typography variant="caption" textAlign="center" sx={{ opacity: 0.8 }}>
-            By clicking &quot;Start now&quot; you agree to our&nbsp;
-          </Typography>
         </Stack>
       </Container>
     </Box>

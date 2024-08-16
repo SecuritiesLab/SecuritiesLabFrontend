@@ -66,6 +66,13 @@ function AppAppBar({ mode, toggleColorMode }: AppAppBarProps) {
     setCurrentMenu(null);
   };
 
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  };
+
   return (
     <AppBar
       position="fixed"
@@ -111,6 +118,7 @@ function AppAppBar({ mode, toggleColorMode }: AppAppBarProps) {
               src={process.env.PUBLIC_URL + '/logo.png'}
               style={logoStyle}
               alt="logo of sitemark"
+              onClick={scrollToTop}
             />
           </Box>
           <Box

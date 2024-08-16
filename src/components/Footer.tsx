@@ -25,7 +25,7 @@ export default function Footer() {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        py: 4, // Increased padding for more space inside the footer
+        py: 2, // Increased padding for more space inside the footer
         boxShadow: 0,
         zIndex: 1300, // Ensures footer is above other content
       }}
@@ -36,7 +36,7 @@ export default function Footer() {
           flexDirection: 'column',
           alignItems: 'center',
           textAlign: 'center',
-          mb: 4, // Add bottom margin to create extra space below the container
+          mb: 1, // Add bottom margin to create extra space below the container
         }}
       >
         <Link href="https://www.linkedin.com/company/securities-lab" target="_blank" rel="noopener noreferrer">
