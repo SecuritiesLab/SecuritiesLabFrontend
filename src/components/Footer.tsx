@@ -15,7 +15,6 @@ export default function Footer() {
   return (
     <Box
       sx={{
-        position: 'fixed',
         bottom: 0,
         left: 0,
         width: '100%',
@@ -36,7 +35,7 @@ export default function Footer() {
           flexDirection: 'column',
           alignItems: 'center',
           textAlign: 'center',
-          mb: 1, // Add bottom margin to create extra space below the container
+          mb: 2, // Add bottom margin to create extra space below the container
         }}
       >
         <Link href="https://www.linkedin.com/company/securities-lab" target="_blank" rel="noopener noreferrer">
