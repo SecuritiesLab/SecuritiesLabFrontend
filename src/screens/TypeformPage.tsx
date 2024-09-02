@@ -2,8 +2,8 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import AppAppBar from '../components/AppAppBar';
-import Footer from '../components/Footer';
+import AppAppBar from '../components/LandingPage/AppAppBar';
+import Footer from '../components/LandingPage/Footer';
 import LandingPageTheme from '../themes/LandingPageTheme';
 import { PaletteMode } from '@mui/material';
 
