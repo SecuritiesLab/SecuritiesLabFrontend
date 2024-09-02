@@ -79,9 +79,8 @@ Optimize your treasury management and access tokenized securities with ease
                     color="primary"
                     variant="contained"
                     component="a"
-                    href="https://jk979qb2k3e.typeform.com/to/Ppni4Nxk"
-                    target="_blank"
                     sx={{ width: '100%' }}
+                    onClick={() => window.open('/typeform', '_blank')}
                   >
                     Get early access
                   </Button>

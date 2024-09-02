@@ -12,6 +12,7 @@ import Drawer from '@mui/material/Drawer';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import ToggleColorMode from './ToggleColorMode';
+import { useNavigate } from 'react-router-dom';  
 
 const logoStyle = {
   width: '100px',
@@ -22,6 +23,7 @@ const logoStyle = {
 interface AppAppBarProps {
   mode: PaletteMode;
   toggleColorMode: () => void;
+  showGetEarlyAccess?: boolean;
 }
 
 const menus = [
@@ -30,10 +32,11 @@ const menus = [
   { id: 'faq', label: 'FAQ' }
 ];
 
-function AppAppBar({ mode, toggleColorMode }: AppAppBarProps) {
+function AppAppBar({ mode, toggleColorMode, showGetEarlyAccess = true }: AppAppBarProps) {
   const [open, setOpen] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [currentMenu, setCurrentMenu] = React.useState<string | null>(null);
+  const navigate = useNavigate(); 
 
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);
@@ -184,16 +187,16 @@ function AppAppBar({ mode, toggleColorMode }: AppAppBarProps) {
               ml: 2 // Add margin-left to create space between FAQ and the button
             }}
           >
+          {showGetEarlyAccess && (
             <Button
               color="primary"
               variant="contained"
               size="small"
-              component="a"
-              href="https://jk979qb2k3e.typeform.com/to/Ppni4Nxk"
-              target="_blank"
+              onClick={() => window.open('/typeform', '_blank')}
             >
               Get early access
             </Button>
+          )}
           </Box>
           <Box sx={{ display: { sm: '', md: 'none' } }}>
             <Button
