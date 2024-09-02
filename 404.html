@@ -3,9 +3,14 @@
   <head>
     <meta http-equiv="refresh" content="0; url=/" />
     <script>
-      window.location.replace("/");
+      // Redirect script for GitHub Pages
+      var path = window.location.pathname;
+      var redirectTo = "/";
+      // If it's a route we recognize, redirect to the root and let React Router handle it
+      if (path.startsWith("/typeform") || path.startsWith("/signin") || path.startsWith("/signup")) {
+        window.location.replace(redirectTo);
+      }
     </script>
   </head>
-  <body>
-  </body>
+  <body></body>
 </html>
