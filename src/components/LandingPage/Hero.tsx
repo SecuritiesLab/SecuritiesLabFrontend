@@ -3,12 +3,13 @@ import { alpha } from '@mui/material';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
-import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
-import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
+import { useNavigate } from 'react-router-dom';
 
 export default function Hero() {
+  const navigate = useNavigate();
+
   return (
     <Box
       id="hero"
@@ -28,46 +29,50 @@ export default function Hero() {
         }}
       >
         <Stack spacing={2} useFlexGap sx={{ width: { xs: '100%', sm: '70%' } }}>
-        <Typography
-      variant="h1"
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignSelf: 'center',
-        textAlign: 'center',
-        fontSize: 'clamp(3.5rem, 10vw, 4rem)',
-      }}
-    >
-      <Typography
-        component="div"
-        variant="h1"
-        sx={{
-          fontSize: 'inherit',
-          color: (theme) =>
-          theme.palette.mode === 'light' ? 'primary.main' : 'primary.light',
-          whiteSpace: 'nowrap', 
-        }}
-      >
-        Embedded Wealth Management For 
-      </Typography>
-      <Typography
-        component="div"
-        variant="h1"
-        sx={{
-          fontSize: 'clamp(3rem, 10vw, 4rem)',
-          color: (theme) =>
-            theme.palette.mode === 'light' ? 'primary.main' : 'primary.light',
-        }}
-      >
-         Business Finance
-      </Typography>
-    </Typography>
+          <Typography
+            variant="h1"
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignSelf: 'center',
+              textAlign: 'center',
+              fontSize: 'clamp(2.5rem, 6vw, 3.5rem)', // Adjusted clamp values for better responsiveness
+              '@media (max-width: 600px)': {
+                fontSize: 'clamp(2rem, 8vw, 2.5rem)', // Further adjustment for very small screens
+              },
+            }}
+          >
+            <Typography
+              component="div"
+              variant="h1"
+              sx={{
+                fontSize: 'inherit',
+                color: (theme) =>
+                  theme.palette.mode === 'light' ? 'primary.main' : 'primary.light',
+                whiteSpace: 'normal', // Allow text to wrap
+              }}
+            >
+              Embedded Wealth Management For
+            </Typography>
+            <Typography
+              component="div"
+              variant="h1"
+              sx={{
+                fontSize: 'inherit', // Keep font size consistent within this block
+                color: (theme) =>
+                  theme.palette.mode === 'light' ? 'primary.main' : 'primary.light',
+                whiteSpace: 'normal', // Allow text to wrap
+              }}
+            >
+              Business Finance
+            </Typography>
+          </Typography>
           <Typography
             textAlign="center"
             color="text.secondary"
             sx={{ alignSelf: 'center', width: { sm: '100%', md: '80%' } }}
           >
-Optimize your treasury management and access tokenized securities with ease
+            Optimize your treasury management and access tokenized securities with ease
           </Typography>
           <Stack
             direction={{ xs: 'column', sm: 'row' }}
@@ -76,15 +81,15 @@ Optimize your treasury management and access tokenized securities with ease
             useFlexGap
             sx={{ pt: 2, width: { xs: '100%', sm: 'auto' } }}
           >
-                  <Button
-                    color="primary"
-                    variant="contained"
-                    component="a"
-                    sx={{ width: '100%' }}
-                    onClick={() => window.open('/typeform', '_blank')}
-                  >
-                    Get early access
-                  </Button>
+            <Button
+              color="primary"
+              variant="contained"
+              component="a"
+              sx={{ width: '100%' }}
+              onClick={() => navigate('/typeform')}
+            >
+              Get early access
+            </Button>
           </Stack>
         </Stack>
       </Container>

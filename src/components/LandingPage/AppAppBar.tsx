@@ -198,7 +198,7 @@ function AppAppBar({ mode, toggleColorMode, showGetEarlyAccess = true }: AppAppB
                   variant="contained"
                   size="small"
                   sx={{ px: 3 }} // Ensure consistent padding for both buttons
-                  onClick={() => window.open('/typeform', '_blank')}
+                  onClick={() => navigate('/typeform')}
                 >
                   Get early access
                 </Button>
@@ -224,6 +224,8 @@ function AppAppBar({ mode, toggleColorMode, showGetEarlyAccess = true }: AppAppB
             >
               <MenuIcon />
             </Button>
+            {showGetEarlyAccess && (
+              <>
             <Drawer anchor="right" open={open} onClose={toggleDrawer(false)}>
               <Box
                 sx={{
@@ -266,7 +268,7 @@ function AppAppBar({ mode, toggleColorMode, showGetEarlyAccess = true }: AppAppB
                   <Button
                     color="primary"
                     variant="contained"
-                    onClick={() => window.open('/typeform', '_blank')}
+                    onClick={() => navigate('/typeform')}
                     sx={{ width: '100%' }}
                   >
                     Get early access
@@ -284,6 +286,8 @@ function AppAppBar({ mode, toggleColorMode, showGetEarlyAccess = true }: AppAppB
                 </MenuItem>
               </Box>
             </Drawer>
+            </>
+            )}
           </Box>
         </Toolbar>
       </Container>
