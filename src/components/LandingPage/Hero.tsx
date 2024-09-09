@@ -5,6 +5,7 @@ import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
+import Link from '@mui/material/Link';
 import { useNavigate } from 'react-router-dom';
 
 export default function Hero() {
@@ -91,6 +92,22 @@ export default function Hero() {
               Get early access
             </Button>
           </Stack>
+          <Typography       
+          variant="body2" 
+          color="text.secondary"
+            sx={{ 
+              textAlign: 'center', 
+              pt: 3, // Increase spacing above the text
+              fontSize: '0.875rem', // Slightly increase font size
+            }}>
+            By signing up, you agree to our{' '}
+            <Link          
+            href="/terms-and-conditions" 
+              color="primary" 
+              underline="always">
+              Terms and Conditions
+            </Link>.
+          </Typography>
         </Stack>
       </Container>
     </Box>

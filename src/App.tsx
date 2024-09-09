@@ -5,6 +5,7 @@ import TypeformPage from './screens/TypeformPage';
 import SignInPage from './screens/SignInPage';
 import SignUpPage from './screens/SignUpPage';
 import TermsAndConditionsPage from './screens/TermsAndConditionsPage';
+import CompanyTermsPage from './screens/CompanyTermsPage';
 
 function App() {
   const [mode, setMode] = React.useState('light');
@@ -21,6 +22,7 @@ function App() {
         <Route path="/signin" element={<SignInPage/>} />
         <Route path="/signup" element={<SignUpPage/>} />
         <Route path="/termsAndConditions" element={<TermsAndConditionsPage/>} />
+        <Route path="/terms-and-conditions" element={<CompanyTermsPage/>} />
       </Routes>
     </Router>
   );
