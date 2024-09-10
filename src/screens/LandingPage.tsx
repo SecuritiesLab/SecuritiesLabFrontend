@@ -21,6 +21,7 @@ import Footer from '../components/LandingPage/Footer';
 import LandingPageTheme from '../themes/LandingPageTheme';
 import CryptoCardComponent from '../components/LandingPage/CardComponent';
 import { Helmet } from 'react-helmet';
+import UseCasesComponent from '../components/LandingPage/UseCases';
 
 interface ToggleCustomThemeProps {
   showCustomTheme: Boolean;
@@ -87,6 +88,8 @@ export default function LandingPage() {
         <LogoCollection />
         <CryptoCardComponent />
         <MoneySafeguarding />
+        <Divider />
+        <UseCasesComponent /> {/* Include UseCasesComponent */}
         <Divider />
         <DashboardFeatures />
         <Divider />

@@ -28,6 +28,7 @@ interface AppAppBarProps {
 
 const menus = [
   { id: 'products', label: 'Products', items: ["Safeguarding", 'Deposit as a Service', 'Stablecoin Wallets'] },
+  { id: 'useCases', label: 'Use Cases' },
   { id: 'features', label: 'Features' },
   { id: 'faq', label: 'FAQ' }
 ];
