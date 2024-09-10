@@ -19,7 +19,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<LandingPage/>} />
-        <Route path="/typeform" element={<TypeformPage/>} />
+        <Route path="/get-early-access" element={<TypeformPage/>} />
         <Route path="/signin" element={<SignInPage/>} />
         <Route path="/signup" element={<SignUpPage/>} />
         <Route path="/termsAndConditions" element={<TermsAndConditionsPage/>} />

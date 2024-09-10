@@ -87,7 +87,7 @@ export default function Hero() {
               variant="contained"
               component="a"
               sx={{ width: '100%' }}
-              onClick={() => navigate('/typeform')}
+              onClick={() => navigate('/get-early-access')}
             >
               Get early access
             </Button>

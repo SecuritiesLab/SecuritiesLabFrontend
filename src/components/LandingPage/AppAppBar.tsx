@@ -198,7 +198,7 @@ function AppAppBar({ mode, toggleColorMode, showGetEarlyAccess = true }: AppAppB
                   variant="contained"
                   size="small"
                   sx={{ px: 3 }} // Ensure consistent padding for both buttons
-                  onClick={() => navigate('/typeform')}
+                  onClick={() => navigate('/get-early-access')}
                 >
                   Get early access
                 </Button>
@@ -243,7 +243,7 @@ function AppAppBar({ mode, toggleColorMode, showGetEarlyAccess = true }: AppAppB
                     flexGrow: 1,
                   }}
                 >
-                  <ToggleColorMode mode={mode} toggleColorMode={toggleColorMode} />
+                
                 </Box>
                 {menus.map(menu => (
                   <React.Fragment key={menu.id}>
@@ -268,7 +268,7 @@ function AppAppBar({ mode, toggleColorMode, showGetEarlyAccess = true }: AppAppB
                   <Button
                     color="primary"
                     variant="contained"
-                    onClick={() => navigate('/typeform')}
+                    onClick={() => navigate('/get-early-access')}
                     sx={{ width: '100%' }}
                   >
                     Get early access
