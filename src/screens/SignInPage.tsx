@@ -120,13 +120,15 @@ export default function SignInPage() {
               Sign In
             </Button>
 
-            {/*
+           
             <Grid container>
+               {/*
               <Grid item xs>
                 <Link href="#" variant="body2" color="inherit">
                   Forgot password?
                 </Link>
               </Grid>
+              */}
               <Grid item>
                 <Link
                   variant="body2"
@@ -138,7 +140,7 @@ export default function SignInPage() {
                 </Link>
               </Grid>
             </Grid>
-        */}
+        
         
           </Box>
         </Box>
