@@ -92,6 +92,7 @@ export default function Hero() {
               Get early access
             </Button>
           </Stack>
+          {/*
           <Typography       
           variant="body2" 
           color="text.secondary"
@@ -108,6 +109,7 @@ export default function Hero() {
               Terms and Conditions
             </Link>.
           </Typography>
+          */}
         </Stack>
       </Container>
     </Box>

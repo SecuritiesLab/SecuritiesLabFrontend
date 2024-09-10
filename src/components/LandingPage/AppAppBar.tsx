@@ -215,6 +215,8 @@ function AppAppBar({ mode, toggleColorMode, showGetEarlyAccess = true }: AppAppB
             )}
           </Box>
           <Box sx={{ display: { sm: '', md: 'none' } }}>
+          {showGetEarlyAccess && (
+              <>
             <Button
               variant="text"
               color="primary"
@@ -224,8 +226,6 @@ function AppAppBar({ mode, toggleColorMode, showGetEarlyAccess = true }: AppAppB
             >
               <MenuIcon />
             </Button>
-            {showGetEarlyAccess && (
-              <>
             <Drawer anchor="right" open={open} onClose={toggleDrawer(false)}>
               <Box
                 sx={{

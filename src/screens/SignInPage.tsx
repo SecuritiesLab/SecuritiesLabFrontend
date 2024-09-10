@@ -36,20 +36,30 @@ const darkTheme = createTheme({
 
 export default function SignInPage() {
   const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    const email = data.get('email') as string;
+    const password = data.get('password') as string;
+
+    // Check if the credentials match
+    if (email === 'admin@securitieslab.eu' && password === 'SLteam123!$&') {
+      setErrorMessage(null);
+      // Navigate to the dashboard
+      navigate('/dashboard');
+    } else {
+      // Set error message if the credentials are incorrect
+      setErrorMessage('Invalid email or password.');
+    }
   };
 
   return (
     <ThemeProvider theme={darkTheme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
-        
+
         <Box
           sx={{
             marginTop: 8,
@@ -92,6 +102,11 @@ export default function SignInPage() {
               autoComplete="current-password"
               InputLabelProps={{ style: { color: 'white' } }} // Ensures the label is visible in dark mode
             />
+            {errorMessage && (
+              <Typography color="error" variant="body2" sx={{ mt: 1 }}>
+                {errorMessage}
+              </Typography>
+            )}
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
@@ -104,7 +119,7 @@ export default function SignInPage() {
             >
               Sign In
             </Button>
-            
+
             {/*
             <Grid container>
               <Grid item xs>
@@ -124,7 +139,7 @@ export default function SignInPage() {
               </Grid>
             </Grid>
         */}
-
+        
           </Box>
         </Box>
         <Copyright sx={{ mt: 8, mb: 4 }} />
