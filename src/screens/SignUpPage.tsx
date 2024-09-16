@@ -39,8 +39,12 @@ const darkTheme = createTheme({
 });
 
 export default function SignUpPage() {
+  const [firstName, setFirstName] = React.useState<string>('');
+  const [lastName, setLastName] = React.useState<string>('');
   const [passwordError, setPasswordError] = React.useState<string | null>(null);
   const [emailError, setEmailError] = React.useState<string | null>(null);
+  const [firstNameError, setFirstNameError] = React.useState<string | null>(null);
+  const [lastNameError, setLastNameError] = React.useState<string | null>(null);
   const [errorMessage, setErrorMessage] = React.useState<string | null>(null); // Handle general errors
   const [password, setPassword] = React.useState<string>('');
   const [confirmPassword, setConfirmPassword] = React.useState<string>('');
@@ -67,12 +71,33 @@ export default function SignUpPage() {
     );
   };
 
+  // Name validation (checking if it's empty or just white spaces)
+  const validateName = (name: string): boolean => {
+    return name.trim() !== '';
+  };
+
   // Form submission handler
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setErrorMessage(null); // Clear previous error messages
 
     let valid = true;
+
+    // Validate first name
+    if (!validateName(firstName)) {
+      setFirstNameError('First name cannot be empty or blank');
+      valid = false;
+    } else {
+      setFirstNameError(null);
+    }
+
+    // Validate last name
+    if (!validateName(lastName)) {
+      setLastNameError('Last name cannot be empty or blank');
+      valid = false;
+    } else {
+      setLastNameError(null);
+    }
 
     // Email validation
     if (!validateEmail(email)) {
@@ -98,7 +123,7 @@ export default function SignUpPage() {
     // If everything is valid, call the signup service
     if (valid) {
       try {
-        await signupUser({ firstName: 'John', lastName: 'Doe', email, password }); // Modify user data accordingly
+        await signupUser({ firstName, lastName, email, password });
         navigate('/otp-verification', { state: { email } }); // Redirect to OTP page with email state
       } catch (error: any) {
         setErrorMessage(error.message); // Display error message
@@ -135,6 +160,10 @@ export default function SignUpPage() {
                   id="firstName"
                   label="First Name"
                   autoFocus
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  error={!!firstNameError}
+                  helperText={firstNameError}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -145,6 +174,10 @@ export default function SignUpPage() {
                   label="Last Name"
                   name="lastName"
                   autoComplete="family-name"
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                  error={!!lastNameError}
+                  helperText={lastNameError}
                 />
               </Grid>
               <Grid item xs={12}>
