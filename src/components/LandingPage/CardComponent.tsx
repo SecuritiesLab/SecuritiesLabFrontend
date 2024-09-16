@@ -3,9 +3,11 @@ import React from 'react';
 import { Box, Typography, Container, Card } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import StarIcon from '@mui/icons-material/Star';
+import { useTranslation } from 'react-i18next';
 
 const CryptoCardComponent = () => {
   const theme = useTheme();
+  const { t } = useTranslation();
 
   return (
     <Container
@@ -64,7 +66,7 @@ const CryptoCardComponent = () => {
                 mb: 1,
               }}
             >
-              5.1%
+             {t('cryptoCardComponent.interestRate')}
             </Box>
             <Box
               sx={{
@@ -76,13 +78,13 @@ const CryptoCardComponent = () => {
               }}
             >
               <Typography variant="caption">
-                * Conditions apply
+              {t('cryptoCardComponent.conditionsApply')}
               </Typography>
             </Box>
           </Box>
           <Box sx={{ textAlign: 'center', maxWidth: '800px' }}>
             <Typography variant="h5" sx={{ fontWeight: 'bold', color: theme.palette.text.primary }}>
-              We enable financial institutions and businesses to diversify revenue streams and enhance customer retention through turnkey AI-driven treasury management and access to tokenized securities.
+            {t('cryptoCardComponent.headline')}
             </Typography>
           </Box>
         </Box>

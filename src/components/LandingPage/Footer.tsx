@@ -4,6 +4,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import { useTranslation } from 'react-i18next';
 
 const logoStyle = {
   width: '140px',
@@ -12,6 +13,7 @@ const logoStyle = {
 };
 
 export default function Footer() {
+  const { t } = useTranslation();
   return (
     <Box
       sx={{
@@ -46,7 +48,7 @@ export default function Footer() {
             />
         </Link>
         <Typography variant="body2" color="text.secondary" mt={1} sx={{ display: 'flex', alignItems: 'center' }}>
-          Follow us on{' '}
+        {t('footer.followUs')}{' '}
           <Link href="https://www.linkedin.com/company/securities-lab" target="_blank" rel="noopener noreferrer">
             <LinkedInIcon fontSize="small" sx={{ ml: 0.5 }} />
           </Link>

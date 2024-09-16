@@ -3,6 +3,7 @@ import { useTheme } from '@mui/material/styles';
 import { LineChart, axisClasses } from '@mui/x-charts';
 import { ChartsTextStyle } from '@mui/x-charts/ChartsText';
 import Title from './Title';
+import { useTranslation } from 'react-i18next';
 
 // Generate Sales Data
 function createData(
@@ -32,10 +33,11 @@ const data = [
 
 export default function MonthlyRevenue() {
   const theme = useTheme();
+  const { t } = useTranslation();
 
   return (
     <React.Fragment>
-      <Title>Monthly Revenue</Title>
+      <Title>{t('monthlyRevenue.title')}</Title>
       <div style={{ width: '100%', flexGrow: 1, overflow: 'hidden' }}>
         <LineChart
           dataset={data}
@@ -55,7 +57,7 @@ export default function MonthlyRevenue() {
           ]}
           yAxis={[
             {
-              label: 'Euros',
+              label: t('monthlyRevenue.label'),
               labelStyle: {
                 ...(theme.typography.body1 as ChartsTextStyle),
                 fill: theme.palette.text.primary,

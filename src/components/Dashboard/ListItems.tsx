@@ -66,14 +66,14 @@ export const MainListItems = () => {
         </ListItemButton>
       </Collapse>
               {/* Link to API Documentation */}
-              <ListItemButton component={Link} href="https://example.com/api-docs" target="_blank" sx={{ pl: 2 }}>
+              <ListItemButton sx={{ pl: 2 }}>
           <ListItemIcon>
             <MenuBookIcon />
           </ListItemIcon>
           <ListItemText primary="API Documentation" />
         </ListItemButton>
 
-        <ListItemButton component={Link} href="https://example.com/api-docs" target="_blank" sx={{ pl: 2 }}>
+        <ListItemButton  sx={{ pl: 2 }}>
           <ListItemIcon>
             <PaymentsIcon />
           </ListItemIcon>

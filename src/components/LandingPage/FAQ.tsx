@@ -6,11 +6,13 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
-
+import { useTranslation } from 'react-i18next';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 export default function FAQ() {
   const [expanded, setExpanded] = React.useState<string | false>(false);
+  
+  const { t } = useTranslation();
 
   const handleChange =
     (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
@@ -40,7 +42,7 @@ export default function FAQ() {
           textAlign: { sm: 'left', md: 'center' },
         }}
       >
-        Frequently asked questions
+        {t('faq.title')}
       </Typography>
       <Box sx={{ width: '100%' }}>
         <Accordion
@@ -53,7 +55,7 @@ export default function FAQ() {
             id="panel1d-header"
           >
             <Typography component="h3" variant="subtitle2">
-              How does Securities Lab benefit fintech companies?
+            {t('faq.question1.question')}
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
@@ -62,7 +64,7 @@ export default function FAQ() {
               gutterBottom
               sx={{ maxWidth: { sm: '100%', md: '70%' } }}
             >
-              Our platform offers seamless connectivity to asset managers, AI-driven treasury management tools, and access to both traditional and tokenized securities. This enables fintech companies to optimize idle funds, reduce risk, ensure regulatory compliance, and create new revenue streams.
+              {t('faq.question1.answer')}
             </Typography>
           </AccordionDetails>
         </Accordion>
@@ -76,7 +78,7 @@ export default function FAQ() {
             id="panel2d-header"
           >
             <Typography component="h3" variant="subtitle2">
-              How does your AI-driven treasury management tool work?
+            {t('faq.question2.question')}
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
@@ -85,7 +87,7 @@ export default function FAQ() {
               gutterBottom
               sx={{ maxWidth: { sm: '100%', md: '70%' } }}
             >
-              Our AI-driven treasury management tool optimizes idle fund usage by analyzing financial data, forecasting cash flow needs, and providing risk management solutions. This ensures that funds are used efficiently while complying with regulatory requirements.
+             {t('faq.question2.answer')}
             </Typography>
           </AccordionDetails>
         </Accordion>
@@ -99,7 +101,7 @@ export default function FAQ() {
             id="panel3d-header"
           >
             <Typography component="h3" variant="subtitle2">
-              What types of securities can I access through Securities Lab? 
+            {t('faq.question3.question')}
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
@@ -108,7 +110,7 @@ export default function FAQ() {
               gutterBottom
               sx={{ maxWidth: { sm: '100%', md: '70%' } }}
             >
-              You can access both traditional securities like money market funds and innovative tokenized securities, including tokenized money market funds, debt markets, real estate, carbon markets, luxury goods, and commodities.
+              {t('faq.question3.answer')}
             </Typography>
           </AccordionDetails>
         </Accordion>
@@ -122,7 +124,7 @@ export default function FAQ() {
             id="panel4d-header"
           >
             <Typography component="h3" variant="subtitle2">
-              How do I integrate my systems with Securities Lab?
+            {t('faq.question4.question')}
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
@@ -131,7 +133,7 @@ export default function FAQ() {
               gutterBottom
               sx={{ maxWidth: { sm: '100%', md: '70%' } }}
             >
-              Integration with Securities Lab is flexible and can be tailored to your needs. You can choose to use our platform independently or combine it with our API for a more customized solution. We provide detailed documentation and support to help you seamlessly connect your existing systems.
+              {t('faq.question4.answer')}
             </Typography>
           </AccordionDetails>
         </Accordion>
@@ -145,7 +147,7 @@ export default function FAQ() {
             id="panel5d-header"
           >
             <Typography component="h3" variant="subtitle2">
-              What are the costs associated with using Securities Lab?
+            {t('faq.question5.question')}
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
@@ -154,7 +156,7 @@ export default function FAQ() {
               gutterBottom
               sx={{ maxWidth: { sm: '100%', md: '70%' } }}
             >
-              Pricing for our services varies based on your specific needs and the scale of integration. Please contact our sales team for a customized quote that fits your requirements.
+              {t('faq.question5.answer')}
             </Typography>
           </AccordionDetails>
         </Accordion>
