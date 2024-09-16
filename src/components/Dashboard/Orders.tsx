@@ -1,92 +1,204 @@
 import * as React from 'react';
-import Link from '@mui/material/Link';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Title from './Title'
+import { Button, Link, Table, TableBody, TableCell, TableHead, TableRow, Box } from '@mui/material';
+import Title from './Title';
 
-// Generate Order Data
+// Generate Company Financial Statement Data
 function createData(
   id: number,
-  date: string,
-  name: string,
-  shipTo: string,
-  paymentMethod: string,
-  amount: number,
+  statementDate: string,
+  department: number,
+  revenue: number,
+  expenses: number,
+  netProfit: number,
+  cashFlow: number,
 ) {
-  return { id, date, name, shipTo, paymentMethod, amount };
+  return { id, statementDate, department, revenue, expenses, netProfit, cashFlow };
 }
 
+// Simulating monthly financial statements for a company
 const rows = [
   createData(
     0,
-    '16 Mar, 2019',
-    'Elvis Presley',
-    'Tupelo, MS',
-    'VISA ⠀•••• 3719',
-    312.44,
+    '1 Sep, 2023',
+    1000000.00,
+    0,
+    0.1,
+    0,
+    15000
   ),
   createData(
     1,
-    '16 Mar, 2019',
-    'Paul McCartney',
-    'London, UK',
-    'VISA ⠀•••• 2574',
-    866.99,
+    '1 Oct, 2023',
+    1003900.00,
+    4333.33,
+    433.33,
+    3900.00,
+    22000
   ),
-  createData(2, '16 Mar, 2019', 'Tom Scholz', 'Boston, MA', 'MC ⠀•••• 1253', 100.81),
+  createData(
+    2,
+    '1 Nov, 2023',
+    1007815.21,
+    4350.23,
+    435.02,
+    3915.21,
+    18000
+  ),
   createData(
     3,
-    '16 Mar, 2019',
-    'Michael Jackson',
-    'Gary, IN',
-    'AMEX ⠀•••• 2000',
-    654.39,
+    '1 Dec, 2023',
+    1011745.69,
+    4367.20,
+    436.72,
+    3930.48,
+    17500
   ),
   createData(
     4,
-    '15 Mar, 2019',
-    'Bruce Springsteen',
-    'Long Branch, NJ',
-    'VISA ⠀•••• 5919',
-    212.79,
+    '1 Jan, 2024',
+    1015691.50,
+    4384.23,
+    438.42,
+    3945.81,
+    15000
+  ),
+  createData(
+    5,
+    '1 Feb, 2024',
+    1019652.69,
+    4401.33,
+    440.13,
+    3961.20,
+    22000
+  ),
+  createData(
+    6,
+    '1 Mar, 2024',
+    1023629.34,
+    4418.50,
+    441.85,
+    3976.65,
+    18000
+  ),
+  createData(
+    7,
+    '1 Apr, 2024',
+    1027621.49,
+    4435.73,
+    443.57,
+    3992.15,
+    17500
+  ),
+  createData(
+    8,
+    '1 May, 2024',
+    1031629.22,
+    4453.03,
+    445.30,
+    4007.72,
+    13000
+  ),
+  createData(
+    9,
+    '1 Jun, 2024',
+    1035652.57,
+    4470.39,
+    447.03,
+    4023.35,
+    16000
+  ),
+  createData(
+    10,
+    '1 Jul, 2024',
+    1039691.62,
+    4487.83,
+    448.78,
+    4039.05,
+    38000
+  ),
+  createData(
+    11,
+    '1 Aug, 2024',
+    1043746.41,
+    4505.33,
+    450.53,
+    4054.80,
+    22000
+  ),
+  createData(
+    12,
+    '1 Sep, 2024',
+    1047817.03,
+    4522.90,
+    452.29,
+    4070.61,
+    22000
   ),
 ];
+
+function exportToCSV() {
+  const csvRows = [
+    ['Statement Date', 'Department', 'Revenue ($)', 'Expenses ($)', 'Net Profit ($)', 'Cash Flow ($)'],
+    ...rows.map((row) => [
+      row.statementDate,
+      row.department,
+      row.revenue.toFixed(2),
+      row.expenses.toFixed(2),
+      row.netProfit.toFixed(2),
+      row.cashFlow.toFixed(2),
+    ]),
+  ];
+
+  const csvContent = csvRows.map((e) => e.join(',')).join('\n');
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.setAttribute('download', 'financial_statements.csv');
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
 
 function preventDefault(event: React.MouseEvent) {
   event.preventDefault();
 }
 
-export default function Orders() {
+export default function CompanyStatements() {
   return (
     <React.Fragment>
-      <Title>Recent Orders</Title>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+        <Title>Monthly Financial Statements - BlackRock ICS US Dollar Liquidity Fund
+(IE0004809582)</Title>
+        <Button variant="contained" color="primary" onClick={exportToCSV}>
+          Export CSV
+        </Button>
+      </Box>
       <Table size="small">
         <TableHead>
           <TableRow>
-            <TableCell>Date</TableCell>
-            <TableCell>Name</TableCell>
-            <TableCell>Ship To</TableCell>
-            <TableCell>Payment Method</TableCell>
-            <TableCell align="right">Sale Amount</TableCell>
+            <TableCell>Statement Date</TableCell>
+            <TableCell>Balance</TableCell>
+            <TableCell align="right">Yield Generated($)</TableCell>
+            <TableCell align="right">Fees ($)</TableCell>
+            <TableCell align="right">Net Yield ($)</TableCell>
+            <TableCell align="right">Yield (%)</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {rows.map((row) => (
             <TableRow key={row.id}>
-              <TableCell>{row.date}</TableCell>
-              <TableCell>{row.name}</TableCell>
-              <TableCell>{row.shipTo}</TableCell>
-              <TableCell>{row.paymentMethod}</TableCell>
-              <TableCell align="right">{`$${row.amount}`}</TableCell>
+              <TableCell>{row.statementDate}</TableCell>
+              <TableCell>{row.department}</TableCell>
+              <TableCell align="right">{row.revenue.toLocaleString()}</TableCell>
+              <TableCell align="right">{row.expenses.toLocaleString()}</TableCell>
+              <TableCell align="right">{row.netProfit.toLocaleString()}</TableCell>
+              <TableCell align="right">5.2</TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
       <Link color="primary" href="#" onClick={preventDefault} sx={{ mt: 3 }}>
-        See more orders
+        See more statements
       </Link>
     </React.Fragment>
   );

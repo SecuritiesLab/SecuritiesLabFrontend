@@ -13,15 +13,18 @@ import Badge from '@mui/material/Badge';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
-import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import { mainListItems, secondaryListItems } from '../components/Dashboard/ListItems';
-import Chart from '../components/Dashboard/Chart';
-import Deposits from '../components/Dashboard/Deposits';
+import { MainListItems, secondaryListItems, BottomListItems } from '../components/Dashboard/ListItems'; 
+import Balances from '../components/Dashboard/Balances';
+import Balance from '../components/Dashboard/Balance';
 import Orders from '../components/Dashboard/Orders';
-
+import Yield from '../components/Dashboard/Yield';
+import Link from '@mui/material/Link';
+import Revenue from '../components/Dashboard/Revenue';
+import MonthlyRevenue from '../components/Dashboard/MonthlyRevenue';
+import AccountDropdown from '../components/Dashboard/AccountDropDown';
 
 function Copyright(props: any) {
   return (
@@ -86,12 +89,11 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
-// TODO remove, this demo shouldn't need to reset the theme.
 const darkTheme = createTheme({
-    palette: {
-      mode: 'dark',
-    },
-  });
+  palette: {
+    mode: 'dark',
+  },
+});
 
 export default function DashboardPage() {
   const [open, setOpen] = React.useState(true);
@@ -130,6 +132,10 @@ export default function DashboardPage() {
             >
               Dashboard
             </Typography>
+
+            {/* Account Dropdown */}
+            <AccountDropdown />
+
             <IconButton color="inherit">
               <Badge badgeContent={4} color="secondary">
                 <NotificationsIcon />
@@ -146,16 +152,38 @@ export default function DashboardPage() {
               px: [1],
             }}
           >
+                        {/* Add logo here */}
+  <Box
+    sx={{
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      p: 2,
+    }}
+  >
+    <img
+      src={process.env.PUBLIC_URL + '/logo.png'} // Replace this with your logo path
+      alt="Logo"
+      style={{ width: '150px', height: 'auto' }} // Adjust the size of the logo as needed
+    />
+  </Box>
             <IconButton onClick={toggleDrawer}>
               <ChevronLeftIcon />
             </IconButton>
           </Toolbar>
           <Divider />
-          <List component="nav">
-            {mainListItems}
-            <Divider sx={{ my: 1 }} />
-            {secondaryListItems}
-          </List>
+
+          <List component="nav" sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+  {/* Main List Items */}
+  <Box sx={{ flexGrow: 1 }}>
+    <MainListItems />
+    <Divider sx={{ my: 1 }} />
+    {secondaryListItems}
+  </Box>
+
+  {/* Bottom List Items (Settings and Sign Out) */}
+  <BottomListItems />
+</List>
         </Drawer>
         <Box
           component="main"
@@ -172,19 +200,6 @@ export default function DashboardPage() {
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
-              {/* Chart */}
-              <Grid item xs={12} md={8} lg={9}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: 240,
-                  }}
-                >
-                  <Chart />
-                </Paper>
-              </Grid>
               {/* Recent Deposits */}
               <Grid item xs={12} md={4} lg={3}>
                 <Paper
@@ -195,7 +210,60 @@ export default function DashboardPage() {
                     height: 240,
                   }}
                 >
-                  <Deposits />
+                  <Balance />
+                </Paper>
+              </Grid>
+
+              <Grid item xs={12} md={4} lg={3}>
+                <Paper
+                  sx={{
+                    p: 2,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    height: 240,
+                  }}
+                >
+                  <Yield />
+                </Paper>
+              </Grid>
+
+              <Grid item xs={12} md={4} lg={3}>
+                <Paper
+                  sx={{
+                    p: 2,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    height: 240,
+                  }}
+                >
+                  <Revenue />
+                </Paper>
+              </Grid>
+
+              {/* Chart */}
+              <Grid item xs={12} md={8} lg={9}>
+                <Paper
+                  sx={{
+                    p: 2,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    height: 240,
+                  }}
+                >
+                  <Balances />
+                </Paper>
+              </Grid>
+              {/* Chart */}
+              <Grid item xs={12} md={8} lg={9}>
+                <Paper
+                  sx={{
+                    p: 2,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    height: 240,
+                  }}
+                >
+                  <MonthlyRevenue />
                 </Paper>
               </Grid>
               {/* Recent Orders */}

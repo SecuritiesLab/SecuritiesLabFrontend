@@ -1,18 +1,20 @@
 import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
+import { signinUser } from '../api/userApi';  // Import your API service
+import {
+  Avatar,
+  Button,
+  CssBaseline,
+  TextField,
+  Typography,
+  Container,
+  Box,
+  Link,
+  Grid
+} from '@mui/material';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+
 
 function Copyright(props: any) {
   return (
@@ -36,22 +38,17 @@ const darkTheme = createTheme({
 
 export default function SignInPage() {
   const navigate = useNavigate();
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
   const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    const email = data.get('email') as string;
-    const password = data.get('password') as string;
-
-    // Check if the credentials match
-    if (email === 'admin@securitieslab.eu' && password === 'SLteam123!$&') {
-      setErrorMessage(null);
-      // Navigate to the dashboard
-      navigate('/dashboard');
-    } else {
-      // Set error message if the credentials are incorrect
-      setErrorMessage('Invalid email or password.');
+    try {
+      await signinUser({ email, password });  // Call API service
+      navigate('/dashboard');  // Navigate to dashboard after successful login
+    } catch (error: any) {
+      setErrorMessage(error.message);
     }
   };
 
@@ -59,7 +56,6 @@ export default function SignInPage() {
     <ThemeProvider theme={darkTheme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
-
         <Box
           sx={{
             marginTop: 8,
@@ -79,7 +75,7 @@ export default function SignInPage() {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
             <TextField
               margin="normal"
               required
@@ -89,7 +85,8 @@ export default function SignInPage() {
               name="email"
               autoComplete="email"
               autoFocus
-              InputLabelProps={{ style: { color: 'white' } }} // Ensures the label is visible in dark mode
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
             <TextField
               margin="normal"
@@ -100,17 +97,14 @@ export default function SignInPage() {
               type="password"
               id="password"
               autoComplete="current-password"
-              InputLabelProps={{ style: { color: 'white' } }} // Ensures the label is visible in dark mode
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
             {errorMessage && (
-              <Typography color="error" variant="body2" sx={{ mt: 1 }}>
+              <Typography color="error" variant="body2">
                 {errorMessage}
               </Typography>
             )}
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
             <Button
               type="submit"
               fullWidth
