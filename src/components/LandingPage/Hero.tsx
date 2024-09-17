@@ -87,11 +87,12 @@ export default function Hero() {
               variant="contained"
               component="a"
               sx={{ width: '100%' }}
-              onClick={() => navigate('/typeform')}
+              onClick={() => navigate('/get-early-access')}
             >
               Get early access
             </Button>
           </Stack>
+          {/*
           <Typography       
           variant="body2" 
           color="text.secondary"
@@ -108,6 +109,7 @@ export default function Hero() {
               Terms and Conditions
             </Link>.
           </Typography>
+          */}
         </Stack>
       </Container>
     </Box>

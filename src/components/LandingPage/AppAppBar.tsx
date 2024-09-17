@@ -28,6 +28,7 @@ interface AppAppBarProps {
 
 const menus = [
   { id: 'products', label: 'Products', items: ["Safeguarding", 'Deposit as a Service', 'Stablecoin Wallets'] },
+  { id: 'useCases', label: 'Use Cases' },
   { id: 'features', label: 'Features' },
   { id: 'faq', label: 'FAQ' }
 ];
@@ -198,7 +199,7 @@ function AppAppBar({ mode, toggleColorMode, showGetEarlyAccess = true }: AppAppB
                   variant="contained"
                   size="small"
                   sx={{ px: 3 }} // Ensure consistent padding for both buttons
-                  onClick={() => navigate('/typeform')}
+                  onClick={() => navigate('/get-early-access')}
                 >
                   Get early access
                 </Button>
@@ -215,6 +216,8 @@ function AppAppBar({ mode, toggleColorMode, showGetEarlyAccess = true }: AppAppB
             )}
           </Box>
           <Box sx={{ display: { sm: '', md: 'none' } }}>
+          {showGetEarlyAccess && (
+              <>
             <Button
               variant="text"
               color="primary"
@@ -224,8 +227,6 @@ function AppAppBar({ mode, toggleColorMode, showGetEarlyAccess = true }: AppAppB
             >
               <MenuIcon />
             </Button>
-            {showGetEarlyAccess && (
-              <>
             <Drawer anchor="right" open={open} onClose={toggleDrawer(false)}>
               <Box
                 sx={{
@@ -243,7 +244,7 @@ function AppAppBar({ mode, toggleColorMode, showGetEarlyAccess = true }: AppAppB
                     flexGrow: 1,
                   }}
                 >
-                  <ToggleColorMode mode={mode} toggleColorMode={toggleColorMode} />
+                
                 </Box>
                 {menus.map(menu => (
                   <React.Fragment key={menu.id}>
@@ -268,7 +269,7 @@ function AppAppBar({ mode, toggleColorMode, showGetEarlyAccess = true }: AppAppB
                   <Button
                     color="primary"
                     variant="contained"
-                    onClick={() => navigate('/typeform')}
+                    onClick={() => navigate('/get-early-access')}
                     sx={{ width: '100%' }}
                   >
                     Get early access
