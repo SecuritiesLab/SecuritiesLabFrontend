@@ -8,55 +8,57 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import { useTheme } from '@mui/system';
+import { useTranslation } from 'react-i18next';
 
-const safeguarding = [
-  {
-    title: "Seamless Multicurrency Options",
-    text: "Effortlessly manage safeguarding in multiple currencies with top asset managers. Enjoy lower minimum and access to higher yield."
-  },
-  {
-    title: "AI-Driven Optimization",
-    text: "Optimize idle cash usage with AI tools designed to reduce risk and ensure compliance. Maintain regulatory peace of mind with intelligent treasury management."
-  },
-  {
-    title: "Flexible Integration",
-    text: "Choose between seamless API integration or utilizing our intuitive platform. Adaptable solutions to fit your specific operational needs."
-  },
-]
-
-const DepositAsAService = [
-  {
-    title: "Effortless Account Opening",
-    text: "Open deposit accounts for your end customers effortlessly to enrich your product offering. Retain customers by helping them monetize their cash flow."
-  },
-  {
-    title: "Diverse Securities Selection",
-    text: "Offer a wide range of securities to meet your customers' needs, including money market funds, tokenized securities, and bonds, providing the desired exposure."
-  },
-  {
-    title: "Competitive Edge",
-    text: "Stay ahead of major fintech competitors and keep pace with market evolution. Monetizing cash flow is now a must-have for financial institutions."
-  },
-]
-
-const StableCoinWallet = [
-  {
-    title: "Instant Wallet Creation",
-    text: "Effortlessly create stablecoin wallets for your end customers with a single click, simplifying the onboarding process."
-  },
-  {
-    title: "Seamless Transactions",
-    text: "Facilitate fast, transparent, and secure transactions using stablecoins, ensuring a modern and efficient payment solution."
-  },
-  {
-    title: "Enhanced Security",
-    text: "Offer your end customers enhanced security features with stablecoin wallets, ensuring their transactions and assets are protected."
-  },
-]
 
 export default function MoneySafeguarding() {
   const theme = useTheme();
+   const { t } = useTranslation();
 
+  const safeguarding = [
+    {
+      title: t('moneySafeguarding.safeguarding1.title'),
+      text: t('moneySafeguarding.safeguarding1.text')
+    },
+    {
+      title: t('moneySafeguarding.safeguarding2.title'),
+      text: t('moneySafeguarding.safeguarding2.text')
+    },
+    {
+      title: t('moneySafeguarding.safeguarding3.title'),
+      text: t('moneySafeguarding.safeguarding3.text')
+    },
+  ]
+  
+  const DepositAsAService = [
+    {
+      title: t('moneySafeguarding.deposit1.title'),
+      text: t('moneySafeguarding.deposit1.text'),
+    },
+    {
+      title: t('moneySafeguarding.deposit2.title'),
+      text: t('moneySafeguarding.deposit2.text'),
+    },
+    {
+      title: t('moneySafeguarding.deposit3.title'),
+      text: t('moneySafeguarding.deposit3.text'),
+    },
+  ]
+  
+  const StableCoinWallet = [
+    {
+      title: t('moneySafeguarding.stablecoin1.title'),
+      text: t('moneySafeguarding.stablecoin1.text'),
+    },
+    {
+      title: t('moneySafeguarding.stablecoin2.title'),
+      text: t('moneySafeguarding.stablecoin2.text'),
+    },
+    {
+      title: t('moneySafeguarding.stablecoin3.title'),
+      text: t('moneySafeguarding.stablecoin3.text'),
+    },
+  ]
   return (
     <Container
       sx={{
@@ -77,10 +79,10 @@ export default function MoneySafeguarding() {
         }}
       >
         <Typography component="h2" variant="h4" color="text.primary">
-        Safeguarding Solutions
+        {t('moneySafeguarding.safeguardingTitle')}
         </Typography>
         <Typography variant="body1" color="text.secondary">
-        Often difficult to open, costly, and not generating yield, safeguarding accounts present significant challenges. Our solution changes this landscape.
+        {t('moneySafeguarding.safeguardingDescription')}
         </Typography>
       </Box>
       <Grid container spacing={2} justifyContent="center">
@@ -125,10 +127,10 @@ export default function MoneySafeguarding() {
         }}
       >
         <Typography component="h2" variant="h4" color="text.primary">
-        Deposit as a Service
+        {t('moneySafeguarding.depositTitle')}
         </Typography>
         <Typography variant="body1" color="text.secondary">
-        Empower your offerings by enabling yield-bearing deposits for your end customers with our innovative solution.
+        {t('moneySafeguarding.depositDescription')}
         </Typography>
       </Box>
       <Grid container spacing={2} justifyContent="center">
@@ -173,10 +175,10 @@ export default function MoneySafeguarding() {
         }}
       >
         <Typography component="h2" variant="h4" color="text.primary">
-        Stablecoin Wallets
+        {t('moneySafeguarding.stablecoinTitle')}
         </Typography>
         <Typography variant="body1" color="text.secondary">
-        Embrace the future of payments by offering exposure to tokenized assets and enabling seamless transactions with stablecoins. Experience speed, transparency, and ease of use.
+        {t('moneySafeguarding.stablecoinDescription')}
         </Typography>
       </Box>
       <Grid container spacing={2} justifyContent="center">

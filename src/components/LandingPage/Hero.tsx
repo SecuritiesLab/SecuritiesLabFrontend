@@ -5,11 +5,12 @@ import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import Link from '@mui/material/Link';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 export default function Hero() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   return (
     <Box
@@ -37,9 +38,9 @@ export default function Hero() {
               flexDirection: 'column',
               alignSelf: 'center',
               textAlign: 'center',
-              fontSize: 'clamp(2.5rem, 6vw, 3.5rem)', // Adjusted clamp values for better responsiveness
+              fontSize: 'clamp(2.5rem, 6vw, 3.5rem)', 
               '@media (max-width: 600px)': {
-                fontSize: 'clamp(2rem, 8vw, 2.5rem)', // Further adjustment for very small screens
+                fontSize: 'clamp(2rem, 8vw, 2.5rem)', 
               },
             }}
           >
@@ -50,22 +51,22 @@ export default function Hero() {
                 fontSize: 'inherit',
                 color: (theme) =>
                   theme.palette.mode === 'light' ? 'primary.main' : 'primary.light',
-                whiteSpace: 'normal', // Allow text to wrap
+                whiteSpace: 'normal', 
               }}
             >
-              Embedded Wealth Management For
+              {t('hero.titleLine1')}
             </Typography>
             <Typography
               component="div"
               variant="h1"
               sx={{
-                fontSize: 'inherit', // Keep font size consistent within this block
+                fontSize: 'inherit',
                 color: (theme) =>
                   theme.palette.mode === 'light' ? 'primary.main' : 'primary.light',
-                whiteSpace: 'normal', // Allow text to wrap
+                whiteSpace: 'normal', 
               }}
             >
-              Business Finance
+              {t('hero.titleLine2')}
             </Typography>
           </Typography>
           <Typography
@@ -73,7 +74,7 @@ export default function Hero() {
             color="text.secondary"
             sx={{ alignSelf: 'center', width: { sm: '100%', md: '80%' } }}
           >
-            Optimize your treasury management and access tokenized securities with ease
+            {t('hero.subtitle')}
           </Typography>
           <Stack
             direction={{ xs: 'column', sm: 'row' }}
@@ -85,11 +86,10 @@ export default function Hero() {
             <Button
               color="primary"
               variant="contained"
-              component="a"
               sx={{ width: '100%' }}
               onClick={() => navigate('/get-early-access')}
             >
-              Get early access
+              {t('hero.button')}
             </Button>
           </Stack>
           {/*

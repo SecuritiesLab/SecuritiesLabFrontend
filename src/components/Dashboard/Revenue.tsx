@@ -2,25 +2,22 @@ import * as React from 'react';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import Title from './Title'
+import { useTranslation } from 'react-i18next';
 
 function preventDefault(event: React.MouseEvent) {
   event.preventDefault();
 }
 
 export default function Revenue() {
+  const { t } = useTranslation();
+
   return (
     <React.Fragment>
-      <Title>Revenue</Title>
-      <Typography component="p" variant="h4">
-        $47,817.03
-      </Typography>
-      <Typography color="text.secondary" sx={{ flex: 1 }}>
-        on 11 September, 2024
-      </Typography>
+      <Title>{t('revenue.title')}</Title>
+      <Typography component="p" variant="h4">{t('revenue.amount')}</Typography>
+      <Typography color="text.secondary" sx={{ flex: 1 }}>{t('revenue.date')}</Typography>
       <div>
-        <Link color="primary" href="#" onClick={preventDefault}>
-          Revenue details
-        </Link>
+        <Link color="primary" href="#" onClick={preventDefault}>{t('revenue.details')}</Link>
       </div>
     </React.Fragment>
   );

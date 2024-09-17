@@ -13,6 +13,7 @@ import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import ToggleColorMode from './ToggleColorMode';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const logoStyle = {
   width: '100px',
@@ -26,18 +27,20 @@ interface AppAppBarProps {
   showGetEarlyAccess?: boolean;
 }
 
-const menus = [
-  { id: 'products', label: 'Products', items: ["Safeguarding", 'Deposit as a Service', 'Stablecoin Wallets'] },
-  { id: 'useCases', label: 'Use Cases' },
-  { id: 'features', label: 'Features' },
-  { id: 'faq', label: 'FAQ' }
-];
 
 function AppAppBar({ mode, toggleColorMode, showGetEarlyAccess = true }: AppAppBarProps) {
   const [open, setOpen] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [currentMenu, setCurrentMenu] = React.useState<string | null>(null);
   const navigate = useNavigate();
+  const { t } = useTranslation(); 
+
+  const menus = [
+    { id: 'products', label: t('appBar.products'), items: [t('appBar.safeguarding'), t('appBar.depositAsAService'), t('appBar.stablecoinWallets')] },
+    { id: 'useCases', label: t('appBar.useCases') },
+    { id: 'features', label: t('appBar.features') },
+    { id: 'faq', label: t('appBar.faq') }
+  ];
 
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);
@@ -201,7 +204,7 @@ function AppAppBar({ mode, toggleColorMode, showGetEarlyAccess = true }: AppAppB
                   sx={{ px: 3 }} // Ensure consistent padding for both buttons
                   onClick={() => navigate('/get-early-access')}
                 >
-                  Get early access
+                 {t('appBar.getEarlyAccess')}
                 </Button>
                 <Button
                   color="primary"
@@ -210,7 +213,7 @@ function AppAppBar({ mode, toggleColorMode, showGetEarlyAccess = true }: AppAppB
                   sx={{ px: 3 }} // Ensure consistent padding for both buttons
                   onClick={() => navigate('/signin')}
                 >
-                  Sign In
+                 {t('appBar.signIn')}
                 </Button>
               </>
             )}
@@ -272,7 +275,7 @@ function AppAppBar({ mode, toggleColorMode, showGetEarlyAccess = true }: AppAppB
                     onClick={() => navigate('/get-early-access')}
                     sx={{ width: '100%' }}
                   >
-                    Get early access
+                    {t('appBar.getEarlyAccess')}
                   </Button>
                 </MenuItem>
                 <MenuItem>
@@ -282,7 +285,7 @@ function AppAppBar({ mode, toggleColorMode, showGetEarlyAccess = true }: AppAppB
                     onClick={() => navigate('/signin')}
                     sx={{ width: '100%' }}
                   >
-                    Sign In
+                   {t('appBar.signIn')}
                   </Button>
                 </MenuItem>
               </Box>

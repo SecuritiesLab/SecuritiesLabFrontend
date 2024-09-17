@@ -8,6 +8,7 @@ import TermsAndConditionsPage from './screens/TermsAndConditionsPage';
 import CompanyTermsPage from './screens/CompanyTermsPage';
 import DashboardPage from './screens/DashboardPage';
 import OtpVerification from './screens/OtpVerificationPage';
+import './i18n';
 
 function App() {
   const [mode, setMode] = React.useState('light');

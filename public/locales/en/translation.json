@@ -1,0 +1,261 @@
+{
+    "appBar": {
+      "products": "Products",
+      "useCases": "Use Cases",
+      "features": "Features",
+      "faq": "FAQ",
+      "getEarlyAccess": "Get early access",
+      "signIn": "Sign In",
+      "safeguarding":"Safeguarding",
+      "depositAsAService":"Deposit as a Service",
+      "stablecoinWallets":"Stablecoin Wallets"
+    },
+    "cryptoCardComponent": {
+      "headline": "We enable financial institutions and businesses to diversify revenue streams and enhance customer retention through turnkey AI-driven treasury management and access to tokenized securities.",
+      "interestRate": "5.1%",
+      "conditionsApply": "* Conditions apply"
+    },
+    
+        "dashboardFeatures": {
+          "title": "AI-Enhanced Features",
+          "subtitle": "Explore our user-friendly treasury management dashboard, featuring an intuitive UI/UX for seamless navigation and efficient financial oversight. It simplifies complex tasks to improve productivity and operational efficiency.",
+          "feature1": {
+              "title": "Streamlined Client Experience",
+              "description": "Explore our user-friendly treasury management dashboard, featuring an intuitive UI/UX for seamless navigation and efficient financial oversight."
+            },
+            "feature2" : 
+            {
+              "title": "Predictive AI Analytics",
+              "description": "Optimize treasury management with predictive AI analysis, providing real-time forecasts and insights. Empower data-driven decision-making with tailored trend analysis for enhanced financial planning."
+            },
+            "feature3" :
+            {
+              "title": "Easy API Integration",
+              "description": "Easily integrate our treasury management dashboard via user-friendly APIs, enhancing your website with powerful financial capabilities. Simplify operations and boost efficiency with our tailored API integration solution."
+            }
+          
+        },
+      
+    "faq": {
+      "title": "Frequently asked questions",
+      "question1": 
+        {
+          "question": "How does Securities Lab benefit fintech companies?",
+          "answer": "Our platform offers seamless connectivity to asset managers, AI-driven treasury management tools, and access to both traditional and tokenized securities. This enables fintech companies to optimize idle funds, reduce risk, ensure regulatory compliance, and create new revenue streams."
+        },
+        "question2": {
+          "question": "How does your AI-driven treasury management tool work?",
+          "answer": "Our AI-driven treasury management tool optimizes idle fund usage by analyzing financial data, forecasting cash flow needs, and providing risk management solutions. This ensures that funds are used efficiently while complying with regulatory requirements."
+        },
+        "question3": {
+          "question": "What types of securities can I access through Securities Lab?",
+          "answer": "You can access both traditional securities like money market funds and innovative tokenized securities, including tokenized money market funds, debt markets, real estate, carbon markets, luxury goods, and commodities."
+        },
+        "question4": {
+          "question": "How do I integrate my systems with Securities Lab?",
+          "answer": "ntegration with Securities Lab is flexible and can be tailored to your needs. You can choose to use our platform independently or combine it with our API for a more customized solution. We provide detailed documentation and support to help you seamlessly connect your existing systems."
+        },
+        "question5": {
+          "question": "What are the costs associated with using Securities Lab?",
+          "answer": "Pricing for our services varies based on your specific needs and the scale of integration. Please contact our sales team for a customized quote that fits your requirements."
+        }
+      
+    },
+    "footer": {
+      "followUs": "Follow us on",
+      "li,nkedin": "LinkedIn"
+    },
+    "hero": {
+        "titleLine1": "Embedded Wealth Management For",
+        "titleLine2": "Business Finance",
+        "subtitle": "Optimize your treasury management and access tokenized securities with ease",
+        "button": "Get early access"
+      },
+      "highlights": {
+        "title": "Highlights",
+        "subtitle": "Enhance connectivity with our API or platform, unifying your account data to manage bank accounts seamlessly and gain a comprehensive view of your financial situation.",
+        "item1": {
+          "title": "Enterprise Grade Auth",
+          "description": "Secure, enterprise-ready multi-factor auth procedures, tried and tested"
+        },
+        "item2": {
+          "title": "Data privacy",
+          "description": "Unified Financial Connectivity, implementing industry best practises throughout"
+        },
+        "item3": {
+          "title": "GDPR",
+          "description": "Compliance with latest GDPR regulations ensure data privacy"
+        },
+        "item4": {
+          "title": "Innovative functionality",
+          "description": "Stay ahead with features that set new standards, addressing your evolving needs better than the rest."
+        },
+        "item5": {
+          "title": "Reliable support",
+          "description": "Count on our responsive customer support, offering assistance beyond purchase."
+        },
+        "item6": {
+          "title": "Experienced team",
+          "description": "Our experienced team, with backgrounds at leading companies like Revolut, brings deep financial expertise to our treasury management solutions."
+        }
+      },
+      "logoCollection": {
+        "title": "We partner with the best asset managers"
+      },
+      "useCases": {
+        "title": "Use Cases",
+        "subtitle": "Explore how our solutions can benefit different industries.",
+        "case1": {
+          "title": "FinTech/BaaS - Deposit as a Service",
+          "description": "As a FinTech, you want to offer your customers the ability to earn interest on their deposits without complicated onboarding.",
+          "solution": "Integrate Securities Lab’s Deposit as a Service via API to offer daily earnings of up to 5.1% APY, improving customer satisfaction and generating a new revenue stream."
+        },
+        "case2": {
+          "title": "FinTech/BaaS: Streamlined Client Funds Safeguarding",
+          "description": "As a FinTech, you need to securely segregate client funds to meet regulatory requirements and build trust.",
+          "solution": "Integrate Securities Lab's Safeguarding Solution via API to automate fund segregation, ensure compliance, and streamline auditing with real-time reporting."
+        },
+        "case3": {
+            "title": "E-commerce Platforms: Driving Customer Loyalty",
+            "description": "As an e-commerce platform, you want to increase customer loyalty by offering interest on funds held in e-wallets.",
+            "solution": "Use Securities Lab’s deposit services API to enable users to earn daily interest, enhancing customer retention and positioning your platform as a leader in financial innovation."
+        },
+        "case4": {
+            "title": "SMEs: AI-Driven Treasury Optimization",
+            "description": "As an SME, you're seeking to optimize treasury operations and maximize returns on idle cash while staying compliant.",
+            "solution": "Leverage Securities Lab’s AI-powered treasury tools for real-time analytics, risk assessment, and optimized financial management."
+            }
+      },
+        "moneySafeguarding": {
+          "safeguardingTitle": "Safeguarding Solutions",
+          "safeguardingDescription": "Often difficult to open, costly, and not generating yield, safeguarding accounts present significant challenges. Our solution changes this landscape.",
+          "depositTitle": "Deposit as a Service",
+          "depositDescription": "Empower your offerings by enabling yield-bearing deposits for your end customers with our innovative solution.",
+          "stablecoinTitle": "Stablecoin Wallets",
+          "stablecoinDescription": "Embrace the future of payments by offering exposure to tokenized assets and enabling seamless transactions with stablecoins. Experience speed, transparency, and ease of use.",
+          "safeguarding1": 
+            {
+              "title": "Seamless Multicurrency Options",
+              "text": "Effortlessly manage safeguarding in multiple currencies with top asset managers. Enjoy lower minimum and access to higher yield."
+            },
+            "safeguarding2": {
+              "title": "AI-Driven Optimization",
+              "text": "Optimize idle cash usage with AI tools designed to reduce risk and ensure compliance. Maintain regulatory peace of mind with intelligent treasury management."
+            },
+            "safeguarding3": {
+              "title": "Flexible Integration",
+              "text": "Choose between seamless API integration or utilizing our intuitive platform. Adaptable solutions to fit your specific operational needs."
+            }
+          ,
+          "deposit1": 
+            {
+              "title": "Effortless Account Opening",
+              "text": "Open deposit accounts for your end customers effortlessly to enrich your product offering. Retain customers by helping them monetize their cash flow."
+            },
+            "deposit2":{
+              "title": "Diverse Securities Selection",
+              "text": "Offer a wide range of securities to meet your customers' needs, including money market funds, tokenized securities, and bonds, providing the desired exposure."
+            },
+            "deposit3":{
+              "title": "Competitive Edge",
+              "text": "Stay ahead of major fintech competitors and keep pace with market evolution. Monetizing cash flow is now a must-have for financial institutions."
+            }
+          ,
+          "stablecoin1": 
+            {
+              "title": "Instant Wallet Creation",
+              "text": "Effortlessly create stablecoin wallets for your end customers with a single click, simplifying the onboarding process."
+            },
+            "stablecoin2":{
+              "title": "Seamless Transactions",
+              "text": "Facilitate fast, transparent, and secure transactions using stablecoins, ensuring a modern and efficient payment solution."
+            },
+            "stablecoin3":{
+              "title": "Enhanced Security",
+              "text": "Offer your end customers enhanced security features with stablecoin wallets, ensuring their transactions and assets are protected."
+            }
+          
+        },
+        "accountDropdown": {
+            "name": "MOHIT TEMBE",
+            "company": "SECURITIES LAB UAB",
+            "entities": "Entities",
+            "addCompany": "Add New Company",
+            "approvals": "Approvals",
+            "pendingApprovals": "Pending Approvals",
+            "yourRequests": "Your Requests",
+            "billing": "Billing",
+            "invoices": "Invoices"
+          },
+          "balance": {
+            "title": "Balance",
+            "amount": "$1,047,817.03",
+            "date": "on 11 September, 2024",
+            "viewBalance": "View balance"
+          },
+          "monthlyRevenue": {
+            "title": "Monthly Revenue",
+            "label": "Euros"
+          },
+          "companyStatements": {
+            "title": "Monthly Financial Statements - BlackRock ICS US Dollar Liquidity Fund (IE0004809582)",
+            "exportCSV": "Export CSV",
+            "columns": {
+              "statementDate": "Statement Date",
+              "balance": "Balance",
+              "yieldGenerated": "Yield Generated($)",
+              "fees": "Fees ($)",
+              "netYield": "Net Yield ($)",
+              "yieldPercentage": "Yield (%)"
+            },
+            "seeMore": "See more statements"
+          },
+          "revenue": {
+            "title": "Revenue",
+            "amount": "$47,817.03",
+            "date": "on 11 September, 2024",
+            "details": "Revenue details"
+          },
+          "yieldGenerated": {
+            "title": "Yield Generated",
+            "amount": "$53,130.02",
+            "date": "on 11 September, 2024",
+            "viewDetails": "View details"
+          },
+          "otpVerification": {
+            "title": "Verify OTP",
+            "label": "Enter OTP",
+            "button": "Verify OTP",
+            "error": "Invalid OTP. Please try again."
+          },
+          "signInPage": {
+            "title": "Sign In",
+            "emailLabel": "Email Address",
+            "passwordLabel": "Password",
+            "button": "Sign In",
+            "forgotPassword": "Forgot password?",
+            "noAccount": "Don't have an account? Sign Up",
+            "errorMessage": "Invalid credentials. Please try again."
+          },
+          "signUpPage": {
+            "title": "Sign Up",
+            "firstNameLabel": "First Name",
+            "lastNameLabel": "Last Name",
+            "emailLabel": "Email Address",
+            "passwordLabel": "Password",
+            "confirmPasswordLabel": "Confirm Password",
+            "button": "Sign Up",
+            "alreadyAccount": "Already have an account? Sign in",
+            "firstNameError": "First name cannot be empty or blank",
+            "lastNameError": "Last name cannot be empty or blank",
+            "emailError": "Please enter a valid email address",
+            "passwordError": "Password must be at least 8 characters long and contain uppercase, lowercase, number, and special character",
+            "passwordMismatchError": "Passwords do not match"
+          },
+          "general": {
+            "companyLogoAlt": "Company Logo",
+            "copyright": "Copyright © {{year}}",
+            "companyName": "SecuritiesLab"
+          }
+      
+  }

@@ -1,37 +1,22 @@
 import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
+import { Avatar, Button, CssBaseline, TextField, Link, Grid, Box, Typography, Container, IconButton, InputAdornment } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import IconButton from '@mui/material/IconButton';
-import InputAdornment from '@mui/material/InputAdornment';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
-import { signupUser } from '../api/userApi'; // Import the service
+import { signupUser } from '../api/userApi';
+import { useTranslation } from 'react-i18next';
 
-// Copyright component
 function Copyright(props: any) {
+  const { t } = useTranslation();
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://securitieslab.eu/">
-        SecuritiesLab
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
+      {t('general.copyright', { year: new Date().getFullYear() })} <Link color="inherit" href="https://securitieslab.eu/">{t('general.companyName')}</Link>
     </Typography>
   );
 }
 
-// Dark theme configuration
 const darkTheme = createTheme({
   palette: {
     mode: 'dark',
@@ -39,94 +24,77 @@ const darkTheme = createTheme({
 });
 
 export default function SignUpPage() {
+  const { t } = useTranslation();
   const [firstName, setFirstName] = React.useState<string>('');
   const [lastName, setLastName] = React.useState<string>('');
   const [passwordError, setPasswordError] = React.useState<string | null>(null);
   const [emailError, setEmailError] = React.useState<string | null>(null);
   const [firstNameError, setFirstNameError] = React.useState<string | null>(null);
   const [lastNameError, setLastNameError] = React.useState<string | null>(null);
-  const [errorMessage, setErrorMessage] = React.useState<string | null>(null); // Handle general errors
+  const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
   const [password, setPassword] = React.useState<string>('');
   const [confirmPassword, setConfirmPassword] = React.useState<string>('');
   const [email, setEmail] = React.useState<string>('');
   const [showPassword, setShowPassword] = React.useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
-
   const navigate = useNavigate();
 
-  // Email validation using regex
   const validateEmail = (email: string): boolean => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
 
-  // Password complexity and length validation
   const validatePassword = (password: string): boolean => {
-    return (
-      password.length >= 8 &&
-      /[A-Z]/.test(password) && // At least one uppercase letter
-      /[a-z]/.test(password) && // At least one lowercase letter
-      /[0-9]/.test(password) && // At least one digit
-      /[!@#$%^&*]/.test(password) // At least one special character
-    );
+    return password.length >= 8 && /[A-Z]/.test(password) && /[a-z]/.test(password) && /[0-9]/.test(password) && /[!@#$%^&*]/.test(password);
   };
 
-  // Name validation (checking if it's empty or just white spaces)
   const validateName = (name: string): boolean => {
     return name.trim() !== '';
   };
 
-  // Form submission handler
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setErrorMessage(null); // Clear previous error messages
+    setErrorMessage(null);
 
     let valid = true;
 
-    // Validate first name
     if (!validateName(firstName)) {
-      setFirstNameError('First name cannot be empty or blank');
+      setFirstNameError(t('signUpPage.firstNameError'));
       valid = false;
     } else {
       setFirstNameError(null);
     }
 
-    // Validate last name
     if (!validateName(lastName)) {
-      setLastNameError('Last name cannot be empty or blank');
+      setLastNameError(t('signUpPage.lastNameError'));
       valid = false;
     } else {
       setLastNameError(null);
     }
 
-    // Email validation
     if (!validateEmail(email)) {
-      setEmailError('Please enter a valid email address');
+      setEmailError(t('signUpPage.emailError'));
       valid = false;
     } else {
       setEmailError(null);
     }
 
-    // Password validation
     if (!validatePassword(password)) {
-      setPasswordError(
-        'Password must be at least 8 characters long and contain uppercase, lowercase, number, and special character'
-      );
+      setPasswordError(t('signUpPage.passwordError'));
       valid = false;
     } else if (password !== confirmPassword) {
-      setPasswordError('Passwords do not match');
+      setPasswordError(t('signUpPage.passwordMismatchError'));
       valid = false;
     } else {
       setPasswordError(null);
     }
 
-    // If everything is valid, call the signup service
     if (valid) {
       try {
         await signupUser({ firstName, lastName, email, password });
-        navigate('/otp-verification', { state: { email } }); // Redirect to OTP page with email state
+        navigate('/otp-verification', { state: { email } });
       } catch (error: any) {
-        setErrorMessage(error.message); // Display error message
+        setErrorMessage(error.message);
       }
     }
   };
@@ -135,20 +103,16 @@ export default function SignUpPage() {
     <ThemeProvider theme={darkTheme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
-
-        {/* Logo at the Top */}
         <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4, mb: 4 }}>
-          <img src={process.env.PUBLIC_URL + '/logo.png'} alt="Company Logo" style={{ height: 60 }} />
+          <img src={process.env.PUBLIC_URL + '/logo.png'} alt={t('general.companyLogoAlt')} style={{ height: 60 }} />
         </Box>
-
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign up
+            {t('signUpPage.title')}
           </Typography>
-
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
@@ -158,7 +122,7 @@ export default function SignUpPage() {
                   required
                   fullWidth
                   id="firstName"
-                  label="First Name"
+                  label={t('signUpPage.firstNameLabel')}
                   autoFocus
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
@@ -171,7 +135,7 @@ export default function SignUpPage() {
                   required
                   fullWidth
                   id="lastName"
-                  label="Last Name"
+                  label={t('signUpPage.lastNameLabel')}
                   name="lastName"
                   autoComplete="family-name"
                   value={lastName}
@@ -185,7 +149,7 @@ export default function SignUpPage() {
                   required
                   fullWidth
                   id="email"
-                  label="Email Address"
+                  label={t('signUpPage.emailLabel')}
                   name="email"
                   autoComplete="email"
                   value={email}
@@ -199,7 +163,7 @@ export default function SignUpPage() {
                   required
                   fullWidth
                   name="password"
-                  label="Password"
+                  label={t('signUpPage.passwordLabel')}
                   type={showPassword ? 'text' : 'password'}
                   id="password"
                   autoComplete="new-password"
@@ -227,14 +191,14 @@ export default function SignUpPage() {
                   required
                   fullWidth
                   name="confirmPassword"
-                  label="Confirm Password"
+                  label={t('signUpPage.confirmPasswordLabel')}
                   type={showConfirmPassword ? 'text' : 'password'}
                   id="confirmPassword"
                   autoComplete="new-password"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
-                  error={!!passwordError} // Show error state if passwords do not match
-                  helperText={passwordError} // Display error message
+                  error={!!passwordError}
+                  helperText={passwordError}
                   InputProps={{
                     endAdornment: (
                       <InputAdornment position="end">
@@ -251,28 +215,19 @@ export default function SignUpPage() {
                 />
               </Grid>
             </Grid>
-
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Sign Up
+            <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+              {t('signUpPage.button')}
             </Button>
-
-            {errorMessage && <Typography color="error">{errorMessage}</Typography>} {/* Error message */}
-
+            {errorMessage && <Typography color="error">{errorMessage}</Typography>}
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <Link href="#" variant="body2" onClick={() => navigate('/signin')}>
-                  Already have an account? Sign in
+                  {t('signUpPage.alreadyAccount')}
                 </Link>
               </Grid>
             </Grid>
           </Box>
         </Box>
-
         <Copyright sx={{ mt: 5 }} />
       </Container>
     </ThemeProvider>

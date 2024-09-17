@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Button, Link, Table, TableBody, TableCell, TableHead, TableRow, Box } from '@mui/material';
 import Title from './Title';
+import { useTranslation } from 'react-i18next';
 
 // Generate Company Financial Statement Data
 function createData(
@@ -164,24 +165,23 @@ function preventDefault(event: React.MouseEvent) {
 }
 
 export default function CompanyStatements() {
+  const { t } = useTranslation();
+
   return (
     <React.Fragment>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-        <Title>Monthly Financial Statements - BlackRock ICS US Dollar Liquidity Fund
-(IE0004809582)</Title>
-        <Button variant="contained" color="primary" onClick={exportToCSV}>
-          Export CSV
-        </Button>
+        <Title>{t('companyStatements.title')}</Title>
+        <Button variant="contained" color="primary" onClick={exportToCSV}>{t('companyStatements.exportCSV')}</Button>
       </Box>
       <Table size="small">
         <TableHead>
           <TableRow>
-            <TableCell>Statement Date</TableCell>
-            <TableCell>Balance</TableCell>
-            <TableCell align="right">Yield Generated($)</TableCell>
-            <TableCell align="right">Fees ($)</TableCell>
-            <TableCell align="right">Net Yield ($)</TableCell>
-            <TableCell align="right">Yield (%)</TableCell>
+            <TableCell>{t('companyStatements.columns.statementDate')}</TableCell>
+            <TableCell>{t('companyStatements.columns.balance')}</TableCell>
+            <TableCell align="right">{t('companyStatements.columns.yieldGenerated')}</TableCell>
+            <TableCell align="right">{t('companyStatements.columns.fees')}</TableCell>
+            <TableCell align="right">{t('companyStatements.columns.netYield')}</TableCell>
+            <TableCell align="right">{t('companyStatements.columns.yieldPercentage')}</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -197,9 +197,7 @@ export default function CompanyStatements() {
           ))}
         </TableBody>
       </Table>
-      <Link color="primary" href="#" onClick={preventDefault} sx={{ mt: 3 }}>
-        See more statements
-      </Link>
+      <Link color="primary" href="#" onClick={preventDefault} sx={{ mt: 3 }}>{t('companyStatements.seeMore')}</Link>
     </React.Fragment>
   );
 }
