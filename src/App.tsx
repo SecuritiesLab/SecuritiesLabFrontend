@@ -8,6 +8,8 @@ import TermsAndConditionsPage from './screens/TermsAndConditionsPage';
 import CompanyTermsPage from './screens/CompanyTermsPage';
 import DashboardPage from './screens/DashboardPage';
 import OtpVerification from './screens/OtpVerificationPage';
+import ForgotPasswordPage from './screens/LoginModule/ForgotPasswordPage';
+import ResetPasswordPage from './screens/LoginModule/ResetPasswordPage';
 import './i18n';
 
 function App() {
@@ -28,6 +30,8 @@ function App() {
         <Route path="/terms-and-conditions" element={<CompanyTermsPage/>} />
         <Route path="/dashboard" element={<DashboardPage/>} />
         <Route path="/otp-verification" element={<OtpVerification/>} />
+        <Route path="/forgot-password" element={<ForgotPasswordPage/>} />
+        <Route path="/reset-password" element={<ResetPasswordPage/>} />
       </Routes>
     </Router>
   );

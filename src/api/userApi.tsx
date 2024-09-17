@@ -2,6 +2,7 @@ import axiosInstance from './axiosConfig';
 import { UserRequest } from '../types/UserRequest';
 import { OtpRequest } from '../types/OtpRequest';
 import { SignInRequest } from '../types/SignInRequest';
+import { ResetPasswordRequest } from '../types/ResetPasswordRequest';
 
 // Service to handle signup
 export const signupUser = async (userData: UserRequest) => {
@@ -43,5 +44,24 @@ export const signinUser = async (signinData: SignInRequest) => {
       throw new Error("User not verified.");
     }
     throw new Error("Error during sign-in. Please try again.");
+  }
+};
+
+export const forgotPassword = async (email: string) => {
+  try {
+    const response = await axiosInstance.post(`/auth/forgot-password?email=${email}`);
+    return response.data;
+  } catch (error) {
+    throw new Error("Error sending OTP. Please try again.");
+  }
+};
+
+export const resetPassword = async (resetPasswordRequest: ResetPasswordRequest) => {
+  try {
+    console.log(resetPasswordRequest)
+    const response = await axiosInstance.post(`/auth/reset-password`, resetPasswordRequest);
+    return response.data;
+  } catch (error) {
+    throw new Error("Error resetting password. Please check your OTP and try again.");
   }
 };

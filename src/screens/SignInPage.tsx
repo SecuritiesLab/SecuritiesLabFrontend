@@ -84,6 +84,12 @@ export default function SignInPage() {
             </Button>
 
             <Grid container>
+            <Grid item xs>
+                {/* Add Forgot Password Link */}
+                <Link variant="body2" color="inherit" onClick={() => navigate('/forgot-password')} style={{ cursor: 'pointer' }}>
+                  {t('signInPage.forgotPassword')}
+                </Link>
+              </Grid>
               <Grid item>
                 <Link variant="body2" color="inherit" onClick={() => navigate('/signup')} style={{ cursor: 'pointer' }}>
                   {t('signInPage.noAccount')}
