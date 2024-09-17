@@ -21,11 +21,11 @@ export default function ForgotPasswordPage() {
   const handleEmailSubmit = async (email: string) => {
     try {
       await forgotPassword(email);
-      setSuccessMessage('OTP sent to your email. Please check your inbox.');
+      setSuccessMessage(t('forgotPasswordPage.successMessage'));
       setErrorMessage(null);
       setTimeout(() => navigate(`/reset-password?email=${email}`), 2000); // Navigate to reset password page
     } catch (error) {
-      setErrorMessage('Error sending OTP. Please try again.');
+      setErrorMessage(t('forgotPasswordPage.errorMessage'));
       setSuccessMessage(null);
     }
   };
@@ -39,11 +39,11 @@ export default function ForgotPasswordPage() {
         </Box>
       <Box sx={{ marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <Typography component="h1" variant="h5">
-          Forgot Password
+        {t('forgotPasswordPage.title')}
         </Typography>
         <EmailInput
           onSubmit={handleEmailSubmit}
-          buttonText="Send OTP"
+          buttonText={t('forgotPasswordPage.buttonText')} 
           successMessage={successMessage || undefined}
           errorMessage={errorMessage || undefined}
         />

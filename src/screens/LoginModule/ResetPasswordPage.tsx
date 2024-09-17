@@ -24,17 +24,17 @@ export default function ResetPasswordPage() {
 
   const handleOtpSubmit = async (otp: number, newPassword: string) => {
     if (!email) {
-      setErrorMessage('Email not found.');
+      setErrorMessage(t('resetPasswordPage.emailNotFoundError'));
       return;
     }
 
     try {
       await resetPassword({ email, otp, newPassword });
-      setSuccessMessage('Password reset successfully.');
+      setSuccessMessage(t('resetPasswordPage.successMessage'));
       setErrorMessage(null);
       setTimeout(() => navigate('/signin'), 2000); // Navigate to sign in page
     } catch (error) {
-      setErrorMessage('Error resetting password. Please check your OTP and try again.');
+      setErrorMessage(t('resetPasswordPage.errorMessage'));
       setSuccessMessage(null);
     }
   };
@@ -48,7 +48,7 @@ export default function ResetPasswordPage() {
         </Box>
       <Box sx={{ marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <Typography component="h1" variant="h5">
-          Reset Password
+        {t('resetPasswordPage.title')}
         </Typography>
         <OtpAndPassword
           onSubmit={handleOtpSubmit}

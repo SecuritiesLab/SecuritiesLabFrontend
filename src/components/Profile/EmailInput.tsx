@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Button, TextField, Box, Typography } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 interface EmailInputProps {
   onSubmit: (email: string) => void;
@@ -10,6 +11,7 @@ interface EmailInputProps {
 
 export const EmailInput: React.FC<EmailInputProps> = ({ onSubmit, buttonText, successMessage, errorMessage }) => {
   const [email, setEmail] = React.useState('');
+  const { t } = useTranslation();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -23,7 +25,7 @@ export const EmailInput: React.FC<EmailInputProps> = ({ onSubmit, buttonText, su
         required
         fullWidth
         id="email"
-        label="Enter your email"
+        label={t('emailInput.emailLabel')} 
         name="email"
         autoComplete="email"
         autoFocus
