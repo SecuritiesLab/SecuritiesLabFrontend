@@ -235,7 +235,8 @@
             "button": "Sign In",
             "forgotPassword": "Forgot password?",
             "noAccount": "Don't have an account? Sign Up",
-            "errorMessage": "Invalid credentials. Please try again."
+            "errorMessage": "Invalid credentials. Please try again.",
+            "captchaErrorMessage": "Please select the captcha"
           },
           "signUpPage": {
             "title": "Sign Up",

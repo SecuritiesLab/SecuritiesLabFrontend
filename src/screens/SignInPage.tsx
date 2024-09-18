@@ -5,8 +5,8 @@ import { Avatar, Button, CssBaseline, TextField, Typography, Container, Box, Lin
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useTranslation } from 'react-i18next';
-import GoogleSignIn from "../components/Profile/GoogleSignIn"
-import ReCAPTCHA from "react-google-recaptcha"; 
+import GoogleSignIn from "../components/Profile/GoogleSignIn";
+import ReCAPTCHA from "react-google-recaptcha";
 
 
 function Copyright(props: any) {
@@ -30,7 +30,7 @@ export default function SignInPage() {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
-  const [captchaToken, setCaptchaToken] = React.useState<string | null>(null); 
+  const [captchaToken, setCaptchaToken] = React.useState<string | null>(null);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -40,12 +40,13 @@ export default function SignInPage() {
       return;
     }
     try {
-      await signinUser({ email, password, captchaToken});
+      await signinUser({ email, password, captchaToken });
       navigate('/dashboard');
     } catch (error: any) {
       setErrorMessage(t('signInPage.errorMessage'));
     }
   };
+
   // Function to handle CAPTCHA response
   const handleCaptchaChange = (token: string | null) => {
     setCaptchaToken(token);
@@ -92,17 +93,26 @@ export default function SignInPage() {
               onChange={(e) => setPassword(e.target.value)}
             />
             {errorMessage && <Typography color="error">{errorMessage}</Typography>}
-                      {/* reCAPTCHA widget */}
-                      <ReCAPTCHA
-              sitekey="6LdoN0cqAAAAAPWjETt1VTDwItUxIWJdlXwvr2rk"  // Replace with your actual reCAPTCHA site key
-              onChange={handleCaptchaChange} // Handle the change event when user completes CAPTCHA
-            />
+
+            {/* reCAPTCHA and Google Sign-In Container */}
+            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 2 }}>
+              {/* reCAPTCHA widget */}
+              <ReCAPTCHA
+                sitekey="6LdoN0cqAAAAAPWjETt1VTDwItUxIWJdlXwvr2rk" // Replace with your actual reCAPTCHA site key
+                onChange={handleCaptchaChange} // Handle the change event when user completes CAPTCHA
+                style={{ marginBottom: '16px' }} // Add margin for spacing
+              />
+
+              {/* Google Sign-In Button */}
+              <GoogleSignIn />
+            </Box>
+
             <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
               {t('signInPage.button')}
             </Button>
 
             <Grid container>
-            <Grid item xs>
+              <Grid item xs>
                 {/* Add Forgot Password Link */}
                 <Link variant="body2" color="inherit" onClick={() => navigate('/forgot-password')} style={{ cursor: 'pointer' }}>
                   {t('signInPage.forgotPassword')}
@@ -115,7 +125,6 @@ export default function SignInPage() {
               </Grid>
             </Grid>
           </Box>
-          <GoogleSignIn /> 
         </Box>
         <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>

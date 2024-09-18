@@ -1,5 +1,5 @@
 export interface SignInRequest {
     email: string;
     password: string;
-    captchaToken: string
+    captchaToken: string;
   }

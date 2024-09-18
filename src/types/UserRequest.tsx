@@ -3,4 +3,5 @@ export interface UserRequest {
     lastName: string;
     email: string;
     password: string;
+    captchaToken: string;
   }
