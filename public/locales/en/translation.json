@@ -235,7 +235,8 @@
             "button": "Sign In",
             "forgotPassword": "Forgot password?",
             "noAccount": "Don't have an account? Sign Up",
-            "errorMessage": "Invalid credentials. Please try again."
+            "errorMessage": "Invalid credentials. Please try again.",
+            "captchaErrorMessage": "Please select the captcha"
           },
           "signUpPage": {
             "title": "Sign Up",
@@ -256,6 +257,35 @@
             "companyLogoAlt": "Company Logo",
             "copyright": "Copyright © {{year}}",
             "companyName": "SecuritiesLab"
+          },
+          "forgotPasswordPage": {
+            "title": "Forgot Password",
+            "emailLabel": "Enter your email",
+            "buttonText": "Send OTP",
+            "successMessage": "OTP sent to your email. Please check your inbox.",
+            "errorMessage": "Error sending OTP. Please try again."
+          },
+          "resetPasswordPage": {
+            "title": "Reset Password",
+            "otpLabel": "Enter the OTP",
+            "newPasswordLabel": "New Password",
+            "buttonText": "Reset Password",
+            "successMessage": "Password reset successfully.",
+            "errorMessage": "Error resetting password. Please check your OTP and try again.",
+            "emailNotFoundError": "Email not found."
+          },
+          "emailInput": {
+            "emailLabel": "Enter your email",
+            "buttonText": "Send OTP",
+            "successMessage": "OTP sent to your email. Please check your inbox.",
+            "errorMessage": "Error sending OTP. Please try again."
+          },
+          "otpAndPassword": {
+            "otpLabel": "Enter the OTP",
+            "newPasswordLabel": "New Password",
+            "buttonText": "Reset Password",
+            "successMessage": "Password reset successfully.",
+            "errorMessage": "Error resetting password. Please check your OTP and try again."
           }
       
   }

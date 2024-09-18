@@ -177,8 +177,6 @@ export default function DashboardPage() {
   {/* Main List Items */}
   <Box sx={{ flexGrow: 1 }}>
     <MainListItems />
-    <Divider sx={{ my: 1 }} />
-    {secondaryListItems}
   </Box>
 
   {/* Bottom List Items (Settings and Sign Out) */}

@@ -7,6 +7,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 import { signupUser } from '../api/userApi';
 import { useTranslation } from 'react-i18next';
+import GoogleSignIn from '../components/Profile/GoogleSignIn';
+import ReCAPTCHA from "react-google-recaptcha";
 
 function Copyright(props: any) {
   const { t } = useTranslation();
@@ -37,6 +39,7 @@ export default function SignUpPage() {
   const [email, setEmail] = React.useState<string>('');
   const [showPassword, setShowPassword] = React.useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
+  const [captchaToken, setCaptchaToken] = React.useState<string | null>(null);
   const navigate = useNavigate();
 
   const validateEmail = (email: string): boolean => {
@@ -89,14 +92,27 @@ export default function SignUpPage() {
       setPasswordError(null);
     }
 
+    if (!captchaToken) {
+      setErrorMessage('Please complete the CAPTCHA');
+      valid = false
+      return;
+    }
+    else{
+      valid = true;
+    }
+
     if (valid) {
       try {
-        await signupUser({ firstName, lastName, email, password });
+        await signupUser({ firstName, lastName, email, password, captchaToken });
         navigate('/otp-verification', { state: { email } });
       } catch (error: any) {
         setErrorMessage(error.message);
       }
     }
+  };
+
+  const handleCaptchaChange = (token: string | null) => {
+    setCaptchaToken(token);
   };
 
   return (
@@ -215,6 +231,15 @@ export default function SignUpPage() {
                 />
               </Grid>
             </Grid>
+            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 2 }}>
+              <ReCAPTCHA
+                sitekey="6LdoN0cqAAAAAPWjETt1VTDwItUxIWJdlXwvr2rk" // Replace with your reCAPTCHA site key
+                onChange={handleCaptchaChange}
+                style={{ marginBottom: '16px' }} // Add margin for spacing
+              />
+
+              <GoogleSignIn />
+            </Box>
             <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
               {t('signUpPage.button')}
             </Button>
