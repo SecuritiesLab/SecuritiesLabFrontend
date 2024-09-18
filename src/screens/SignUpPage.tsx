@@ -7,6 +7,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 import { signupUser } from '../api/userApi';
 import { useTranslation } from 'react-i18next';
+import GoogleSignIn from '../components/Profile/GoogleSignIn';
 
 function Copyright(props: any) {
   const { t } = useTranslation();
@@ -226,6 +227,8 @@ export default function SignUpPage() {
                 </Link>
               </Grid>
             </Grid>
+
+            <GoogleSignIn /> 
           </Box>
         </Box>
         <Copyright sx={{ mt: 5 }} />
