@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Create an Axios instance
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost:8080/api',  // Your base URL
+  baseURL: 'https://securitieslab-c1cfead86190.herokuapp.com/api',  // Your base URL
   timeout: 5000,  // Optional timeout for requests
 });
 
