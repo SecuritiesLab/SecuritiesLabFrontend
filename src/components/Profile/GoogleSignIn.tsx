@@ -1,8 +1,10 @@
 import React from 'react';
 import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 import axiosInstance from '../../api/axiosConfig';  // Import your axios instance
+import { useNavigate } from 'react-router-dom';
 
 export default function GoogleSignIn() {
+  const navigate = useNavigate();
   const handleSuccess = (response: any) => {
     console.log("Google login success:", response);
     const token = response.credential; // Get the ID token from the response
@@ -16,7 +18,7 @@ export default function GoogleSignIn() {
           localStorage.setItem('token', res.data.token);
         }
         // Optionally, redirect to dashboard or other protected page
-        window.location.href = '/dashboard';  // Redirect to dashboard after successful login
+        navigate('/dashboard'); // Redirect to dashboard after successful login
       })
       .catch((error) => {
         console.error("Error sending token to backend:", error);

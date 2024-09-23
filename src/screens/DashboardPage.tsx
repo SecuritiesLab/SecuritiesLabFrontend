@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useEffect } from 'react';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiDrawer from '@mui/material/Drawer';
@@ -25,6 +26,7 @@ import Link from '@mui/material/Link';
 import Revenue from '../components/Dashboard/Revenue';
 import MonthlyRevenue from '../components/Dashboard/MonthlyRevenue';
 import AccountDropdown from '../components/Dashboard/AccountDropDown';
+import { useNavigate } from 'react-router-dom';
 
 function Copyright(props: any) {
   return (
@@ -97,9 +99,19 @@ const darkTheme = createTheme({
 
 export default function DashboardPage() {
   const [open, setOpen] = React.useState(true);
+  const navigate = useNavigate();
   const toggleDrawer = () => {
     setOpen(!open);
   };
+
+  
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      navigate('/signin'); // Redirect to login if no token is present
+    }
+  }, [navigate]);
+  
 
   return (
     <ThemeProvider theme={darkTheme}>
