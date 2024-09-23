@@ -22,9 +22,9 @@ export default function LogoCollection() {
 
   return (
     <Box id="logoCollection" sx={{ py: 4 }}>
-      <Typography component="p" variant="subtitle2" align="center" color="text.secondary" mb={2}>
+     {/* <Typography component="p" variant="subtitle2" align="center" color="text.secondary" mb={2}>
         {t('logoCollection.title')}
-      </Typography>
+  </Typography> */}
       <Grid container justifyContent="center" alignItems="center" spacing={2}>
         {amlogos.map((logo, index) => (
           <Grid item key={index}>
