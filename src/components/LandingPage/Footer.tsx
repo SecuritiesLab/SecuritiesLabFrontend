@@ -5,6 +5,7 @@ import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
 const logoStyle = {
   width: '140px',
@@ -14,6 +15,12 @@ const logoStyle = {
 
 export default function Footer() {
   const { t } = useTranslation();
+  const navigate = useNavigate(); // Using useNavigate for internal navigation
+
+  const handlePrivacyPolicyClick = () => {
+    navigate('/privacy-policy');
+  };
+
   return (
     <Box
       sx={{
@@ -41,17 +48,22 @@ export default function Footer() {
         }}
       >
         <Link href="https://www.linkedin.com/company/securities-lab" target="_blank" rel="noopener noreferrer">
-        <img
-              src={process.env.PUBLIC_URL + '/logo.png'}
-              style={logoStyle}
-              alt="logo of sitemark"
-            />
+          <img
+            src={process.env.PUBLIC_URL + '/logo.png'}
+            style={logoStyle}
+            alt="logo of sitemark"
+          />
         </Link>
         <Typography variant="body2" color="text.secondary" mt={1} sx={{ display: 'flex', alignItems: 'center' }}>
-        {t('footer.followUs')}{' '}
+          {t('footer.followUs')}{' '}
           <Link href="https://www.linkedin.com/company/securities-lab" target="_blank" rel="noopener noreferrer">
             <LinkedInIcon fontSize="small" sx={{ ml: 0.5 }} />
           </Link>
+        </Typography>
+
+        {/* Add a Privacy Policy Link */}
+        <Typography variant="body2" color="text.secondary" mt={1} sx={{ cursor: 'pointer' }} onClick={handlePrivacyPolicyClick}>
+          {t('footer.privacyPolicy')}
         </Typography>
       </Container>
     </Box>
