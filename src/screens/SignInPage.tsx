@@ -39,12 +39,22 @@ export default function SignInPage() {
       setErrorMessage(t('signInPage.captchaErrorMessage'));
       return;
     }
+    /*
+    if (email === 'admin@securitieslab.eu' && password === 'SLteam123!$&'){
+      navigate('/dashboard');
+    }
+    else{
+      setErrorMessage(t('signInPage.errorMessage'));
+    }
+    */
+    
     try {
       await signinUser({ email, password, captchaToken });
       navigate('/dashboard');
     } catch (error: any) {
       setErrorMessage(t('signInPage.errorMessage'));
     }
+    
   };
 
   // Function to handle CAPTCHA response
@@ -95,6 +105,7 @@ export default function SignInPage() {
             {errorMessage && <Typography color="error">{errorMessage}</Typography>}
 
             {/* reCAPTCHA and Google Sign-In Container */}
+            
             <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 2 }}>
               {/* reCAPTCHA widget */}
               <ReCAPTCHA
@@ -103,8 +114,8 @@ export default function SignInPage() {
                 style={{ marginBottom: '16px' }} // Add margin for spacing
               />
 
-              {/* Google Sign-In Button */}
-              <GoogleSignIn />
+              {/* Google Sign-In Button 
+              <GoogleSignIn />*/}
             </Box>
 
             <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
@@ -112,17 +123,21 @@ export default function SignInPage() {
             </Button>
 
             <Grid container>
+              {/* 
               <Grid item xs>
-                {/* Add Forgot Password Link */}
+                
                 <Link variant="body2" color="inherit" onClick={() => navigate('/forgot-password')} style={{ cursor: 'pointer' }}>
                   {t('signInPage.forgotPassword')}
                 </Link>
               </Grid>
+              */}
+              {/* 
               <Grid item>
                 <Link variant="body2" color="inherit" onClick={() => navigate('/signup')} style={{ cursor: 'pointer' }}>
                   {t('signInPage.noAccount')}
                 </Link>
               </Grid>
+               */}
             </Grid>
           </Box>
         </Box>

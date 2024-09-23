@@ -10,6 +10,8 @@ import DashboardPage from './screens/DashboardPage';
 import OtpVerification from './screens/OtpVerificationPage';
 import ForgotPasswordPage from './screens/LoginModule/ForgotPasswordPage';
 import ResetPasswordPage from './screens/LoginModule/ResetPasswordPage';
+import PrivacyPolicy from './components/PrivacyPolicy'
+import ProtectedRoute from './authentication/ProtectedRoute';
 import './i18n';
 
 function App() {
@@ -28,10 +30,11 @@ function App() {
         <Route path="/signup" element={<SignUpPage/>} />
         <Route path="/termsAndConditions" element={<TermsAndConditionsPage/>} />
         <Route path="/terms-and-conditions" element={<CompanyTermsPage/>} />
-        <Route path="/dashboard" element={<DashboardPage/>} />
+        <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>}  />
         <Route path="/otp-verification" element={<OtpVerification/>} />
         <Route path="/forgot-password" element={<ForgotPasswordPage/>} />
         <Route path="/reset-password" element={<ResetPasswordPage/>} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
       </Routes>
     </Router>
   );

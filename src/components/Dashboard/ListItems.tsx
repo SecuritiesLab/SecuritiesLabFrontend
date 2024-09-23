@@ -139,6 +139,7 @@ export const BottomListItems = () => {
   const handleSignOut = () => {
     // Sign out logic here (e.g., clearing auth tokens)
     localStorage.removeItem('token');
+    localStorage.clear()
     navigate('/'); // Navigate to the landing page after sign-out
   };
 
