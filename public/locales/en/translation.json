@@ -63,7 +63,8 @@
     },
     "footer": {
       "followUs": "Follow us on",
-      "li,nkedin": "LinkedIn"
+      "linkedin": "LinkedIn",
+      "privacyPolicy": "Privacy Policy"
     },
     "hero": {
         "titleLine1": "Embedded Wealth Management For",

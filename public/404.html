@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Page not found</title>
+    <meta http-equiv="refresh" content="0; url=/" />
+  </head>
+  <body>
+    <script type="text/javascript">
+      // Redirect all unknown routes to the root
+      var pathname = window.location.pathname;
+      window.location.href = "/" + "#" + pathname;
+    </script>
+  </body>
+</html>
