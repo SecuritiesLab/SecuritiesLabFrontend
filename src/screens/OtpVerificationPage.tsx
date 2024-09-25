@@ -26,7 +26,7 @@ function OtpVerification() {
       const otpData = { email, otp };
       const response = await verifyOtp(otpData);
       alert(response);
-      navigate('/dashboard');
+      navigate('/kyc');
     } catch (error) {
       setError(t('otpVerification.error'));
     }

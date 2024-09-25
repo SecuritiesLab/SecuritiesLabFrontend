@@ -7,8 +7,6 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useTranslation } from 'react-i18next';
 import GoogleSignIn from "../components/Profile/GoogleSignIn";
 import ReCAPTCHA from "react-google-recaptcha";
-//import SumsubKycWidget from '../components/KYC/SumSubKycWidget';
-import SumsubKyc from '../components/KYC/SumSubKyc';
 
 
 function Copyright(props: any) {
@@ -133,17 +131,15 @@ export default function SignInPage() {
                 </Link>
               </Grid>
               */}
-              {/* 
+              {
               <Grid item>
                 <Link variant="body2" color="inherit" onClick={() => navigate('/signup')} style={{ cursor: 'pointer' }}>
                   {t('signInPage.noAccount')}
                 </Link>
               </Grid>
-               */}
+               }
             </Grid>
           </Box>
-      
-          <SumsubKyc/>
         </Box>
         <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>

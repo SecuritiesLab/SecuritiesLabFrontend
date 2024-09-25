@@ -63,8 +63,10 @@
     ]
   },
   "devDependencies": {
+    "@types/crypto-js": "^4.2.2",
     "@types/react-google-recaptcha": "^2.1.9",
     "@types/react-helmet": "^6.1.11",
+    "crypto-js": "^4.2.0",
     "gh-pages": "^6.1.1"
   },
   "homepage": "https://securitieslab.eu/"
