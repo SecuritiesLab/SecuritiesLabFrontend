@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState }  from 'react';
 import { useNavigate } from 'react-router-dom';
 import { signinUser } from '../api/userApi';
 import { Avatar, Button, CssBaseline, TextField, Typography, Container, Box, Link, Grid } from '@mui/material';
@@ -7,6 +7,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useTranslation } from 'react-i18next';
 import GoogleSignIn from "../components/Profile/GoogleSignIn";
 import ReCAPTCHA from "react-google-recaptcha";
+import TwoFactorVerification from '../components/Profile/TwoFactorVerification';
+import { useEmail } from '../contexts/EmailContext';
 
 
 function Copyright(props: any) {
@@ -31,6 +33,8 @@ export default function SignInPage() {
   const [password, setPassword] = React.useState('');
   const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
   const [captchaToken, setCaptchaToken] = React.useState<string | null>(null);
+  const [twoFactorRequired, setTwoFactorRequired] = useState(false);  
+  const { email: emailFromContext, setEmail: setEmailFromContext } = useEmail();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -39,28 +43,31 @@ export default function SignInPage() {
       setErrorMessage(t('signInPage.captchaErrorMessage'));
       return;
     }
-    /*
-    if (email === 'admin@securitieslab.eu' && password === 'SLteam123!$&'){
-      navigate('/dashboard');
-    }
-    else{
-      setErrorMessage(t('signInPage.errorMessage'));
-    }
-    */
-    
+
     try {
-      await signinUser({ email, password, captchaToken });
-      navigate('/dashboard');
+      const result = await signinUser({ email, password, captchaToken });
+      setEmailFromContext(email)
+      if (result.twoFactorRequired) {
+        // 2FA is required, show the TwoFactorVerification component
+        setTwoFactorRequired(true);
+      } else {
+        // No 2FA required, proceed to dashboard
+        navigate('/dashboard');
+      }
     } catch (error: any) {
       setErrorMessage(t('signInPage.errorMessage'));
     }
-    
   };
 
   // Function to handle CAPTCHA response
   const handleCaptchaChange = (token: string | null) => {
     setCaptchaToken(token);
   };
+
+    // Callback when OTP is successfully verified
+    const handleOtpSuccess = () => {
+      navigate('/dashboard');  // Redirect to dashboard after successful OTP verification
+    };
 
   return (
     <ThemeProvider theme={darkTheme}>
@@ -77,6 +84,10 @@ export default function SignInPage() {
           <Typography component="h1" variant="h5">
             {t('signInPage.title')}
           </Typography>
+          {twoFactorRequired ? (
+            // Render TwoFactorVerification component if 2FA is required
+            <TwoFactorVerification email={email} onSuccess={handleOtpSuccess} />
+          ) : (
           <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
             <TextField
               margin="normal"
@@ -140,6 +151,7 @@ export default function SignInPage() {
                }
             </Grid>
           </Box>
+          )}
         </Box>
         <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>

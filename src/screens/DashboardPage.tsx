@@ -27,6 +27,7 @@ import Revenue from '../components/Dashboard/Revenue';
 import MonthlyRevenue from '../components/Dashboard/MonthlyRevenue';
 import AccountDropdown from '../components/Dashboard/AccountDropDown';
 import { useNavigate } from 'react-router-dom';
+import { useEmail } from '../contexts/EmailContext';
 
 function Copyright(props: any) {
   return (
@@ -99,6 +100,7 @@ const darkTheme = createTheme({
 
 export default function DashboardPage() {
   const [open, setOpen] = React.useState(true);
+  const { email: emailFromContext, setEmail: setEmailFromContext } = useEmail();
   const navigate = useNavigate();
   const toggleDrawer = () => {
     setOpen(!open);

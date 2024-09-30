@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import SumsubWebSdk from '@sumsub/websdk-react';
 import { getAccessToken } from '../../api/sumSubApi'; // Import your API
+import { useEmail } from '../../contexts/EmailContext';
 
 interface ApplicantStatusPayload {
   reviewResult?: {
@@ -13,11 +14,16 @@ const SumsubKycWidget: React.FC<{ onKycCompleted: () => void }> = ({ onKycComple
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const { email, setEmail } = useEmail();
 
   useEffect(() => {
     const fetchAccessToken = async () => {
       try {
-        const response = await getAccessToken('mohit', 'basic-kyc-level');
+        if (email == null){
+          console.log("email not present")
+          return
+        }
+        const response = await getAccessToken("SecuritiesLab", 'basic-kyc-level');
         setAccessToken(response.token);
         setIsLoading(false);
       } catch (error) {
@@ -53,6 +59,7 @@ const SumsubKycWidget: React.FC<{ onKycCompleted: () => void }> = ({ onKycComple
             if (typedPayload.reviewResult?.reviewAnswer === 'GREEN') {
               // KYC is completed successfully
               console.log('KYC completed successfully');
+              onKycCompleted();
             }
           }
         }}

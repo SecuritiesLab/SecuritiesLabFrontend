@@ -1,30 +1,36 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SumsubKycWidget from '../../components/KYC/SumSubKycWidget'; 
-import { Button, Box, Typography } from '@mui/material';
+import { Button, Box, Typography, CssBaseline } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axiosInstance from '../../api/axiosConfig'; // Import your Axios instance
+import { useEmail } from '../../contexts/EmailContext';
+
 
 const KycPage: React.FC = () => {
   const navigate = useNavigate();
   const [kycCompleted, setKycCompleted] = useState(false); // State to manage button text
+  const { email: emailFromContext, setEmail: setEmailFromContext } = useEmail();
 
   const handleSkipKyc = () => {
     if (kycCompleted) {
       // If KYC is completed, redirect to dashboard
-      navigate('/dashboard');
+      navigate('/2fa');
     } else {
       // If KYC is skipped, you can notify the backend here and then navigate
-      navigate('/dashboard');
+      navigate('/2fa');
     }
   };
 
   // Callback to call when KYC is completed
   const handleKycCompleted = () => {
     setKycCompleted(true);
-
+    if (emailFromContext == null){
+      console.log("email not present")
+      return
+    }
     // You can make a backend call here to notify that KYC is completed
-    axiosInstance.post('/api/kyc-completed', { status: 'completed' })
+    axiosInstance.post('/sumsub/kyc-completed', {email: emailFromContext, status: 'completed' })
       .then(response => console.log('Backend notified:', response.data))
       .catch(error => console.error('Error notifying backend:', error));
   };
@@ -37,6 +43,7 @@ const KycPage: React.FC = () => {
 
   return (
     <ThemeProvider theme={darkTheme}>
+        <CssBaseline />
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 4 }}>
         <Typography variant="h5" gutterBottom>
           Complete KYC Verification
