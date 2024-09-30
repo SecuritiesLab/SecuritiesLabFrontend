@@ -28,14 +28,17 @@ export const verifyOtp = async (otpData: OtpRequest) => {
   }
 };
 
-// Service to handle Sign-in
 export const signinUser = async (signinData: SignInRequest) => {
   try {
-    console.log(signinData)
     const response = await axiosInstance.post('/auth/signin', signinData);
-    // Store the JWT token in localStorage after successful login
+    console.log(response)
+    // If 2FA is required for the user
+    if (response.data.status = "2FA required") {
+      return { twoFactorRequired: true, email: signinData.email };
+    }
+    // Otherwise, store the JWT token in localStorage after successful login
     localStorage.setItem('token', response.data.token);  // Assuming the token is in response.data.token
-    return response.data; // Handle success
+    return { twoFactorRequired: false }; // No 2FA required, return success
   } catch (error: any) {
     if (error.response && error.response.status === 401) {
       throw new Error("Invalid email or password.");

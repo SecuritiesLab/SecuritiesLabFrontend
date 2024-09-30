@@ -13,6 +13,8 @@ import ResetPasswordPage from './screens/LoginModule/ResetPasswordPage';
 import PrivacyPolicy from './components/PrivacyPolicy'
 import ProtectedRoute from './authentication/ProtectedRoute';
 import './i18n';
+import KycPage from './screens/LoginModule/kycPage';
+import TwoFactorPage from './screens/LoginModule/ TwoFactorPage';
 
 function App() {
   const [mode, setMode] = React.useState('light');
@@ -35,6 +37,9 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPasswordPage/>} />
         <Route path="/reset-password" element={<ResetPasswordPage/>} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/kyc" element={<KycPage />} />
+        <Route path="/2fa" element={<TwoFactorPage />} />
+        
       </Routes>
     </Router>
   );

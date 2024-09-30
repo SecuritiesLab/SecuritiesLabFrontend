@@ -18,7 +18,7 @@ export default function GoogleSignIn() {
           localStorage.setItem('token', res.data.token);
         }
         // Optionally, redirect to dashboard or other protected page
-        navigate('/dashboard'); // Redirect to dashboard after successful login
+        navigate('/kyc'); // Redirect to dashboard after successful login
       })
       .catch((error) => {
         console.error("Error sending token to backend:", error);
