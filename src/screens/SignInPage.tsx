@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import GoogleSignIn from "../components/Profile/GoogleSignIn";
 import ReCAPTCHA from "react-google-recaptcha";
 import TwoFactorVerification from '../components/Profile/TwoFactorVerification';
-import { useEmail } from '../contexts/EmailContext';
+import { storeEncryptedData } from '../authentication/EncryptAndDecryptData';
 
 
 function Copyright(props: any) {
@@ -34,7 +34,6 @@ export default function SignInPage() {
   const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
   const [captchaToken, setCaptchaToken] = React.useState<string | null>(null);
   const [twoFactorRequired, setTwoFactorRequired] = useState(false);  
-  const { email: emailFromContext, setEmail: setEmailFromContext } = useEmail();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -46,7 +45,7 @@ export default function SignInPage() {
 
     try {
       const result = await signinUser({ email, password, captchaToken });
-      setEmailFromContext(email)
+      storeEncryptedData("email", email)
       if (result.twoFactorRequired) {
         // 2FA is required, show the TwoFactorVerification component
         setTwoFactorRequired(true);

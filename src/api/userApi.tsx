@@ -33,7 +33,7 @@ export const signinUser = async (signinData: SignInRequest) => {
     const response = await axiosInstance.post('/auth/signin', signinData);
     console.log(response)
     // If 2FA is required for the user
-    if (response.data.status = "2FA required") {
+    if (response.data.status === "2FA required") {
       return { twoFactorRequired: true, email: signinData.email };
     }
     // Otherwise, store the JWT token in localStorage after successful login

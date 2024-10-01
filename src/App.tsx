@@ -15,6 +15,8 @@ import ProtectedRoute from './authentication/ProtectedRoute';
 import './i18n';
 import KycPage from './screens/LoginModule/kycPage';
 import TwoFactorPage from './screens/LoginModule/ TwoFactorPage';
+import SettingsPage from './screens/Settings/SettingsPage';
+import Layout from './components/Layout';
 
 function App() {
   const [mode, setMode] = React.useState('light');
@@ -32,14 +34,17 @@ function App() {
         <Route path="/signup" element={<SignUpPage/>} />
         <Route path="/termsAndConditions" element={<TermsAndConditionsPage/>} />
         <Route path="/terms-and-conditions" element={<CompanyTermsPage/>} />
-        <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>}  />
         <Route path="/otp-verification" element={<OtpVerification/>} />
         <Route path="/forgot-password" element={<ForgotPasswordPage/>} />
         <Route path="/reset-password" element={<ResetPasswordPage/>} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/kyc" element={<KycPage />} />
         <Route path="/2fa" element={<TwoFactorPage />} />
-        
+      {/* Protect the Dashboard and Settings Pages with layout */}
+      <Route path="/" element={<ProtectedRoute><Layout /></ProtectedRoute>}>
+          <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/settings" element={<SettingsPage />} />
+        </Route>
       </Routes>
     </Router>
   );

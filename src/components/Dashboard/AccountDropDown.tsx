@@ -25,7 +25,7 @@ export default function AccountDropdown() {
         <Box>
           <Typography variant="subtitle1">MOHIT TEMBE</Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-            AMBR PAYMENTS UAB
+            XYZ PAYMENTS UAB
           </Typography>
         </Box>
         <ArrowDropDownIcon />

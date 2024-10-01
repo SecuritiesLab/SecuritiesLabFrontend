@@ -9,7 +9,7 @@ import { signupUser } from '../api/userApi';
 import { useTranslation } from 'react-i18next';
 import GoogleSignIn from '../components/Profile/GoogleSignIn';
 import ReCAPTCHA from "react-google-recaptcha";
-import { useEmail } from '../contexts/EmailContext';
+import { storeEncryptedData } from '../authentication/EncryptAndDecryptData';
 
 function Copyright(props: any) {
   const { t } = useTranslation();
@@ -41,7 +41,6 @@ export default function SignUpPage() {
   const [showPassword, setShowPassword] = React.useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
   const [captchaToken, setCaptchaToken] = React.useState<string | null>(null);
-  const { email: emailFromContext, setEmail: setEmailFromContext } = useEmail();
   const navigate = useNavigate();
 
   const validateEmail = (email: string): boolean => {
@@ -106,7 +105,7 @@ export default function SignUpPage() {
     if (valid) {
       try {
         await signupUser({ firstName, lastName, email, password, captchaToken });
-        setEmailFromContext(email)
+        storeEncryptedData("email", email)
         navigate('/otp-verification', { state: { email } });
       } catch (error: any) {
         setErrorMessage(error.message);
