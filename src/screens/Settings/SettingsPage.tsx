@@ -4,6 +4,7 @@ import AccountSettings from '../../components/Settings/AccountSettings';
 import SecuritySettings from '../../components/Settings/SecuritySettings';
 import EntitySettings from '../../components/Settings/EntitySettings';
 import ApiSettings from '../../components/Settings/ApiSettings';
+import KYCSettings from '../../components/Settings/KYCSettings';
 
 const SettingsPage: React.FC = () => {
   const [selectedTab, setSelectedTab] = React.useState(0);
@@ -26,6 +27,7 @@ const SettingsPage: React.FC = () => {
         <Tab label="Security" />
         <Tab label="Entity" />
         <Tab label="API" />
+        <Tab label="KYC" />
       </Tabs>
 
       {/* Tab Panels */}
@@ -43,6 +45,9 @@ const SettingsPage: React.FC = () => {
 
       <TabPanel value={selectedTab} index={3}>
         <ApiSettings />
+      </TabPanel>
+      <TabPanel value={selectedTab} index={4}>
+        <KYCSettings />
       </TabPanel>
     </Box>
   );

@@ -1,8 +1,10 @@
 import React, { useState }  from 'react';
 import { useNavigate } from 'react-router-dom';
 import { signinUser } from '../api/userApi';
-import { Avatar, Button, CssBaseline, TextField, Typography, Container, Box, Link, Grid } from '@mui/material';
+import { Avatar, Button, CssBaseline, TextField, Typography, Container, Box, Link, Grid, IconButton, InputAdornment } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useTranslation } from 'react-i18next';
 import GoogleSignIn from "../components/Profile/GoogleSignIn";
@@ -34,6 +36,7 @@ export default function SignInPage() {
   const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
   const [captchaToken, setCaptchaToken] = React.useState<string | null>(null);
   const [twoFactorRequired, setTwoFactorRequired] = useState(false);  
+  const [showPassword, setShowPassword] = useState(false);  // State to toggle password visibility
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -47,26 +50,27 @@ export default function SignInPage() {
       const result = await signinUser({ email, password, captchaToken });
       storeEncryptedData("email", email)
       if (result.twoFactorRequired) {
-        // 2FA is required, show the TwoFactorVerification component
-        setTwoFactorRequired(true);
+        setTwoFactorRequired(true);  // 2FA is required, show the TwoFactorVerification component
       } else {
-        // No 2FA required, proceed to dashboard
-        navigate('/dashboard');
+        navigate('/dashboard');  // No 2FA required, proceed to dashboard
       }
     } catch (error: any) {
       setErrorMessage(t('signInPage.errorMessage'));
     }
   };
 
+  // Toggle password visibility
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
   // Function to handle CAPTCHA response
   const handleCaptchaChange = (token: string | null) => {
     setCaptchaToken(token);
   };
 
-    // Callback when OTP is successfully verified
-    const handleOtpSuccess = () => {
-      navigate('/dashboard');  // Redirect to dashboard after successful OTP verification
-    };
+  // Callback when OTP is successfully verified
+  const handleOtpSuccess = () => {
+    navigate('/dashboard');  // Redirect to dashboard after successful OTP verification
+  };
 
   return (
     <ThemeProvider theme={darkTheme}>
@@ -84,63 +88,72 @@ export default function SignInPage() {
             {t('signInPage.title')}
           </Typography>
           {twoFactorRequired ? (
-            // Render TwoFactorVerification component if 2FA is required
-            <TwoFactorVerification email={email} onSuccess={handleOtpSuccess} />
+            <TwoFactorVerification email={email} onSuccess={handleOtpSuccess} /> // Render TwoFactorVerification component if 2FA is required
           ) : (
-          <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label={t('signInPage.emailLabel')}
-              name="email"
-              autoComplete="email"
-              autoFocus
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label={t('signInPage.passwordLabel')}
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            {errorMessage && <Typography color="error">{errorMessage}</Typography>}
-
-            {/* reCAPTCHA and Google Sign-In Container */}
-            
-            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 2 }}>
-              {/* reCAPTCHA widget */}
-              <ReCAPTCHA
-                sitekey="6LdoN0cqAAAAAPWjETt1VTDwItUxIWJdlXwvr2rk" // Replace with your actual reCAPTCHA site key
-                onChange={handleCaptchaChange} // Handle the change event when user completes CAPTCHA
-                style={{ marginBottom: '16px' }} // Add margin for spacing
+            <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                label={t('signInPage.emailLabel')}
+                name="email"
+                autoComplete="email"
+                autoFocus
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label={t('signInPage.passwordLabel')}
+                type={showPassword ? 'text' : 'password'}  // Toggle between 'text' and 'password' based on showPassword
+                id="password"
+                autoComplete="current-password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        edge="end"
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+              />
+              {errorMessage && <Typography color="error">{errorMessage}</Typography>}
 
-              {/* Google Sign-In Button 
-              <GoogleSignIn />*/}
-            </Box>
+              <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 2 }}>
+                {/* reCAPTCHA widget */}
+                <ReCAPTCHA
+                  sitekey="6LdoN0cqAAAAAPWjETt1VTDwItUxIWJdlXwvr2rk"  // Replace with your actual reCAPTCHA site key
+                  onChange={handleCaptchaChange}
+                  style={{ marginBottom: '16px' }}
+                />
+   {/* Google Sign-In Button   
+              <GoogleSignIn />    */}        
+              </Box>
 
-            <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-              {t('signInPage.button')}
-            </Button>
+              <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+                {t('signInPage.button')}
+              </Button>
 
             <Grid container>
-              {/* 
+              
               <Grid item xs>
                 
                 <Link variant="body2" color="inherit" onClick={() => navigate('/forgot-password')} style={{ cursor: 'pointer' }}>
                   {t('signInPage.forgotPassword')}
                 </Link>
               </Grid>
-              */}
+              
               {
               <Grid item>
                 <Link variant="body2" color="inherit" onClick={() => navigate('/signup')} style={{ cursor: 'pointer' }}>

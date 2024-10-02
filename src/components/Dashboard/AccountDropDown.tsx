@@ -37,6 +37,9 @@ export default function AccountDropdown() {
           <Typography variant="body2">{t('accountDropdown.company')}</Typography>
         </MenuItem>
         <MenuItem>
+          <Typography variant="body2">ABC Payments UAB</Typography>
+        </MenuItem>
+        <MenuItem>
           <ListItemIcon><AddIcon fontSize="small" /></ListItemIcon>
           <Typography variant="body2">{t('accountDropdown.addCompany')}</Typography>
         </MenuItem>

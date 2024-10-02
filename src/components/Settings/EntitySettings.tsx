@@ -8,6 +8,7 @@ interface Company {
   address: string;
   registrationNumber: string;
   industry: string;
+  role: String;
 }
 
 const EntitySettings: React.FC = () => {
@@ -27,14 +28,16 @@ const EntitySettings: React.FC = () => {
           address: '123 Business St, Vilnius, Lithuania',
           registrationNumber: '123456789',
           industry: 'Fintech',
+          role: "Admin"
         },
         {
           id: 2,
-          name: 'Ambr Payments UAB',
+          name: 'ABC Payments UAB',
           kybStatus: 'Completed',
           address: '456 Finance Ave, Vilnius, Lithuania',
           registrationNumber: '987654321',
           industry: 'Payment Solutions',
+          role: "Admin"
         },
       ];
       setCompanies(dummyCompanies);
@@ -70,6 +73,7 @@ const EntitySettings: React.FC = () => {
       address: 'New Company Address',
       registrationNumber: '000000000',
       industry: 'New Industry',
+      role: "Admin"
     };
     setCompanies([...companies, newCompany]);
     setNewCompanyName('');
@@ -138,6 +142,9 @@ const EntitySettings: React.FC = () => {
             </Typography>
             <Typography variant="body1">
               <strong>KYB Status:</strong> {selectedCompany.kybStatus}
+            </Typography>
+            <Typography variant="body1">
+              <strong>Role:</strong> {selectedCompany.role}
             </Typography>
           </DialogContent>
         )}
