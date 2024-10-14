@@ -1,8 +1,9 @@
 import axios from 'axios';
 
+const apiUrl = process.env.REACT_APP_API_URL;
 // Create an Axios instance
 const axiosInstance = axios.create({
-  baseURL: 'https://securitieslab-c1cfead86190.herokuapp.com/api',  // Your base URL
+  baseURL: apiUrl,  // Your base URL
   timeout: 5000,  // Optional timeout for requests
 });
 

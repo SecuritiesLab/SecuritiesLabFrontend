@@ -10,9 +10,23 @@ interface OtpAndPasswordProps {
 export const OtpAndPassword: React.FC<OtpAndPasswordProps> = ({ onSubmit, successMessage, errorMessage }) => {
   const [otp, setOtp] = React.useState('');
   const [newPassword, setNewPassword] = React.useState('');
+  const [passwordError, setPasswordError] = React.useState<string | null>(null);
+
+  // Password validation function
+  const validatePassword = (password: string): boolean => {
+    return password.length >= 8 && /[A-Z]/.test(password) && /[a-z]/.test(password) && /[0-9]/.test(password) && /[!@#$%^&*]/.test(password);
+  };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    // Validate the password before submitting the form
+    if (!validatePassword(newPassword)) {
+      setPasswordError('Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character.');
+      return;
+    }
+
+    setPasswordError(null);  // Clear the password error if the validation passes
     onSubmit(parseInt(otp), newPassword);
   };
 
@@ -38,6 +52,8 @@ export const OtpAndPassword: React.FC<OtpAndPasswordProps> = ({ onSubmit, succes
         id="newPassword"
         value={newPassword}
         onChange={(e) => setNewPassword(e.target.value)}
+        error={!!passwordError}
+        helperText={passwordError}
       />
       {errorMessage && <Typography color="error">{errorMessage}</Typography>}
       {successMessage && <Typography color="primary">{successMessage}</Typography>}

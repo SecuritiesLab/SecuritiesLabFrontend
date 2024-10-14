@@ -25,7 +25,7 @@ export default function AccountDropdown() {
         <Box>
           <Typography variant="subtitle1">MOHIT TEMBE</Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-            AMBR PAYMENTS UAB
+            XYZ PAYMENTS UAB
           </Typography>
         </Box>
         <ArrowDropDownIcon />
@@ -35,6 +35,9 @@ export default function AccountDropdown() {
         <Typography variant="overline" sx={{ ml: 2, mt: 1 }}>{t('accountDropdown.entities')}</Typography>
         <MenuItem>
           <Typography variant="body2">{t('accountDropdown.company')}</Typography>
+        </MenuItem>
+        <MenuItem>
+          <Typography variant="body2">ABC Payments UAB</Typography>
         </MenuItem>
         <MenuItem>
           <ListItemIcon><AddIcon fontSize="small" /></ListItemIcon>

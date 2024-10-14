@@ -139,15 +139,20 @@ export const BottomListItems = () => {
   const handleSignOut = () => {
     // Sign out logic here (e.g., clearing auth tokens)
     localStorage.removeItem('token');
+    localStorage.removeItem('email')
     localStorage.clear()
     navigate('/'); // Navigate to the landing page after sign-out
+  };
+
+  const handleSettingsPress = () => {
+    navigate('/settings'); // Navigate to the landing page after sign-out
   };
 
   return (
     <React.Fragment>
       <Divider sx={{ mt: 4 }} /> {/* Add more space before the bottom buttons */}
       <Box sx={{ mt: 'auto', mb: 1 }}>
-        <ListItemButton>
+        <ListItemButton onClick={handleSettingsPress}>
           <ListItemIcon>
             <SettingsIcon />
           </ListItemIcon>

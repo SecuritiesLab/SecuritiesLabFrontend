@@ -4,14 +4,14 @@ import { useNavigate } from 'react-router-dom';
 import QRCodeDisplay from '../../components/Profile/QRCodeDisplay'; // Reusable QR code component
 import { generateTwoFactorSecret, verifyTwoFactorCode } from '../../api/twoFactorApi'
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useEmail } from '../../contexts/EmailContext';
+import { getDecryptedData } from '../../authentication/EncryptAndDecryptData';
 
 const TwoFactorPage: React.FC = () => {
   const [qrCodeUrl, setQrCodeUrl] = useState<string | null>(null);
   const [verificationCode, setVerificationCode] = useState<string | null>(null);
   const [isSetupComplete, setIsSetupComplete] = useState(false);
-  const { email, setEmail } = useEmail();
   const navigate = useNavigate();
+  const email = getDecryptedData("email")
 
   // Fetch the QR Code URL and secret
   useEffect(() => {
