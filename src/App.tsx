@@ -2,12 +2,12 @@ import React from 'react';
 import { HashRouter as Router, Route, Routes } from 'react-router-dom';
 import LandingPage from './screens/LandingPage';
 import TypeformPage from './screens/TypeformPage';
-import SignInPage from './screens/SignInPage';
-import SignUpPage from './screens/SignUpPage';
+import SignInPage from './screens/LoginModule/SignInPage';
+import SignUpPage from './screens/LoginModule/SignUpPage';
 import TermsAndConditionsPage from './screens/TermsAndConditionsPage';
-import CompanyTermsPage from './screens/CompanyTermsPage';
+import CompanyTermsPage from './screens/LoginModule/CompanyTermsPage';
 import DashboardPage from './screens/DashboardPage';
-import OtpVerification from './screens/OtpVerificationPage';
+import OtpVerification from './screens/LoginModule/OtpVerificationPage';
 import ForgotPasswordPage from './screens/LoginModule/ForgotPasswordPage';
 import ResetPasswordPage from './screens/LoginModule/ResetPasswordPage';
 import PrivacyPolicy from './components/PrivacyPolicy'

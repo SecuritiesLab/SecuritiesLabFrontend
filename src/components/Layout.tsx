@@ -19,6 +19,7 @@ import { MainListItems, BottomListItems } from '../components/Dashboard/ListItem
 import { Outlet } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import AccountDropdown from './Dashboard/AccountDropDown';
+import NotificationBadge from './Notifications/NotificationBadge';
 
 // Constants
 const drawerWidth = 240;
@@ -131,12 +132,8 @@ const Layout: React.FC = () => {
 
             {/* Account Dropdown */}
             <AccountDropdown />
-
-            <IconButton color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
+            <NotificationBadge />
+  
           </Toolbar>
         </AppBar>
 
