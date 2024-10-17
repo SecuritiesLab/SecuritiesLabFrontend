@@ -22,7 +22,7 @@ import { Link } from '@mui/material';
 export const MainListItems = () => {
   const [openBaaS, setOpenBaaS] = React.useState(false);
   const [openAnalytics, setOpenAnalytics] = React.useState(false);
-
+  const navigate = useNavigate();
   // Toggle BaaS Submenu
   const handleBaaSClick = () => {
     setOpenBaaS(!openBaaS);
@@ -32,9 +32,13 @@ export const MainListItems = () => {
     setOpenAnalytics(!openAnalytics);
   };
 
+  const handleHomeClick = () => {
+    navigate('/dashboard'); // Assuming /dashboard is the route for the dashboard
+  };
+
   return (
     <React.Fragment>
-      <ListItemButton>
+      <ListItemButton onClick={handleHomeClick}>
         <ListItemIcon>
           <AccountBalanceIcon />
         </ListItemIcon>
