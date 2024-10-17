@@ -35,8 +35,21 @@ export const signinUser = async (signinData: SignInRequest) => {
     const response = await axiosInstance.post('/auth/signin', signinData);
     console.log(response)
     // If 2FA is required for the user
+    if (response.data.status === "OTP required") {
+      // Redirect user to the OTP verification page
+      return { otpRequired: true, email: signinData.email };
+    }
+    
     if (response.data.status === "2FA required") {
       return { twoFactorRequired: true, email: signinData.email };
+    }
+
+    if (response.data.status === "Not Verified") {
+      // Redirect user to the OTP verification page
+      localStorage.setItem('userVerification',"false")
+    }
+    else{
+      localStorage.setItem('userVerification',"true")
     }
     // Otherwise, store the JWT token in localStorage after successful login
     localStorage.setItem('token', response.data.token);  // Assuming the token is in response.data.token

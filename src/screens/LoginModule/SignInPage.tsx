@@ -50,7 +50,10 @@ export default function SignInPage() {
     try {
       const result = await signinUser({ email, password, captchaToken });
       storeEncryptedData("email", email)
-      if (result.twoFactorRequired) {
+      if (result.otpRequired) {
+        // Redirect to OTP verification page
+        navigate('/otp-verification', { state: { email: result.email } });
+      } else if (result.twoFactorRequired) {
         setTwoFactorRequired(true);  // 2FA is required, show the TwoFactorVerification component
       } else {
         navigate('/dashboard');  // No 2FA required, proceed to dashboard

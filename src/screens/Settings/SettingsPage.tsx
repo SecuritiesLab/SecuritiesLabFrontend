@@ -8,6 +8,7 @@ import KYCSettings from '../../components/Settings/KYCSettings';
 
 const SettingsPage: React.FC = () => {
   const [selectedTab, setSelectedTab] = React.useState(0);
+  const isVerified = localStorage.getItem("userVerification")
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setSelectedTab(newValue);
@@ -39,13 +40,17 @@ const SettingsPage: React.FC = () => {
         <SecuritySettings />
       </TabPanel>
 
+      {isVerified == "true" &&
       <TabPanel value={selectedTab} index={2}>
         <EntitySettings />
       </TabPanel>
+      }
 
+      {isVerified == "true" &&
       <TabPanel value={selectedTab} index={3}>
         <ApiSettings />
-      </TabPanel>
+      </TabPanel>}
+
       <TabPanel value={selectedTab} index={4}>
         <KYCSettings />
       </TabPanel>

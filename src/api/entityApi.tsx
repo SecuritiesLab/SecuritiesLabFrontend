@@ -47,3 +47,12 @@ import axiosInstance from './axiosConfig';
     }
   };
   
+  export const createEntity = async (entityData: any, email: string | null) => {
+    try {
+      const response = await axiosInstance.post(`/entities?email=${email}`, entityData);
+      return response.data;
+    } catch (error) {
+      console.error('Error creating entity:', error);
+      throw error;
+    }
+  };
