@@ -50,6 +50,8 @@ export default function SignInPage() {
     try {
       const result = await signinUser({ email, password, captchaToken });
       storeEncryptedData("email", email)
+      console.log("sign in")
+      console.log(result)
       if (result.otpRequired) {
         // Redirect to OTP verification page
         navigate('/otp-verification', { state: { email: result.email } });
