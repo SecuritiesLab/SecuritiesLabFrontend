@@ -17,6 +17,11 @@ import KycPage from './screens/LoginModule/kycPage';
 import TwoFactorPage from './screens/LoginModule/ TwoFactorPage';
 import SettingsPage from './screens/Settings/SettingsPage';
 import Layout from './components/Layout';
+import BankAccountsPage from './screens/BankAccounts/BankAccountPage';
+import TreasurySafeguardingPage from './screens/TreasurySafeguarding/TreasurySafeguardingPage';
+import EarnedDepositsPage from './screens/Deposits/EarnedDepositPage';
+import ApiDocumentationPage from './screens/Deposits/ApiDocumentationPage';
+import DepositDetailsPage from './screens/Deposits/DepositDetailsPage';
 
 function App() {
   const [mode, setMode] = React.useState('light');
@@ -44,6 +49,11 @@ function App() {
       <Route path="/" element={<ProtectedRoute><Layout /></ProtectedRoute>}>
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/settings" element={<SettingsPage />} />
+          <Route path="/accounts" element={<BankAccountsPage />} />
+          <Route path="/safeguarding" element={<TreasurySafeguardingPage />} />
+          <Route path="/deposit" element={<EarnedDepositsPage />} />
+          <Route path="/documentation" element={<ApiDocumentationPage />} />
+          <Route path="/deposit/:id" element={<DepositDetailsPage />} />
         </Route>
       </Routes>
     </Router>

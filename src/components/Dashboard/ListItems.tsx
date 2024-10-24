@@ -21,6 +21,7 @@ import { Link } from '@mui/material';
 // Main menu items
 export const MainListItems = () => {
   const [openBaaS, setOpenBaaS] = React.useState(false);
+  const [openTreasury, setOpenTreasury] = React.useState(false);
   const [openAnalytics, setOpenAnalytics] = React.useState(false);
   const navigate = useNavigate();
   // Toggle BaaS Submenu
@@ -36,6 +37,23 @@ export const MainListItems = () => {
     navigate('/dashboard'); // Assuming /dashboard is the route for the dashboard
   };
 
+  const handleAccountClick = () => {
+    navigate('/accounts');
+  };
+
+  const handleTreasuryClick = () => {
+    setOpenTreasury(!openTreasury);
+    navigate('/safeguarding?tab=0');
+  };
+
+  const handleSafeguardingClick = () => {
+    navigate('/safeguarding?tab=1');
+  };
+
+  const handleDepositClick = () => {
+    navigate('/deposit');
+  };
+
   return (
     <React.Fragment>
       <ListItemButton onClick={handleHomeClick}>
@@ -45,7 +63,7 @@ export const MainListItems = () => {
         <ListItemText primary="Home" />
       </ListItemButton>
 
-      {/* BaaS Section */}
+{/*
       <ListItemButton onClick={handleBaaSClick}>
         <ListItemIcon>
           <LayersIcon />
@@ -54,7 +72,7 @@ export const MainListItems = () => {
         {openBaaS ? <ExpandLessIcon /> : <ExpandMoreIcon />}
       </ListItemButton>
       
-      {/* Nested Submenu for BaaS */}
+ 
       <Collapse in={openBaaS} timeout="auto" unmountOnExit>
         <ListItemButton sx={{ pl: 4 }}>
           <ListItemIcon>
@@ -69,7 +87,7 @@ export const MainListItems = () => {
           <ListItemText primary="Deposit as a Service (DaaS)" />
         </ListItemButton>
       </Collapse>
-              {/* Link to API Documentation */}
+          
               <ListItemButton sx={{ pl: 2 }}>
           <ListItemIcon>
             <MenuBookIcon />
@@ -84,7 +102,7 @@ export const MainListItems = () => {
           <ListItemText primary="Payments" />
         </ListItemButton>
 
-      {/* BaaS Section */}
+
       <ListItemButton onClick={handleAnalyticsClick}>
         <ListItemIcon>
           <LeaderboardIcon />
@@ -92,8 +110,7 @@ export const MainListItems = () => {
         <ListItemText primary="Analytics" />
         {openAnalytics ? <ExpandLessIcon /> : <ExpandMoreIcon />}
       </ListItemButton>
-      
-      {/* Nested Submenu for BaaS */}
+
       <Collapse in={openAnalytics} timeout="auto" unmountOnExit>
         <ListItemButton sx={{ pl: 4 }}>
           <ListItemIcon>
@@ -114,6 +131,35 @@ export const MainListItems = () => {
           <ListItemText primary="Reconciliation" />
         </ListItemButton>
       </Collapse>
+*/}
+   
+      <ListItemButton onClick={handleAccountClick}>
+        <ListItemIcon>
+          <AccountBalanceIcon />
+        </ListItemIcon>
+        <ListItemText primary="Accounts" />
+      </ListItemButton>
+      <ListItemButton onClick={handleTreasuryClick}>
+        <ListItemIcon>
+          <LayersIcon />
+        </ListItemIcon>
+        <ListItemText primary="Treasury" />
+        {openTreasury ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+      </ListItemButton>
+      <Collapse in={openTreasury} timeout="auto" unmountOnExit>
+        <ListItemButton sx={{ pl: 4 }} onClick={handleSafeguardingClick}>
+          <ListItemIcon>
+            <SecurityIcon />
+          </ListItemIcon>
+          <ListItemText primary="Safeguarding" />
+        </ListItemButton>
+      </Collapse>
+      <ListItemButton onClick={handleDepositClick}>
+        <ListItemIcon>
+          <AccountBalanceIcon />
+        </ListItemIcon>
+        <ListItemText primary="Deposit" />
+      </ListItemButton>
     </React.Fragment>
   );
 };

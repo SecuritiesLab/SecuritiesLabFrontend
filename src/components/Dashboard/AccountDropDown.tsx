@@ -36,12 +36,12 @@ export default function AccountDropdown() {
 
   const handleCompanySelect = (companyName: string) => {
     // Navigate to SettingsPage with Entity tab selected (index 2)
-    navigate('/settings', { state: { selectedTab: 2, companyName } });
+    navigate('/settings?tab=2');
     handleClose();
   };
 
   const handleAddCompany = () => {
-    navigate('/settings/entities/new');
+    navigate('/settings?tab=2');
     handleClose();
   };
 
