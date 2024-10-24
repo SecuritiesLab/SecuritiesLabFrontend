@@ -34,7 +34,7 @@ const generateUniqueReference = () => {
 // Call backend to create requisition
 export async function createRequisition(accessToken: string, institutionId: string, agreementId: string) {
   const response = await axiosInstance.post(`/gocardless/createRequisition?accessToken=${accessToken}`, {
-    redirect: 'http://localhost:8080/accounts',
+    redirect: 'https://securitieslab.eu/accounts',
     institution_id: institutionId,
     reference: generateUniqueReference(),
     agreement: agreementId,
