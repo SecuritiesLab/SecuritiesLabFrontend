@@ -5,9 +5,11 @@ import { SignInRequest } from '../types/SignInRequest';
 import { ResetPasswordRequest } from '../types/ResetPasswordRequest';
 
 // Service to handle signup
-export const signupUser = async (userData: UserRequest) => {
+export const signupUser = async (userData: UserRequest, token?: string | null) => {
   try {
-    const response = await axiosInstance.post('/users/signup', userData);
+    const response = await axiosInstance.post('/users/signup', userData,{
+      params: token ? { token } : {} // Send token as a query parameter if available
+    });
     return response.data; // Handle success
   } catch (error: any) {
     if (error.response && error.response.status === 409) {
@@ -33,8 +35,21 @@ export const signinUser = async (signinData: SignInRequest) => {
     const response = await axiosInstance.post('/auth/signin', signinData);
     console.log(response)
     // If 2FA is required for the user
+    if (response.data.status === "OTP required") {
+      // Redirect user to the OTP verification page
+      return { otpRequired: true, email: signinData.email };
+    }
+    
     if (response.data.status === "2FA required") {
       return { twoFactorRequired: true, email: signinData.email };
+    }
+
+    if (response.data.status === "Not Verified") {
+      // Redirect user to the OTP verification page
+      localStorage.setItem('userVerification',"false")
+    }
+    else{
+      localStorage.setItem('userVerification',"true")
     }
     // Otherwise, store the JWT token in localStorage after successful login
     localStorage.setItem('token', response.data.token);  // Assuming the token is in response.data.token
@@ -66,5 +81,15 @@ export const resetPassword = async (resetPasswordRequest: ResetPasswordRequest) 
     return response.data;
   } catch (error) {
     throw new Error("Error resetting password. Please check your OTP and try again.");
+  }
+};
+
+export const fetchUserWithCompanies = async (email: string): Promise<{ userName: string; companyNames: string[] }> => {
+  try {
+    const response = await axiosInstance.get(`/users/user-companies?email=${email}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching user and companies:', error);
+    throw error;
   }
 };

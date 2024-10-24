@@ -8,6 +8,16 @@ function preventDefault(event: React.MouseEvent) {
   event.preventDefault();
 }
 
+// Function to format today's date in "10 October 2024" format
+function getFormattedDate() {
+  const today = new Date();
+  return today.toLocaleDateString('en-GB', { // Adjust locale if needed
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  });
+}
+
 export default function Balance() {
   const { t } = useTranslation();
   
@@ -15,9 +25,13 @@ export default function Balance() {
     <React.Fragment>
       <Title>{t('balance.title')}</Title>
       <Typography component="p" variant="h4">{t('balance.amount')}</Typography>
-      <Typography color="text.secondary" sx={{ flex: 1 }}>{t('balance.date')}</Typography>
+      <Typography color="text.secondary" sx={{ flex: 1 }}>
+        on {getFormattedDate()}
+      </Typography>
       <div>
-        <Link color="primary" href="#" onClick={preventDefault}>{t('balance.viewBalance')}</Link>
+        <Link color="primary" href="#" onClick={preventDefault}>
+          {t('balance.viewBalance')}
+        </Link>
       </div>
     </React.Fragment>
   );
