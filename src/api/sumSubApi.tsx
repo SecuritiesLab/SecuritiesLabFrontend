@@ -9,3 +9,6 @@ export const getAccessToken = async (userId: string,levelName: String) => {
     }
   };
   
+  export const fetchApplicantDetails = async (email: string | null) => {
+    return axiosInstance.post(`/sumsub/fetchApplicantDetails?email=${email}`);
+  };

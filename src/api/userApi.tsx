@@ -36,11 +36,12 @@ export const signinUser = async (signinData: SignInRequest) => {
     console.log(response)
     // If 2FA is required for the user
     if (response.data.status === "OTP required") {
-      // Redirect user to the OTP verification page
+      localStorage.setItem('token', response.data.token);  
       return { otpRequired: true, email: signinData.email };
     }
     
     if (response.data.status === "2FA required") {
+      localStorage.setItem('token', response.data.token);  
       return { twoFactorRequired: true, email: signinData.email };
     }
 
@@ -92,4 +93,10 @@ export const fetchUserWithCompanies = async (email: string): Promise<{ userName:
     console.error('Error fetching user and companies:', error);
     throw error;
   }
+};
+
+
+export const saveApplicantId = async (email: string | null, applicantId: string) => {
+  const response = await axiosInstance.put(`/users/applicant-id?email=${email}&applicantId=${applicantId}`);
+  return response.data;
 };

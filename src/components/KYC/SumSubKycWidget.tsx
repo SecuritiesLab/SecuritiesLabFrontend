@@ -1,20 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import SumsubWebSdk from '@sumsub/websdk-react';
-import { getAccessToken } from '../../api/sumSubApi'; // Import your API
+import { getAccessToken } from '../../api/sumSubApi';
+import { saveApplicantId } from '../../api/userApi';
 import { getDecryptedData } from '../../authentication/EncryptAndDecryptData';
 
-interface ApplicantStatusPayload {
-  reviewResult?: {
-    reviewAnswer: string;
-  };
-  // Add other properties of payload if necessary
+interface ApplicantLoadedPayload {
+  applicantId: string;
 }
 
 const SumsubKycWidget: React.FC<{ onKycCompleted: () => void }> = ({ onKycCompleted }) => {
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-
+  const email = getDecryptedData("email")
 
   useEffect(() => {
     const fetchAccessToken = async () => {
@@ -45,16 +43,29 @@ const SumsubKycWidget: React.FC<{ onKycCompleted: () => void }> = ({ onKycComple
         options={{
           addViewportTag: false
         }}
-        onMessage={(messageType, payload) => {
+        onMessage={async(messageType, payload) => {
           console.log('Sumsub message:', messageType, payload);
-        
+
           if (messageType === 'idCheck.onApplicantStatusChanged') {
             const typedPayload = payload as { reviewResult?: { reviewAnswer?: string } };
         
             if (typedPayload.reviewResult?.reviewAnswer === 'GREEN') {
-              // KYC is completed successfully
               console.log('KYC completed successfully');
               onKycCompleted();
+            }
+          }
+
+          // Capture applicantId when the applicant is loaded
+          if (messageType === 'idCheck.onApplicantLoaded') {
+            const applicantId = (payload as { applicantId: string }).applicantId;
+            console.log('Applicant ID:', applicantId);
+
+            // Send the applicantId to the backend
+            try {
+              await saveApplicantId(email, applicantId);
+              console.log('Applicant ID saved successfully');
+            } catch (error) {
+              console.error('Failed to save applicant ID', error);
             }
           }
         }}
