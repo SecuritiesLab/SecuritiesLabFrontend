@@ -23,6 +23,7 @@ import EarnedDepositsPage from './screens/Deposits/EarnedDepositPage';
 import ApiDocumentationPage from './screens/Deposits/ApiDocumentationPage';
 import DepositDetailsPage from './screens/Deposits/DepositDetailsPage';
 import RedirectPage from './screens/BankAccounts/RedirectPage';
+import CryptoWalletPage from './screens/Wallets/CryptoWallet';
 
 function App() {
   const [mode, setMode] = React.useState('light');
@@ -56,6 +57,7 @@ function App() {
           <Route path="/documentation" element={<ApiDocumentationPage />} />
           <Route path="/deposit/:id" element={<DepositDetailsPage />} />
           <Route path="/redirect" element={<RedirectPage />} />
+          <Route path="/wallet" element={<CryptoWalletPage />} />
         </Route>
       </Routes>
     </Router>

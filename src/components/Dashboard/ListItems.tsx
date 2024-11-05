@@ -54,6 +54,10 @@ export const MainListItems = () => {
     navigate('/deposit');
   };
 
+  const handleWalletClick = () => {
+    navigate('/wallet');
+  };
+
   return (
     <React.Fragment>
       <ListItemButton onClick={handleHomeClick}>
@@ -159,6 +163,12 @@ export const MainListItems = () => {
           <AccountBalanceIcon />
         </ListItemIcon>
         <ListItemText primary="Deposit" />
+      </ListItemButton>
+      <ListItemButton onClick={handleWalletClick}>
+        <ListItemIcon>
+          <AccountBalanceIcon />
+        </ListItemIcon>
+        <ListItemText primary="Wallet" />
       </ListItemButton>
     </React.Fragment>
   );
