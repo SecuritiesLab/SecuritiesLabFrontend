@@ -22,6 +22,7 @@ import TreasurySafeguardingPage from './screens/TreasurySafeguarding/TreasurySaf
 import EarnedDepositsPage from './screens/Deposits/EarnedDepositPage';
 import ApiDocumentationPage from './screens/Deposits/ApiDocumentationPage';
 import DepositDetailsPage from './screens/Deposits/DepositDetailsPage';
+import RedirectPage from './screens/BankAccounts/RedirectPage';
 
 function App() {
   const [mode, setMode] = React.useState('light');
@@ -54,6 +55,7 @@ function App() {
           <Route path="/deposit" element={<EarnedDepositsPage />} />
           <Route path="/documentation" element={<ApiDocumentationPage />} />
           <Route path="/deposit/:id" element={<DepositDetailsPage />} />
+          <Route path="/redirect" element={<RedirectPage />} />
         </Route>
       </Routes>
     </Router>

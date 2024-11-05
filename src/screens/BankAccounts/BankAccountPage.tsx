@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Card, CardContent, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton, TextField, MenuItem, Dialog, DialogTitle, DialogContent, Button, CircularProgress, Modal } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-import { createEndUserAgreement, createRequisition, getAccessToken, getBanks, redirectToBankAuth } from '../../api/gocardlessApi';
 import { ArrowDownward, ArrowUpward } from '@mui/icons-material';
+import AddBankAccount from '../../components/Accounts/AddBankAccount';
 
 // Dummy data for bank accounts
 const bankAccounts = [
@@ -89,44 +89,6 @@ const BankAccountsPage = () => {
     return `****${accountNumber.slice(-4)}`;
   };
 
-  // Function to handle adding a new account using GoCardless API
-  const handleAddAccount = async () => {
-    try {
-      setLoading(true);
-      // Step 1: Get access token
-      const accessToken = await getAccessToken();
-  
-      // Step 2: Get available banks
-      const banks = await getBanks(accessToken);
-      setBanks(banks); // Save banks to state
-      setOpenBankDialog(true); // Open dialog for bank selection
-      setLoading(false);
-    } catch (error) {
-      setLoading(false);
-      console.error('Error during Add Account flow:', error);
-    }
-  };
-
-  const handleBankSelection = async () => {
-    if (!selectedBank) return;
-
-    try {
-      // Step 3: Create end-user agreement
-      const accessToken = await getAccessToken(); // Get token again if needed
-      const agreement = await createEndUserAgreement(accessToken, selectedBank);
-      console.log('End-user agreement created:', agreement);
-
-      // Step 4: Create requisition and generate redirect link
-     const redirectLink = await createRequisition(accessToken, selectedBank, agreement.id);
-      console.log('Redirect URL:', redirectLink);
-
-      // Redirect user to bank authentication
-      redirectToBankAuth(redirectLink);
-    } catch (error) {
-      console.error('Error during bank authentication flow:', error);
-    }
-  };
-
     // Function to handle opening the modal
     const handleSendMoneyClick = () => {
       setSendMoneyModalOpen(true); // Open the modal when Send Money is clicked
@@ -137,6 +99,11 @@ const BankAccountsPage = () => {
       console.log(`Sending ${amount} to ${beneficiary} from account ID ${selectedBankId}`);
       setSendMoneyModalOpen(false); // Close the modal after submitting
     };
+
+    const handleAddAccountClick = () => {
+      setOpenBankDialog(true); // Open the AddBankAccount dialog
+    };
+  
 
   return (
     <Box sx={{ padding: 2 }}>
@@ -162,7 +129,7 @@ const BankAccountsPage = () => {
             marginRight: 2,
             cursor: 'pointer',
           }}
-          onClick={handleAddAccount}
+          onClick={handleAddAccountClick}
         >
           <CardContent>
             <IconButton>
@@ -173,6 +140,7 @@ const BankAccountsPage = () => {
             </Typography>
           </CardContent>
         </Card>
+        <AddBankAccount open={openBankDialog} onClose={() => setOpenBankDialog(false)} />
         {bankAccounts.map((account) => (
   <Card
     key={account.id}
@@ -307,47 +275,6 @@ const BankAccountsPage = () => {
           </TableBody>
         </Table>
       </TableContainer>
-
-      {/* Bank selection dialog */}
-      <Dialog open={openBankDialog} onClose={() => setOpenBankDialog(false)}>
-  <DialogTitle>Select Your Bank</DialogTitle>
-  <DialogContent>
-    {loading ? (
-      <CircularProgress />
-    ) : (
-      <Box sx={{ width: 400 }}> {/* Increased the width to 400px */}
-        <TextField
-          select
-          fullWidth
-          label="Choose a bank"
-          value={selectedBank || ''}
-          onChange={(e) => setSelectedBank(e.target.value)}
-          sx={{
-            marginBottom: 2,
-            fontSize: '1.2rem', // Larger font size for better visibility
-            '& .MuiOutlinedInput-root': {
-              fontSize: '1.2rem', // Increase font size of the dropdown
-            },
-          }}
-        >
-          {banks.map((bank: any) => (
-            <MenuItem key={bank.id} value={bank.id} sx={{ display: 'flex', alignItems: 'center' }}>
-              <img
-                src={bank.logo} // Ensure that 'logo' is available in the bank object
-                alt={bank.name}
-                style={{ width: '40px', height: '40px', marginRight: '10px' }} // Increased logo size
-              />
-              {bank.name}
-            </MenuItem>
-          ))}
-        </TextField>
-        <Button variant="contained" fullWidth onClick={handleBankSelection}>
-          Confirm Selection
-        </Button>
-      </Box>
-    )}
-  </DialogContent>
-</Dialog>
     </Box>
   );
 };
