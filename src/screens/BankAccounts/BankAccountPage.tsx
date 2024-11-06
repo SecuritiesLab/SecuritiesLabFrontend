@@ -1,8 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Card, CardContent, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton, TextField, MenuItem, Dialog, DialogTitle, DialogContent, Button, CircularProgress, Modal } from '@mui/material';
+import { Box, Card, CardContent, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton, TextField, MenuItem, Dialog, DialogTitle, DialogContent, Button, CircularProgress, Modal, FormControl,
+  InputLabel,Select, InputAdornment, Divider, DialogActions
+ } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import { ArrowDownward, ArrowUpward } from '@mui/icons-material';
 import AddBankAccount from '../../components/Accounts/AddBankAccount';
+import PersonIcon from '@mui/icons-material/Person';
+import EuroIcon from '@mui/icons-material/Euro';
+import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
+import AddBeneficiaryModal from '../../components/Accounts/AddBeneficiaryModal';
 
 // Dummy data for bank accounts
 const bankAccounts = [
@@ -42,6 +48,13 @@ const transactions = [
   { id: 25, bankId: 2, date: '2024-10-25', description: 'Return from Stock Investments', amount: '€50,000', type: 'Credit' }
 ];
 
+const initialBeneficiaries = [
+  { id: 1, name: 'John Doe', iban: 'DE89370400440532013000' },
+  { id: 2, name: 'Jane Smith', iban: 'GB29NWBK60161331926819' },
+];
+
+const receivingCurrencies = ['EUR', 'USD', 'GBP'];
+
 const BankAccountsPage = () => {
   const [selectedBankId, setSelectedBankId] = useState<number | null>(null);  // Allows both null and number
   const [filters, setFilters] = useState({ date: '', amount: '', type: '' }); // State for filters
@@ -54,7 +67,15 @@ const BankAccountsPage = () => {
   const [sendMoneyModalOpen, setSendMoneyModalOpen] = useState(false);  // Tracks modal visibility
   const [beneficiary, setBeneficiary] = useState('');  // Beneficiary name
   const [amount, setAmount] = useState(''); 
-
+  const [selectedBeneficiary, setSelectedBeneficiary] = useState('');
+  const [selectedAccount, setSelectedAccount] = useState('');
+  const [selectedCurrency, setSelectedCurrency] = useState('EUR');
+  const [reference, setReference] = useState('');
+  const todayDate = new Date().toISOString().split('T')[0];
+  const [beneficiaries, setBeneficiaries] = useState(initialBeneficiaries);
+  const [newBeneficiaryName, setNewBeneficiaryName] = useState('');
+  const [newBeneficiaryIBAN, setNewBeneficiaryIBAN] = useState('');
+  const [openAddBeneficiaryDialog, setOpenAddBeneficiaryDialog] = useState(false);
   // Filter transactions based on selected bank account and filters
   const filteredTransactions = transactions
     .filter((txn) => !selectedBankId || txn.bankId === selectedBankId)
@@ -103,43 +124,85 @@ const BankAccountsPage = () => {
     const handleAddAccountClick = () => {
       setOpenBankDialog(true); // Open the AddBankAccount dialog
     };
+
+    const getDisplayedBalance = () => {
+      if (selectedBankId) {
+        const account = bankAccounts.find((acc) => acc.id === selectedBankId);
+        return account ? account.balance : 0;
+      }
+      return bankAccounts.reduce((acc, bank) => acc + bank.balance, 0);
+    };
+
+    const handleAddBeneficiary = () => {
+      const newBeneficiary = {
+        id: beneficiaries.length + 1,
+        name: newBeneficiaryName,
+        iban: newBeneficiaryIBAN,
+      };
+      setBeneficiaries([...beneficiaries, newBeneficiary]);
+      setOpenAddBeneficiaryDialog(false);
+      setNewBeneficiaryName('');
+      setNewBeneficiaryIBAN('');
+    };
   
 
   return (
-    <Box sx={{ padding: 2 }}>
-      <Typography variant="h5" gutterBottom>
-        Bank Accounts
-      </Typography>
-
-      {/* Combined balance */}
-      <Typography variant="h6" sx={{ marginBottom: 2 }}>
-        Combined Balance: €{combinedBalance.toLocaleString()}
-      </Typography>
+    <Box sx={{ display: 'flex', minHeight: '50vh',flexDirection: { xs: 'column', lg: 'row' }, }}>
+    <Box sx={{ flex: 1, padding: 2, marginRight: { lg: '320px' }, mb: { xs: 3, lg: 0 }, width:'60vw'}}>
+    <Box sx={{ mb: 3 }}>
+  <Box display="flex" alignItems="center" sx={{ mb: 1 }}>
+    <AccountBalanceIcon sx={{ color: 'lightblue', fontSize: 32, mr: 1 }} />
+    <Typography variant="h5" sx={{ fontWeight: 'bold', color: 'lightblue' }}>
+      XYZ Payments UAB
+    </Typography>
+  </Box>
+  <Typography variant="subtitle1" sx={{ color: 'gray' }}>
+    Company Bank Accounts
+  </Typography>
+  <Divider sx={{ my: 2, backgroundColor: 'lightblue' }} />
+</Box>
 
       {/* Horizontally scrollable list of bank accounts */}
-      <Box sx={{ display: 'flex', overflowX: 'auto', marginBottom: 3 }}>
+      <Box sx={{  border: '1px solid #4a4a4a', borderRadius:2,  borderWidth:2, padding:3 ,display: 'flex', overflowX: 'auto', marginBottom: 4}}>
         {/* Card for adding a new account */}
         <Card
-          sx={{
-            minWidth: 150,
-            minHeight: 100,
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginRight: 2,
-            cursor: 'pointer',
-          }}
-          onClick={handleAddAccountClick}
-        >
-          <CardContent>
-            <IconButton>
-              <AddIcon fontSize="large" />
-            </IconButton>
-            <Typography variant="body1" align="center">
-              Add Account
-            </Typography>
-          </CardContent>
-        </Card>
+  sx={{
+    minWidth: 150,
+    minHeight: 100,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 2,
+    cursor: 'pointer',
+    backgroundColor: 'lightblue',
+    borderRadius: 2, // Optional, for a rounded look
+  }}
+  onClick={handleAddAccountClick}
+>
+  <CardContent
+    sx={{
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+    }}
+  >
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+      }}
+    >
+      <IconButton>
+        <AddIcon fontSize="large" />
+      </IconButton>
+      <Typography variant="body1" align="center">
+        Add Account
+      </Typography>
+    </Box>
+  </CardContent>
+</Card>
         <AddBankAccount open={openBankDialog} onClose={() => setOpenBankDialog(false)} />
         {bankAccounts.map((account) => (
   <Card
@@ -155,6 +218,7 @@ const BankAccountsPage = () => {
       flexDirection: 'column', // Stack logo on top of text
       alignItems: 'center', // Center both logo and text
       padding: 2,
+      boxShadow: selectedBankId === account.id ? '0 4px 10px rgba(0, 0, 0, 0.1)' : ''
     }}
     onClick={() => setSelectedBankId(selectedBankId === account.id ? null : account.id)}  // Toggle selection
   >
@@ -177,71 +241,8 @@ const BankAccountsPage = () => {
 ))}
       </Box>
 
-      {/* Show selected account details */}
-      {selectedBankId && (
-        <Box sx={{ marginBottom: 3 }}>
-          {bankAccounts
-            .filter((account) => account.id === selectedBankId)
-            .map((account) => (
-              <Box key={account.id}>
-                <Typography variant="body1">Account Number: {account.accountNumber}</Typography>
-                <Typography variant="body1">Account Type: {account.accountType}</Typography>
-                <Typography variant="body1">Balance: €{account.balance.toLocaleString()}</Typography>
-                <Button variant="contained" sx={{ mt: 2 }} onClick={handleSendMoneyClick}>
-                  Send Money
-                </Button>
-              </Box>
-            ))}
-        </Box>
-      )}
-
-      {/* Modal for Sending Money */}
-      <Modal open={sendMoneyModalOpen} onClose={() => setSendMoneyModalOpen(false)}>
-        <Box
-          sx={{
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            width: 400,
-            bgcolor: 'background.paper',
-            border: '2px solid #000',
-            boxShadow: 24,
-            p: 4,
-          }}
-        >
-          {/* Selected Bank Info */}
-          {selectedBankId && bankAccounts.filter((account) => account.id === selectedBankId).map((account) => (
-            <Box key={account.id} sx={{ marginBottom: 2 }}>
-              <Typography variant="h6">From: {account.name}</Typography>
-              <Typography variant="body2">Balance: €{account.balance.toLocaleString()}</Typography>
-            </Box>
-          ))}
-
-          {/* Beneficiary and Transfer Amount */}
-          <TextField
-            fullWidth
-            label="Beneficiary  IBAN"
-            value={beneficiary}
-            onChange={(e) => setBeneficiary(e.target.value)}
-            sx={{ marginBottom: 2 }}
-          />
-          <TextField
-            fullWidth
-            label="Amount"
-            type="number"
-            value={amount}
-            onChange={(e) => setAmount(e.target.value)}
-            sx={{ marginBottom: 2 }}
-          />
-
-          <Button variant="contained" fullWidth onClick={handleSendMoney}>
-            Confirm Transfer
-          </Button>
-        </Box>
-      </Modal>
-
-      {/* Transactions table */}
+      <Box sx={{ border: '1px solid #4a4a4a', borderWidth:2, borderRadius: 2, boxShadow: 3, padding: 3 }}>
+        <Typography variant="h6" sx={{ marginBottom: 2, color: 'lightblue' }}>Transaction History</Typography>
       <TableContainer component={Paper}>
         <Table>
           <TableHead>
@@ -275,7 +276,166 @@ const BankAccountsPage = () => {
           </TableBody>
         </Table>
       </TableContainer>
+      </Box>
     </Box>
+    <Box
+ sx={{
+  width: { xs: '100%', lg: '300px' },
+  padding: 1,
+  borderRadius: 2,
+  position: { lg: 'fixed' }, // Only fixed on large screens
+  top: { lg: '10%' },
+  right: { lg: '20px' },
+  backgroundColor: '#1e1e1e',
+  overflowY: { lg: 'auto' },
+  maxHeight: { lg: '80vh' },
+  marginTop: { xs: 3, lg: 0 },
+}}
+    >
+
+<Box sx={{ border: '1px solid #4a4a4a', borderRadius: 2, padding: 2, marginBottom: 3 }}>
+          <Typography variant="h6" sx={{ color: 'lightblue', marginBottom: 2 }}>Account Details</Typography>
+          <Typography variant="body2">
+            Balance: €{getDisplayedBalance().toLocaleString()}
+          </Typography>
+          {selectedBankId && (
+            <>
+              <Typography variant="body2">Account:  {bankAccounts.find((acc) => acc.id === selectedBankId)?.name}</Typography>
+              <Typography variant="body2">
+                Account Number: ****
+                {bankAccounts.find((acc) => acc.id === selectedBankId)?.accountNumber.slice(-4)}
+              </Typography>
+            </>
+          )}
+        </Box>
+
+        <Box sx={{ border: '1px solid #4a4a4a', borderRadius: 2, padding: 2, marginBottom: 3 }}>
+      <Typography variant="h6" sx={{ color: 'lightblue', marginBottom: 2 }}>Send Money</Typography>
+
+      {/* Payment Details Section */}
+      <Typography variant="subtitle1" sx={{ color: 'lightgray', marginBottom: 2 }}>Payment Details</Typography>
+      
+      <Box sx={{ marginBottom: 2 }}>
+        <TextField
+          fullWidth
+          select
+          label="From Account"
+          value={selectedAccount}
+          onChange={(e) => setSelectedAccount(e.target.value)}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <AccountBalanceIcon  sx={{color: 'lightblue'}} />
+              </InputAdornment>
+            ),
+          }}
+        >
+          {bankAccounts.map((account) => (
+            <MenuItem key={account.id} value={account.name}>
+              {account.name}
+            </MenuItem>
+          ))}
+        </TextField>
+      </Box>
+
+      <Box sx={{ marginBottom: 2 }}>
+        <TextField
+          fullWidth
+          label="Amount (€)"
+          type="number"
+          value={amount}
+          onChange={(e) => setAmount(e.target.value)}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <EuroIcon  sx={{color: 'lightblue'}}/>
+              </InputAdornment>
+            ),
+          }}
+        />
+      </Box>
+
+      {/* Receiver Section */}
+      <Typography variant="subtitle1" sx={{ color: 'lightgray', marginBottom: 2 }}>Receiver</Typography>
+      <Box sx={{ marginBottom: 2 }}>
+        <TextField
+          fullWidth
+          select
+          label="Beneficiary"
+          value={selectedBeneficiary}
+          onChange={(e) => setSelectedBeneficiary(e.target.value)}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <PersonIcon sx={{ color: 'lightblue' }} />
+              </InputAdornment>
+            ),
+          }}
+        >
+          {beneficiaries.map((beneficiary) => (
+            <MenuItem key={beneficiary.id} value={beneficiary.name}>
+              {beneficiary.name} - {beneficiary.iban}
+            </MenuItem>
+          ))}
+        </TextField>
+      </Box>
+
+      {/* Separate "Add Beneficiary" Button */}
+      <Button
+        variant="outlined"
+        startIcon={<AddIcon />}
+        onClick={() => setOpenAddBeneficiaryDialog(true)}
+        sx={{ marginBottom: 3, color: 'lightblue', borderColor: 'lightblue' }}
+      >
+        Add Beneficiary
+      </Button>
+
+      <AddBeneficiaryModal open={openAddBeneficiaryDialog} onClose={() => setOpenAddBeneficiaryDialog(false)} />
+
+
+      <Box sx={{ marginBottom: 2 }}>
+        <TextField
+          fullWidth
+          select
+          label="Receiving Currency"
+          value={selectedCurrency}
+          onChange={(e) => setSelectedCurrency(e.target.value)}
+        >
+          {receivingCurrencies.map((currency) => (
+            <MenuItem key={currency} value={currency}>
+              {currency}
+            </MenuItem>
+          ))}
+        </TextField>
+      </Box>
+
+      {/* Additional Details Section */}
+      <Typography variant="subtitle1" sx={{ color: 'lightgray', marginBottom: 2 }}>Additional Details</Typography>
+      
+      <Box sx={{ marginBottom: 2 }}>
+        <TextField
+          fullWidth
+          label="Reference"
+          value={reference}
+          onChange={(e) => setReference(e.target.value)}
+        />
+      </Box>
+
+      <Box sx={{ marginBottom: 3 }}>
+        <TextField
+          fullWidth
+          label="Payment Date"
+          value={todayDate}
+          disabled
+        />
+      </Box>
+
+      <Button variant="contained" fullWidth sx={{ backgroundColor: 'lightblue', color: '#000' }}>
+        Confirm Transfer
+      </Button>
+    </Box>
+    </Box>
+      </Box>
   );
 };
 

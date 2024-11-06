@@ -173,7 +173,7 @@ const Layout: React.FC = () => {
           }}
         >
           <Toolbar />
-          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+          <Container maxWidth={false} sx={{ mt: 4, mb: 4 }}>
             <Outlet /> {/* This allows different pages to be loaded here */}
           </Container>
         </Box>
