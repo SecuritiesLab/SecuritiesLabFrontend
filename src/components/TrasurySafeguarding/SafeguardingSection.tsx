@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { Box, Typography, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Card, Grid, Divider, CardContent, TextField, MenuItem } from '@mui/material';
 import { SectionProps } from '../../screens/TreasurySafeguarding/TreasurySafeguardingPage';
+import { saveAs } from 'file-saver';
+import Papa from 'papaparse';
+import { jsPDF } from 'jspdf';
 
 const currencyOptions = ['EUR', 'USD', 'GBP'];
 const monthOptions = [
@@ -29,6 +32,27 @@ const SafeguardingSection: React.FC<SectionProps> = ({ funds, handleInvestClick,
   const [selectedCurrency, setSelectedCurrency] = useState('EUR');
   const [selectedMonth, setSelectedMonth] = useState('');
   const [selectedYear, setSelectedYear] = useState('');
+
+  const downloadCSV = (data: Array<{ [key: string]: string | number }>, filename: string) => {
+    const csv = Papa.unparse(data);
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    saveAs(blob, filename);
+  };
+  
+  // PDF Download
+  const downloadPDF = (title: string, data: Array<{ [key: string]: string | number }>) => {
+    const doc = new jsPDF();
+    doc.setFontSize(18);
+    doc.text(title, 10, 10);
+    doc.setFontSize(12);
+  
+    data.forEach((item, index) => {
+      const y = 20 + index * 10;
+      doc.text(`${Object.values(item).join(' | ')}`, 10, y);
+    });
+  
+    doc.save(`${title}.pdf`);
+  };
 
   const orderHistory = [
     { id: 1, date: '2023-08-15', fundName: 'BlackRock ICS Euro Government Liquidity Fund', action: 'Invested', amount: 100000, currency: 'EUR' },
@@ -278,7 +302,14 @@ const SafeguardingSection: React.FC<SectionProps> = ({ funds, handleInvestClick,
         {/* Analytics */}
         <Grid item xs={12} md={6}>
           <Box sx={{ border: '1px solid #4a4a4a', borderRadius: 2, padding: 2, backgroundColor: '#1e1e1e', height: 500 }}>
-            <Typography variant="h6" sx={{ color: 'lightblue', marginBottom: 1 }}>Analytics</Typography>
+            <Typography variant="h6" sx={{ color: 'lightblue', display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
+              Analytics
+              <Box>
+              <Button onClick={() => downloadCSV([analyticsData], 'Analytics.csv')}>CSV</Button>
+              <Button onClick={() => downloadPDF('Analytics', [analyticsData])}>PDF</Button>
+              </Box>
+              </Typography>
+              
             <Divider sx={{ my: 1, backgroundColor: 'lightblue' }} />
             <Grid container spacing={2} sx={{ marginTop: 2 }}>
               <Grid item xs={6}>
@@ -322,7 +353,12 @@ const SafeguardingSection: React.FC<SectionProps> = ({ funds, handleInvestClick,
   {/* Order History */}
   <Grid item xs={12} md={6}>
     <Box sx={{ border: '1px solid #4a4a4a', borderRadius: 2, padding: 2 }}>
-      <Typography variant="h6" sx={{ color: 'lightblue', marginBottom: 1 }}>Order History</Typography>
+      <Typography variant="h6" sx={{ color: 'lightblue', display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>Order History
+      <Box>
+      <Button onClick={() => downloadCSV(filteredOrderHistory, 'Order_history.csv')}>CSV</Button>
+      <Button onClick={() => downloadPDF('Order_history', filteredOrderHistory)}>PDF</Button>
+      </Box>
+      </Typography>
       <Divider sx={{ my: 1, backgroundColor: 'lightblue' }} />
       <TableContainer component={Paper} sx={{ maxHeight: 300, overflowY: 'auto' }}>
         <Table stickyHeader>
@@ -352,7 +388,13 @@ const SafeguardingSection: React.FC<SectionProps> = ({ funds, handleInvestClick,
   {/* Yield History */}
   <Grid item xs={12} md={6}>
     <Box sx={{ border: '1px solid #4a4a4a', borderRadius: 2, padding: 2 }}>
-      <Typography variant="h6" sx={{ color: 'lightblue', marginBottom: 1 }}>Yield History</Typography>
+      <Typography variant="h6" sx={{ color: 'lightblue', display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
+        Yield History
+        <Box>
+      <Button onClick={() => downloadCSV(filteredYieldHistory, 'Yeild_history.csv')}>CSV</Button>
+      <Button onClick={() => downloadPDF('Yeild_history', filteredYieldHistory)}>PDF</Button>
+      </Box>
+      </Typography>
       <Divider sx={{ my: 1, backgroundColor: 'lightblue' }} />
       <TableContainer component={Paper} sx={{ maxHeight: 300, overflowY: 'auto' }}>
         <Table stickyHeader>

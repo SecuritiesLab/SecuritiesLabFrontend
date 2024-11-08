@@ -9,6 +9,9 @@ import PersonIcon from '@mui/icons-material/Person';
 import EuroIcon from '@mui/icons-material/Euro';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import AddBeneficiaryModal from '../../components/Accounts/AddBeneficiaryModal';
+import { saveAs } from 'file-saver';
+import Papa from 'papaparse';
+import { jsPDF } from 'jspdf';
 
 // Dummy data for bank accounts
 const bankAccounts = [
@@ -144,6 +147,28 @@ const BankAccountsPage = () => {
       setNewBeneficiaryName('');
       setNewBeneficiaryIBAN('');
     };
+
+
+    const downloadCSV = (data: Array<{ [key: string]: string | number }>, filename: string) => {
+      const csv = Papa.unparse(data);
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      saveAs(blob, filename);
+    };
+    
+    // PDF Download
+    const downloadPDF = (title: string, data: Array<{ [key: string]: string | number }>) => {
+      const doc = new jsPDF();
+      doc.setFontSize(18);
+      doc.text(title, 10, 10);
+      doc.setFontSize(12);
+    
+      data.forEach((item, index) => {
+        const y = 20 + index * 10;
+        doc.text(`${Object.values(item).join(' | ')}`, 10, y);
+      });
+    
+      doc.save(`${title}.pdf`);
+    };
   
 
   return (
@@ -242,7 +267,12 @@ const BankAccountsPage = () => {
       </Box>
 
       <Box sx={{ border: '1px solid #4a4a4a', borderWidth:2, borderRadius: 2, boxShadow: 3, padding: 3 }}>
-        <Typography variant="h6" sx={{ marginBottom: 2, color: 'lightblue' }}>Transaction History</Typography>
+        <Typography variant="h6" sx={{ color: 'lightblue', display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>Transaction History
+        <Box>
+                <Button onClick={() => downloadCSV(sortedTransactions, 'transactions.csv')}>CSV</Button>
+                <Button onClick={() => downloadPDF('Transactions', sortedTransactions)}>PDF</Button>
+              </Box>
+        </Typography>
       <TableContainer component={Paper}>
         <Table>
           <TableHead>

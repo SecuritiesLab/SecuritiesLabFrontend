@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Box, Typography, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Divider, Grid, MenuItem, Select, FormControl, InputLabel, Pagination } from '@mui/material';
+import { Box, Typography, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Divider, Grid, Pagination } from '@mui/material';
 import { useLocation } from 'react-router-dom';
-import { SelectChangeEvent } from '@mui/material';
-
+import { jsPDF } from 'jspdf';
+import Papa from 'papaparse';
+import { saveAs } from 'file-saver';
 
 const TOTAL_USERS_INVESTED = 10000;
 const generateRandomUserId = () => Math.floor(100000 + Math.random() * 900000);
@@ -34,7 +35,7 @@ const DepositDetailsPage = () => {
   const expectedEarnings = '€373,600';
   const totalUsersInvested = '10,000';
   const yieldGeneratedSoFar = '€100,000';
-  const earningsSinceInception = yieldGeneratedSoFar
+  const earningsSinceInception = yieldGeneratedSoFar;
   const earningsThisYear = '€150,000';        
   const earningsThisMonth = '€20,000';         
   const earningsToday = '€1,000';             
@@ -43,6 +44,43 @@ const DepositDetailsPage = () => {
     (currentPage - 1) * ITEMS_PER_PAGE,
     currentPage * ITEMS_PER_PAGE
   );
+
+  // Download as CSV
+  const downloadCSV = (data: unknown[] | Papa.UnparseObject<unknown>, filename: string | undefined) => {
+    const csv = Papa.unparse(data);
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    saveAs(blob, filename);
+  };
+
+  // Download as PDF
+  const downloadPDF = (title: string | string[], data: any[]) => {
+    const doc = new jsPDF();
+    doc.setFontSize(18);
+    doc.text(title, 10, 10);
+    doc.setFontSize(12);
+
+    data.forEach((item, index) => {
+      const y = 20 + index * 10;
+      doc.text(`${Object.values(item).join(' | ')}`, 10, y);
+    });
+
+    doc.save(`${title}.pdf`);
+  };
+
+  // Prepare data for Analytics, Historical Analytics, and Transaction Table downloads
+  const analyticsData = [
+    { Label: 'Average Yield', Value: averageYield },
+    { Label: 'Expected Earnings', Value: expectedEarnings },
+    { Label: 'Total Users Invested', Value: totalUsersInvested },
+    { Label: 'Yield Generated So Far', Value: yieldGeneratedSoFar },
+  ];
+
+  const historicalEarningsData = [
+    { Label: 'Earnings Since Inception', Value: earningsSinceInception },
+    { Label: 'Earnings This Year', Value: earningsThisYear },
+    { Label: 'Earnings This Month', Value: earningsThisMonth },
+    { Label: 'Earnings Today', Value: earningsToday },
+  ];
 
   return (
     <Box sx={{ padding: 4 }}>
@@ -67,85 +105,54 @@ const DepositDetailsPage = () => {
         </Grid>
 
         <Grid item xs={12} md={6}>
-          <Box
-            sx={{
-              border: '1px solid #4a4a4a',
-              borderRadius: 2,
-              padding: 3,
-              backgroundColor: '#1e1e1e',
-              height: 300,
-              overflowY: 'auto'
-            }}
-          >
-            <Typography variant="h6" sx={{ color: 'lightblue', mb: 1 }}>Analytics</Typography>
+          <Box sx={{ border: '1px solid #4a4a4a', borderRadius: 2, padding: 3, backgroundColor: '#1e1e1e', maxHeight: 300, overflowY: 'auto' }}>
+            <Typography variant="h6" sx={{ color: 'lightblue', display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
+              Analytics
+              <Box>
+                <Button onClick={() => downloadCSV(analyticsData, 'Analytics.csv')}>CSV</Button>
+                <Button onClick={() => downloadPDF('Analytics', analyticsData)}>PDF</Button>
+              </Box>
+            </Typography>
             <Divider sx={{ my: 1, backgroundColor: 'lightblue' }} />
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-              <Box sx={{ padding: 2, backgroundColor: '#2e2e2e', borderRadius: 1 }}>
-                <Typography variant="subtitle1" color="lightgray">Average Yield</Typography>
-                <Typography variant="h6" sx={{ color: 'lightblue' }}>{averageYield}</Typography>
-              </Box>
-              <Box sx={{ padding: 2, backgroundColor: '#2e2e2e', borderRadius: 1 }}>
-                <Typography variant="subtitle1" color="lightgray">Expected Earnings</Typography>
-                <Typography variant="h6" sx={{ color: 'lightblue' }}>{expectedEarnings}</Typography>
-              </Box>
-              <Box sx={{ padding: 2, backgroundColor: '#2e2e2e', borderRadius: 1 }}>
-                <Typography variant="subtitle1" color="lightgray">Total Users Invested</Typography>
-                <Typography variant="h6" sx={{ color: 'lightblue' }}>{totalUsersInvested}</Typography>
-              </Box>
-              <Box sx={{ padding: 2, backgroundColor: '#2e2e2e', borderRadius: 1 }}>
-                <Typography variant="subtitle1" color="lightgray">Yield Generated So Far</Typography>
-                <Typography variant="h6" sx={{ color: 'lightblue' }}>{yieldGeneratedSoFar}</Typography>
-              </Box>
+              {analyticsData.map((item, index) => (
+                <Box key={index} sx={{ padding: 2, backgroundColor: '#2e2e2e', borderRadius: 1 }}>
+                  <Typography variant="subtitle1" color="lightgray">{item.Label}</Typography>
+                  <Typography variant="h6" sx={{ color: 'lightblue' }}>{item.Value}</Typography>
+                </Box>
+              ))}
             </Box>
           </Box>
         </Grid>
       </Grid>
 
-      {/* Historical Analytics Box */}
-      <Box
-        sx={{
-          border: '1px solid #4a4a4a',
-          borderRadius: 2,
-          padding: 3,
-          backgroundColor: '#1e1e1e',
-          mt: 3,
-          mb: 3
-        }}
-      >
-        <Typography variant="h6" sx={{ color: 'lightblue', mb: 1 }}>Historical Earnings</Typography>
+      <Box sx={{ border: '1px solid #4a4a4a', borderRadius: 2, padding: 3, backgroundColor: '#1e1e1e', mt: 3, mb: 3 }}>
+        <Typography variant="h6" sx={{ color: 'lightblue', display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
+          Historical Earnings
+        <Box>
+                <Button onClick={() => downloadCSV(historicalEarningsData, 'historicalEarningsData.csv')}>CSV</Button>
+                <Button onClick={() => downloadPDF('historicalEarningsData', historicalEarningsData)}>PDF</Button>
+              </Box>
+        </Typography>
         <Divider sx={{ my: 1, backgroundColor: 'lightblue' }} />
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            padding: 2
-          }}
-        >
-          <Box sx={{ textAlign: 'center' }}>
-            <Typography variant="subtitle1" color="lightgray">Earnings Since Inception</Typography>
-            <Typography variant="h6" sx={{ color: 'lightblue' }}>{earningsSinceInception}</Typography>
-          </Box>
-          <Divider orientation="vertical" flexItem sx={{ backgroundColor: '#4a4a4a' }} />
-          <Box sx={{ textAlign: 'center' }}>
-            <Typography variant="subtitle1" color="lightgray">Earnings This Year</Typography>
-            <Typography variant="h6" sx={{ color: 'lightblue' }}>{earningsThisYear}</Typography>
-          </Box>
-          <Divider orientation="vertical" flexItem sx={{ backgroundColor: '#4a4a4a' }} />
-          <Box sx={{ textAlign: 'center' }}>
-            <Typography variant="subtitle1" color="lightgray">Earnings This Month</Typography>
-            <Typography variant="h6" sx={{ color: 'lightblue' }}>{earningsThisMonth}</Typography>
-          </Box>
-          <Divider orientation="vertical" flexItem sx={{ backgroundColor: '#4a4a4a' }} />
-          <Box sx={{ textAlign: 'center' }}>
-            <Typography variant="subtitle1" color="lightgray">Earnings Today</Typography>
-            <Typography variant="h6" sx={{ color: 'lightblue' }}>{earningsToday}</Typography>
-          </Box>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', padding: 2 }}>
+          {historicalEarningsData.map((item, index) => (
+            <Box key={index} sx={{ textAlign: 'center' }}>
+              <Typography variant="subtitle1" color="lightgray">{item.Label}</Typography>
+              <Typography variant="h6" sx={{ color: 'lightblue' }}>{item.Value}</Typography>
+            </Box>
+          ))}
         </Box>
       </Box>
 
-      {/* Transaction History */}
       <Box sx={{ border: '1px solid #4a4a4a', borderRadius: 2, padding: 3, backgroundColor: '#1e1e1e', mt: 3 }}>
-        <Typography variant="h6" sx={{ color: 'lightblue', mb: 1 }}>Transaction History</Typography>
+      <Typography variant="h6" sx={{ color: 'lightblue', display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
+        Transaction History
+        <Box>
+                <Button onClick={() => downloadCSV(dummyTransactions, 'Transactions.csv')}>CSV</Button>
+                <Button onClick={() => downloadPDF('Transactions', dummyTransactions)}>PDF</Button>
+              </Box>
+              </Typography>
         <Divider sx={{ my: 1, backgroundColor: 'lightblue' }} />
         <TableContainer component={Paper} sx={{ maxHeight: 300 }}>
           <Table stickyHeader>
@@ -170,12 +177,7 @@ const DepositDetailsPage = () => {
           </Table>
         </TableContainer>
         <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
-          <Pagination
-            count={Math.ceil(dummyTransactions.length / ITEMS_PER_PAGE)}
-            page={currentPage}
-            onChange={(e, page) => setCurrentPage(page)}
-            color="primary"
-          />
+          <Pagination count={Math.ceil(dummyTransactions.length / ITEMS_PER_PAGE)} page={currentPage} onChange={(e, page) => setCurrentPage(page)} color="primary" />
         </Box>
       </Box>
     </Box>

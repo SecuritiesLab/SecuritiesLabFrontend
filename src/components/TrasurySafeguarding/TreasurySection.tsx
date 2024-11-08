@@ -1,6 +1,9 @@
 import React from 'react';
 import { Box, Typography, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Card, Grid, Divider } from '@mui/material';
 import { SectionProps } from '../../screens/TreasurySafeguarding/TreasurySafeguardingPage';
+import { saveAs } from 'file-saver';
+import Papa from 'papaparse';
+import { jsPDF } from 'jspdf';
 
 const analyticsData = 
   {  totalAmountAvailable: "1,000,000€",
@@ -21,7 +24,26 @@ const orderHistory = [
   
 
 const TreasurySection: React.FC<SectionProps> = ({ funds, handleInvestClick, handleRedeemClick }) => {
-    console.log(funds)
+  const downloadCSV = (data: Array<{ [key: string]: string | number }>, filename: string) => {
+    const csv = Papa.unparse(data);
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    saveAs(blob, filename);
+  };
+  
+  // PDF Download
+  const downloadPDF = (title: string, data: Array<{ [key: string]: string | number }>) => {
+    const doc = new jsPDF();
+    doc.setFontSize(18);
+    doc.text(title, 10, 10);
+    doc.setFontSize(12);
+  
+    data.forEach((item, index) => {
+      const y = 20 + index * 10;
+      doc.text(`${Object.values(item).join(' | ')}`, 10, y);
+    });
+  
+    doc.save(`${title}.pdf`);
+  };
     return (
     <Box>
       {/* Funds List */}
@@ -76,7 +98,12 @@ const TreasurySection: React.FC<SectionProps> = ({ funds, handleInvestClick, han
         {/* Analytics */}
         <Grid item xs={12} md={6}>
           <Box sx={{ border: '1px solid #4a4a4a', borderRadius: 2, padding: 2, backgroundColor: '#1e1e1e', height: 500 }}>
-            <Typography variant="h6" sx={{ color: 'lightblue', marginBottom: 1 }}>Analytics</Typography>
+            <Typography variant="h6" sx={{ color: 'lightblue', display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>Analytics
+            <Box>
+                <Button onClick={() => downloadCSV([analyticsData], 'Analytics.csv')}>CSV</Button>
+                <Button onClick={() => downloadPDF('Analytics', [analyticsData])}>PDF</Button>
+              </Box>
+            </Typography>
             <Divider sx={{ my: 1, backgroundColor: 'lightblue' }} />
             <Grid container spacing={2} sx={{ marginTop: 2 }}>
               <Grid item xs={6}>
@@ -112,7 +139,13 @@ const TreasurySection: React.FC<SectionProps> = ({ funds, handleInvestClick, han
       <Grid container spacing={2} sx={{ marginTop: 3 }}>
         <Grid item xs={12} md={6}>
           <Box sx={{ border: '1px solid #4a4a4a', borderRadius: 2, padding: 2 }}>
-            <Typography variant="h6" sx={{ color: 'lightblue', marginBottom: 1 }}>Order History</Typography>
+            <Typography variant="h6" sx={{ color: 'lightblue', display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
+              Order History
+              <Box>
+                <Button onClick={() => downloadCSV(orderHistory, 'Order_history.csv')}>CSV</Button>
+                <Button onClick={() => downloadPDF('Order_history', orderHistory)}>PDF</Button>
+              </Box>
+              </Typography>
             <Divider sx={{ my: 1, backgroundColor: 'lightblue' }} />
             <TableContainer component={Paper}>
               <Table>
@@ -141,7 +174,12 @@ const TreasurySection: React.FC<SectionProps> = ({ funds, handleInvestClick, han
 
         <Grid item xs={12} md={6}>
           <Box sx={{ border: '1px solid #4a4a4a', borderRadius: 2, padding: 2 }}>
-            <Typography variant="h6" sx={{ color: 'lightblue', marginBottom: 1 }}>Yield History</Typography>
+            <Typography variant="h6" sx={{ color: 'lightblue', display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>Yield History
+            <Box>
+                <Button onClick={() => downloadCSV(yieldHistory, 'Yield_history.csv')}>CSV</Button>
+                <Button onClick={() => downloadPDF('Yield_history', yieldHistory)}>PDF</Button>
+              </Box>
+            </Typography>
             <Divider sx={{ my: 1, backgroundColor: 'lightblue' }} />
             <TableContainer component={Paper}>
               <Table>
