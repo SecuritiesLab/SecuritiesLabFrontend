@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { Box, Typography, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Modal, TextField, Snackbar, Alert, MenuItem, Select, FormControl, InputLabel } from '@mui/material';
+import { Box, Typography, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Modal, TextField, Snackbar, Alert, MenuItem, Select, FormControl, InputLabel,
+  Grid, Divider
+ } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 // Reusing the MMF funds as asset managers
@@ -25,8 +27,48 @@ const initialDeposits = [
     manager: 'Fidelity ILF - The Euro Fund',
     userType: 'Retail',
     yield: '4.5%',  // Direct yield value
-    pricingPlans: { Free: '50%', Plus: '60%', Pro: '80%' }, // Yield for each pricing plan
+    pricingPlans: { Free: '50%', Plus: '60%', Pro: '80%' },
   },
+  {
+    id: 2,
+    name: 'US Dollar Growth Fund',
+    amountInvested: '€27,000,000', // $30,000,000 * 0.90
+    totalEarnings: '€108,000',     // $120,000 * 0.90
+    manager: 'BlackRock ICS US Treasury Fund',
+    userType: 'Institutional',
+    yield: '4.2%',
+    pricingPlans: { Free: '55%', Plus: '65%', Pro: '85%' },
+  },
+  {
+    id: 3,
+    name: 'Sterling High Yield Account',
+    amountInvested: '€23,200,000', // £20,000,000 * 1.16
+    totalEarnings: '€98,600',      // £85,000 * 1.16
+    manager: 'Fidelity ILF - The Sterling Fund',
+    userType: 'Retail',
+    yield: '4.1%',
+    pricingPlans: { Free: '50%', Plus: '70%', Pro: '90%' },
+  },
+  {
+    id: 4,
+    name: 'Euro Corporate Liquidity Pool',
+    amountInvested: '€60,000,000',
+    totalEarnings: '€150,000',
+    manager: 'abrdn Liquidity Fund (Lux) - Euro Fund',
+    userType: 'Institutional',
+    yield: '4.0%',
+    pricingPlans: { Free: '52%', Plus: '68%', Pro: '88%' },
+  },
+  {
+    id: 5,
+    name: 'USD Institutional Treasury Reserve',
+    amountInvested: '€45,000,000', // $50,000,000 * 0.90
+    totalEarnings: '€117,000',     // $130,000 * 0.90
+    manager: 'BlackRock ICS US Treasury Fund',
+    userType: 'Institutional',
+    yield: '4.3%',
+    pricingPlans: { Free: '58%', Plus: '70%', Pro: '90%' },
+  }
 ];
 
 interface Deposit {
@@ -43,250 +85,101 @@ interface Deposit {
 const userTypes = ['Free', 'Plus', 'Pro']; // Available user types
 
 const BusinessDepositsPage = () => {
-  const [deposits, setDeposits] = useState<Deposit[]>(initialDeposits);
-  const [createModalOpen, setCreateModalOpen] = useState(false);
-  const [newDeposit, setNewDeposit] = useState({
-    name: '',
-    manager: '',
-    userType: '',
-    pricingPlans: {} as Record<string, string>, // Mapping of user types to yields
-  });
-  const [amountInvested, setAmountInvested] = useState('');
+  const [deposits, setDeposits] = useState(initialDeposits);
   const [showSuccess, setShowSuccess] = useState(false);
-  const [manageDeposit, setManageDeposit] = useState<Deposit | null>(null); // For managing existing deposits
   const navigate = useNavigate();
 
-  // Handle creating a new deposit product
-  const handleCreateDeposit = () => {
-    const managerDetails = assetManagers.find((am) => am.name === newDeposit.manager);
-    const newDepositEntry: Deposit = {
-      id: deposits.length + 1,
-      name: newDeposit.name,
-      amountInvested,
-      totalEarnings: '€0', // Initial earnings are zero
-      manager: newDeposit.manager,
-      userType: newDeposit.userType,
-      yield: managerDetails?.defaultYield || '',  // Use the default yield of the selected manager
-      pricingPlans: newDeposit.pricingPlans,  // Include the yield for each user type
-    };
+  const totalDepositAmount = deposits.reduce((acc, deposit) => {
+    const amount = parseFloat(deposit.amountInvested.replace(/[^0-9.-]+/g, ''));
+    return acc + amount;
+  }, 0);
 
-    setDeposits((prev) => [...prev, newDepositEntry]);
-    setCreateModalOpen(false);
-    setShowSuccess(true);
-  };
-
-  // Handle managing an existing deposit product
-  const handleManageDeposit = () => {
-    if (manageDeposit) {
-      setDeposits((prev) =>
-        prev.map((deposit) =>
-          deposit.id === manageDeposit.id ? { ...manageDeposit } : deposit
-        )
-      );
-      setManageDeposit(null);
-      setShowSuccess(true);
-    }
-  };
+  const averageYield = (deposits.reduce((acc, deposit) => acc + parseFloat(deposit.yield), 0) / deposits.length).toFixed(2);
+  const expectedEarnings = deposits.reduce((acc, deposit) => {
+    const earnings = parseFloat(deposit.totalEarnings.replace(/[^0-9.-]+/g, ''));
+    return acc + earnings;
+  }, 0);
 
   const viewDocumentation = () => {
     navigate("/documentation");
   };
 
-  const handleRowClick = (deposit: { id: any; }) => {
-    // Navigate to a new page and pass the deposit data
-    navigate(`/deposit/${deposit.id}`, { state: { deposit } });
-  };
-  
   return (
-    <Box sx={{ padding: 2 }}>
+    <Box sx={{ padding: 3 }}>
       <Typography variant="h5" gutterBottom>Business Deposit Products</Typography>
 
-      {/* Existing deposit products offered by the business */}
-      <Typography variant="h6" gutterBottom>Your Deposit Offerings</Typography>
-      <TableContainer component={Paper} sx={{ mb: 3 }}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Deposit Product Name</TableCell>
-              <TableCell>Total Amount Invested</TableCell>
-              <TableCell>Total Earnings</TableCell>
-              <TableCell>Asset Manager</TableCell>
-              <TableCell>Yield</TableCell>  {/* Changed to just Yield */}
-   
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {deposits.map((deposit) => (
-               <TableRow key={deposit.id} onClick={() => handleRowClick(deposit)} style={{ cursor: 'pointer' }}>
-                <TableCell>{deposit.name}</TableCell>
-                <TableCell>{deposit.amountInvested}</TableCell>
-                <TableCell>{deposit.totalEarnings}</TableCell>
-                <TableCell>{deposit.manager}</TableCell>
-                <TableCell>{deposit.yield}</TableCell> {/* Show single yield */}
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-
-      {/* Button to create new deposit product */}
-      <Button variant="contained" onClick={() => setCreateModalOpen(true)}>Create New Deposit Product</Button>
-
-      {/* Create Deposit Modal */}
-      <Modal open={createModalOpen} onClose={() => setCreateModalOpen(false)}>
-        <Box
-          sx={{
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            width: 500,
-            bgcolor: 'background.paper',
-            border: '2px solid #000',
-            boxShadow: 24,
-            p: 4,
-          }}
-        >
-          <Typography variant="h6" mb={2}>Create New Deposit Product</Typography>
-
-          {/* Deposit Product Name */}
-          <TextField
-            fullWidth
-            label="Deposit Product Name"
-            value={newDeposit.name}
-            onChange={(e) => setNewDeposit({ ...newDeposit, name: e.target.value })}
-            sx={{ mb: 2 }}
-          />
-
-          {/* Asset Manager Selection */}
-          <TextField
-            select
-            fullWidth
-            label="Asset Manager"
-            value={newDeposit.manager}
-            onChange={(e) => setNewDeposit({ ...newDeposit, manager: e.target.value })}
-            sx={{ mb: 2 }}
-          >
-            {assetManagers.map((manager) => (
-              <MenuItem key={manager.id} value={manager.name}>
-                {manager.name} (Default Yield: {manager.defaultYield})
-              </MenuItem>
-            ))}
-          </TextField>
-
-          {/* User Type and Yield */}
-          <FormControl fullWidth sx={{ mb: 2 }}>
-            <InputLabel>User Types and Yields</InputLabel>
-            <Select
-              multiple
-              value={Object.keys(newDeposit.pricingPlans)}
-              onChange={(e) => {
-                const selectedPlans = e.target.value as string[];
-                const updatedPlans = { ...newDeposit.pricingPlans };
-
-                // Add or remove user types as selected
-                userTypes.forEach((type) => {
-                  if (selectedPlans.includes(type)) {
-                    if (!updatedPlans[type]) updatedPlans[type] = ''; // Initialize yield field
-                  } else {
-                    delete updatedPlans[type];
-                  }
-                });
-                setNewDeposit({ ...newDeposit, pricingPlans: updatedPlans });
-              }}
-            >
-              {userTypes.map((type) => (
-                <MenuItem key={type} value={type}>
-                  {type}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-
-          {/* Yield Input for each Pricing Plan */}
-          {Object.keys(newDeposit.pricingPlans).map((plan) => (
-            <TextField
-              key={plan}
-              fullWidth
-              label={`${plan} Yield (%)`}
-              value={newDeposit.pricingPlans[plan]}
-              onChange={(e) =>
-                setNewDeposit({
-                  ...newDeposit,
-                  pricingPlans: { ...newDeposit.pricingPlans, [plan]: e.target.value },
-                })
-              }
-              sx={{ mb: 2 }}
-            />
-          ))}
-
-          {/* Investment Amount (optional, for tracking total amount invested) */}
-          <TextField
-            fullWidth
-            label="Initial Total Investment (optional)"
-            value={amountInvested}
-            onChange={(e) => setAmountInvested(e.target.value)}
-            sx={{ mb: 2 }}
-          />
-
-          <Button variant="contained" fullWidth onClick={handleCreateDeposit}>
-            Confirm Deposit Product
-          </Button>
-        </Box>
-      </Modal>
-
-      {/* Manage Deposit Modal */}
-      {manageDeposit && (
-        <Modal open={!!manageDeposit} onClose={() => setManageDeposit(null)}>
-          <Box
-            sx={{
-              position: 'absolute',
-              top: '50%',
-              left: '50%',
-              transform: 'translate(-50%, -50%)',
-              width: 500,
-              bgcolor: 'background.paper',
-              border: '2px solid #000',
-              boxShadow: 24,
-              p: 4,
-            }}
-          >
-            <Typography variant="h6" mb={2}>Manage Deposit Product</Typography>
-
-            {/* Deposit Product Name (Readonly) */}
-            <TextField
-              fullWidth
-              label="Deposit Product Name"
-              value={manageDeposit.name}
-              InputProps={{
-                readOnly: true,
-              }}
-              sx={{ mb: 2 }}
-            />
-
-            {/* Yield Input for each Pricing Plan */}
-            {Object.keys(manageDeposit.pricingPlans).map((plan) => (
-              <TextField
-                key={plan}
-                fullWidth
-                label={`${plan} Yield (%)`}
-                value={manageDeposit.pricingPlans[plan]}
-                onChange={(e) =>
-                  setManageDeposit({
-                    ...manageDeposit,
-                    pricingPlans: { ...manageDeposit.pricingPlans, [plan]: e.target.value },
-                  })
-                }
-                sx={{ mb: 2 }}
-              />
-            ))}
-
-            <Button variant="contained" fullWidth onClick={handleManageDeposit}>
-              Update Deposit Product
-            </Button>
+      <Grid container spacing={3}>
+        {/* Deposit Table */}
+        <Grid item xs={12} md={8}>
+          <Box sx={{ border: '1px solid #4a4a4a', borderRadius: 2, padding: 2, backgroundColor: '#1e1e1e', height: 500, overflowY: 'auto' }}>
+            <Typography variant="h6" sx={{ color: 'lightblue', marginBottom: 1 }}>Your Deposit Offerings</Typography>
+            <Divider sx={{ my: 1, backgroundColor: 'lightblue' }} />
+            <TableContainer component={Paper}>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Product Name</TableCell>
+                    <TableCell>Amount Invested</TableCell>
+                    <TableCell>Total Earnings</TableCell>
+                    <TableCell>Manager</TableCell>
+                    <TableCell>Yield</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {deposits.map((deposit) => (
+                    <TableRow key={deposit.id} style={{ cursor: 'pointer' }} onClick={() => navigate(`/deposit/${deposit.id}`, { state: { deposit } })}>
+                      <TableCell>{deposit.name}</TableCell>
+                      <TableCell>{deposit.amountInvested}</TableCell>
+                      <TableCell>{deposit.totalEarnings}</TableCell>
+                      <TableCell>{deposit.manager}</TableCell>
+                      <TableCell>{deposit.yield}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
           </Box>
-        </Modal>
-      )}
+        </Grid>
+
+        {/* Analytics Box */}
+        <Grid item xs={12} md={4}>
+          <Box sx={{ border: '1px solid #4a4a4a', borderRadius: 2, padding: 2, backgroundColor: '#1e1e1e', height: 500 }}>
+            <Typography variant="h6" sx={{ color: 'lightblue', marginBottom: 1 }}>Analytics</Typography>
+            <Divider sx={{ my: 1, backgroundColor: 'lightblue' }} />
+            <Grid container spacing={2} sx={{ marginTop: 2 }}>
+              <Grid item xs={12}>
+                <Box sx={{ padding: 2, backgroundColor: '#2e2e2e', borderRadius: 1 }}>
+                  <Typography variant="subtitle1" color="lightgray">Total Deposit Amount</Typography>
+                  <Typography variant="h6" sx={{ color: 'lightblue' }}>{`€${totalDepositAmount.toLocaleString()}`}</Typography>
+                </Box>
+              </Grid>
+              <Grid item xs={12}>
+                <Box sx={{ padding: 2, backgroundColor: '#2e2e2e', borderRadius: 1 }}>
+                  <Typography variant="subtitle1" color="lightgray">Average Yield</Typography>
+                  <Typography variant="h6" sx={{ color: 'lightblue' }}>{averageYield}%</Typography>
+                </Box>
+              </Grid>
+              <Grid item xs={12}>
+                <Box sx={{ padding: 2, backgroundColor: '#2e2e2e', borderRadius: 1 }}>
+                  <Typography variant="subtitle1" color="lightgray">Expected Earnings</Typography>
+                  <Typography variant="h6" sx={{ color: 'lightblue' }}>{`€${expectedEarnings.toLocaleString()}`}</Typography>
+                </Box>
+              </Grid>
+            </Grid>
+          </Box>
+        </Grid>
+      </Grid>
+
+      {/* API Access Section */}
+      <Box sx={{ marginTop: 4, padding: 2, border: '1px solid #4a4a4a', borderRadius: 2, backgroundColor: '#1e1e1e' }}>
+        <Typography variant="h6" sx={{ color: 'lightblue', marginBottom: 1 }}>API Access</Typography>
+        <Divider sx={{ my: 1, backgroundColor: 'lightblue' }} />
+        <Typography variant="body2" color="lightgray" sx={{ marginBottom: 2 }}>
+          Use our API to create and manage deposit products programmatically. This feature is useful for fintechs or
+          businesses automating their treasury management and safeguarding earnings.
+        </Typography>
+        <Button variant="contained" onClick={viewDocumentation}>View API Documentation</Button>
+      </Box>
 
       {/* Success Snackbar */}
       <Snackbar open={showSuccess} autoHideDuration={3000} onClose={() => setShowSuccess(false)}>
@@ -294,18 +187,6 @@ const BusinessDepositsPage = () => {
           Deposit product updated successfully!
         </Alert>
       </Snackbar>
-
-      {/* API Access Section */}
-      <Typography variant="h6" gutterBottom sx={{ mt: 4 }}>
-        API Access
-      </Typography>
-      <Typography variant="body2">
-        Use our API to create and manage deposit products programmatically. This feature is useful for fintechs or
-        businesses automating their treasury management and safeguarding earnings.
-      </Typography>
-      <Box sx={{ mt: 2 }}>
-        <Button variant="contained" onClick={viewDocumentation}>View API Documentation</Button>
-      </Box>
     </Box>
   );
 };
