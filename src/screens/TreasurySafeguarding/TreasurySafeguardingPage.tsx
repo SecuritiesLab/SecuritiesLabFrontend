@@ -189,6 +189,13 @@ const TreasurySafeguardingPage = () => {
   const [investModalOpen, setInvestModalOpen] = useState(false);
   const [redeemModalOpen, setRedeemModalOpen] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const location = useLocation();
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const tab = searchParams.get('tab');
+    setSelectedTab(tab ? parseInt(tab, 10) : 0); // Fallback to 0 if `tab` is not in the URL
+  }, [location.search]); 
 
 
   const handleInvestClick = (fund: Fund) => {

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ListItemButton, ListItemIcon, ListItemText, Divider, ListSubheader, Box } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Collapse from '@mui/material/Collapse';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import LayersIcon from '@mui/icons-material/Layers';
@@ -10,6 +10,7 @@ import MenuBookIcon from '@mui/icons-material/MenuBook';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import SettingsIcon from '@mui/icons-material/Settings';
+import HomeIcon from '@mui/icons-material/Home';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import PaymentsIcon from '@mui/icons-material/Payments';
 import LeaderboardIcon from '@mui/icons-material/Leaderboard';
@@ -17,29 +18,14 @@ import StormIcon from '@mui/icons-material/Storm';
 import TollIcon from '@mui/icons-material/Toll';
 import CommentBankIcon from '@mui/icons-material/CommentBank';
 import { Link } from '@mui/material';
+import SavingsIcon from '@mui/icons-material/Savings';
+import WalletIcon from '@mui/icons-material/Wallet';
 
 // Main menu items
 export const MainListItems = () => {
-  const [openBaaS, setOpenBaaS] = React.useState(false);
   const [openTreasury, setOpenTreasury] = React.useState(false);
-  const [openAnalytics, setOpenAnalytics] = React.useState(false);
   const navigate = useNavigate();
-  // Toggle BaaS Submenu
-  const handleBaaSClick = () => {
-    setOpenBaaS(!openBaaS);
-  };
-
-  const handleAnalyticsClick = () => {
-    setOpenAnalytics(!openAnalytics);
-  };
-
-  const handleHomeClick = () => {
-    navigate('/dashboard'); // Assuming /dashboard is the route for the dashboard
-  };
-
-  const handleAccountClick = () => {
-    navigate('/accounts');
-  };
+  const location = useLocation(); // Get the current path
 
   const handleTreasuryClick = () => {
     setOpenTreasury(!openTreasury);
@@ -50,123 +36,60 @@ export const MainListItems = () => {
     navigate('/safeguarding?tab=1');
   };
 
-  const handleDepositClick = () => {
-    navigate('/deposit');
+
+  const getSelectedStyle = (path: string) => {
+    // Exact match for specific paths to highlight only the active item
+    return location.pathname === path ? { color: 'lightblue', fontWeight: 'bold' } : {};
   };
 
-  const handleWalletClick = () => {
-    navigate('/wallet');
-  };
+  React.useEffect(() => {
+    // Automatically expand Treasury if current path matches any of its sub-items
+    setOpenTreasury(/^\/safeguarding/.test(location.pathname));
+  }, [location.pathname]);
 
   return (
     <React.Fragment>
-      <ListItemButton onClick={handleHomeClick}>
+      <ListItemButton onClick={() => navigate('/dashboard')} sx={getSelectedStyle('/dashboard')}>
         <ListItemIcon>
-          <AccountBalanceIcon />
+          <HomeIcon sx={getSelectedStyle('/dashboard')} />
         </ListItemIcon>
         <ListItemText primary="Home" />
       </ListItemButton>
 
-{/*
-      <ListItemButton onClick={handleBaaSClick}>
+      <ListItemButton onClick={() => navigate('/accounts')} sx={getSelectedStyle('/accounts')}>
         <ListItemIcon>
-          <LayersIcon />
-        </ListItemIcon>
-        <ListItemText primary="BaaS" />
-        {openBaaS ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-      </ListItemButton>
-      
- 
-      <Collapse in={openBaaS} timeout="auto" unmountOnExit>
-        <ListItemButton sx={{ pl: 4 }}>
-          <ListItemIcon>
-            <SecurityIcon />
-          </ListItemIcon>
-          <ListItemText primary="Safeguarding" />
-        </ListItemButton>
-        <ListItemButton sx={{ pl: 4 }}>
-          <ListItemIcon>
-            <PaymentIcon />
-          </ListItemIcon>
-          <ListItemText primary="Deposit as a Service (DaaS)" />
-        </ListItemButton>
-      </Collapse>
-          
-              <ListItemButton sx={{ pl: 2 }}>
-          <ListItemIcon>
-            <MenuBookIcon />
-          </ListItemIcon>
-          <ListItemText primary="API Documentation" />
-        </ListItemButton>
-
-        <ListItemButton  sx={{ pl: 2 }}>
-          <ListItemIcon>
-            <PaymentsIcon />
-          </ListItemIcon>
-          <ListItemText primary="Payments" />
-        </ListItemButton>
-
-
-      <ListItemButton onClick={handleAnalyticsClick}>
-        <ListItemIcon>
-          <LeaderboardIcon />
-        </ListItemIcon>
-        <ListItemText primary="Analytics" />
-        {openAnalytics ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-      </ListItemButton>
-
-      <Collapse in={openAnalytics} timeout="auto" unmountOnExit>
-        <ListItemButton sx={{ pl: 4 }}>
-          <ListItemIcon>
-            <StormIcon />
-          </ListItemIcon>
-          <ListItemText primary="Forecast" />
-        </ListItemButton>
-        <ListItemButton sx={{ pl: 4 }}>
-          <ListItemIcon>
-            <TollIcon />
-          </ListItemIcon>
-          <ListItemText primary="Risk" />
-        </ListItemButton>
-        <ListItemButton sx={{ pl: 4 }}>
-          <ListItemIcon>
-            <CommentBankIcon />
-          </ListItemIcon>
-          <ListItemText primary="Reconciliation" />
-        </ListItemButton>
-      </Collapse>
-*/}
-   
-      <ListItemButton onClick={handleAccountClick}>
-        <ListItemIcon>
-          <AccountBalanceIcon />
+          <AccountBalanceIcon sx={getSelectedStyle('/accounts')} />
         </ListItemIcon>
         <ListItemText primary="Accounts" />
       </ListItemButton>
-      <ListItemButton onClick={handleTreasuryClick}>
+
+       <ListItemButton onClick={handleTreasuryClick} sx={getSelectedStyle('/treasury')}>
         <ListItemIcon>
-          <LayersIcon />
+          <LayersIcon sx={getSelectedStyle('/treasury')} />
         </ListItemIcon>
         <ListItemText primary="Treasury" />
         {openTreasury ? <ExpandLessIcon /> : <ExpandMoreIcon />}
       </ListItemButton>
+
       <Collapse in={openTreasury} timeout="auto" unmountOnExit>
-        <ListItemButton sx={{ pl: 4 }} onClick={handleSafeguardingClick}>
+        <ListItemButton sx={{ pl: 4, ...getSelectedStyle('/safeguarding') }} onClick={handleSafeguardingClick}>
           <ListItemIcon>
-            <SecurityIcon />
+            <SecurityIcon sx={getSelectedStyle('/safeguarding')} />
           </ListItemIcon>
           <ListItemText primary="Safeguarding" />
         </ListItemButton>
       </Collapse>
-      <ListItemButton onClick={handleDepositClick}>
+
+      <ListItemButton onClick={() => navigate('/deposit')} sx={getSelectedStyle('/deposit')}>
         <ListItemIcon>
-          <AccountBalanceIcon />
+          <SavingsIcon sx={getSelectedStyle('/deposit')} />
         </ListItemIcon>
         <ListItemText primary="Deposit" />
       </ListItemButton>
-      <ListItemButton onClick={handleWalletClick}>
+
+      <ListItemButton onClick={() => navigate('/wallet')} sx={getSelectedStyle('/wallet')}>
         <ListItemIcon>
-          <AccountBalanceIcon />
+          <WalletIcon sx={getSelectedStyle('/wallet')} />
         </ListItemIcon>
         <ListItemText primary="Wallet" />
       </ListItemButton>

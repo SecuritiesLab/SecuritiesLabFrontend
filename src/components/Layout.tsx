@@ -17,7 +17,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import { Container } from '@mui/material';
 import { MainListItems, BottomListItems } from '../components/Dashboard/ListItems'; // Reuse these
 import { Outlet } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import AccountDropdown from './Dashboard/AccountDropDown';
 import NotificationBadge from './Notifications/NotificationBadge';
 
@@ -84,6 +84,7 @@ const darkTheme = createTheme({
 const Layout: React.FC = () => {
   const [open, setOpen] = React.useState(true);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const toggleDrawer = () => {
     setOpen(!open);
@@ -96,6 +97,31 @@ const Layout: React.FC = () => {
       navigate('/signin'); // Redirect to login if no token is present
     }
   }, [navigate]);
+
+  const searchParams = new URLSearchParams(location.search);
+  const tab = searchParams.get('tab');
+
+  const getTitle = () => {
+    if (location.pathname === '/safeguarding') {
+      return tab === '1' ? 'Safeguarding' : 'Treasury';
+    }
+    switch (location.pathname) {
+      case '/dashboard':
+        return 'Dashboard';
+      case '/accounts':
+        return 'Accounts';
+      case '/deposit':
+        return 'Earned Deposits';
+      case '/documentation':
+        return 'API Documentation';
+      case '/settings':
+        return 'Settings';
+      case '/wallet':
+        return 'Wallet';
+      default:
+        return 'Dashboard';
+    }
+  }
   
 
   return (
@@ -127,7 +153,7 @@ const Layout: React.FC = () => {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              Dashboard
+             { getTitle()}
             </Typography>
 
             {/* Account Dropdown */}
