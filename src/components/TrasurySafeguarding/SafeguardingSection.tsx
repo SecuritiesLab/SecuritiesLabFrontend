@@ -23,9 +23,9 @@ const monthOptions = [
 const yearOptions = ['2023', '2024']; // Add more years as needed
 
 const banks = [
-    { name: 'Banking Circle Master EURO', balance: '€3,000,000', currency : "EUR", account: '****3344', logo: 'https://cdn-logos.gocardless.com/ais/LHV_LHVBEE22.png' },
-    { name: 'Banking Circle Master USD', balance: '$1,000,000', currency : "USD", account: '****6655', logo: 'https://cdn-logos.gocardless.com/ais/LHV_LHVBEE22.png' },
-    { name: 'Banking Circle Master GBP', balance: '£1,500,000', currency: "GBP", account: '****8899', logo: 'https://cdn-logos.gocardless.com/ais/LHV_LHVBEE22.png' },
+    { name: 'Banking Circle Master EURO', balance: '€3,000,000', currency : "EUR", account: '****3344', logo: `${process.env.PUBLIC_URL}/logo/bankingCircle.png` },
+    { name: 'Banking Circle Master USD', balance: '$1,000,000', currency : "USD", account: '****6655', logo: `${process.env.PUBLIC_URL}/logo/bankingCircle.png` },
+    { name: 'Banking Circle Master GBP', balance: '£1,500,000', currency: "GBP", account: '****8899', logo: `${process.env.PUBLIC_URL}/logo/bankingCircle.png` },
 ]
 
 const SafeguardingSection: React.FC<SectionProps> = ({ funds, handleInvestClick, handleRedeemClick }) => {
@@ -197,7 +197,7 @@ const SafeguardingSection: React.FC<SectionProps> = ({ funds, handleInvestClick,
             }}
           >
             <Box sx={{ marginBottom: 2 }}>
-              <img src={account.logo} alt={`${account.name} logo`} style={{ width: 60, height: 60 }} />
+              <img src={account.logo} alt={`${account.name} logo`} style={{ width: 120, height: 60 }} />
             </Box>
             <CardContent sx={{ textAlign: 'center' }}>
               <Typography variant="h6">{account.name}</Typography>
