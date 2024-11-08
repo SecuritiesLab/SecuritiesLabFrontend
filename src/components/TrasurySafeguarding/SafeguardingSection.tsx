@@ -73,23 +73,24 @@ const SafeguardingSection: React.FC<SectionProps> = ({ funds, handleInvestClick,
     { id: 16, date: '2024-11-05', fundName: 'Fidelity ILF - The Euro Fund', action: 'Invested', amount: 250000, currency: 'EUR' },
   ];
   
+ 
   const yieldHistory = [
-    { id: 1, date: '2023-08-18', fundName: 'BlackRock ICS Euro Government Liquidity Fund', yield: '4.0%', currency: 'EUR' },
-    { id: 2, date: '2023-09-14', fundName: 'Fidelity ILF - The United States Dollar Fund', yield: '4.2%', currency: 'USD' },
-    { id: 3, date: '2023-10-20', fundName: 'Fidelity ILF - The Sterling Fund', yield: '3.9%', currency: 'GBP' },
-    { id: 4, date: '2023-11-10', fundName: 'abrdn Liquidity Fund (Lux) - Euro Fund', yield: '3.8%', currency: 'EUR' },
-    { id: 5, date: '2023-12-24', fundName: 'BlackRock ICS US Treasury Fund', yield: '4.1%', currency: 'USD' },
-    { id: 6, date: '2024-01-15', fundName: 'Fidelity ILF - The Euro Fund', yield: '4.5%', currency: 'EUR' },
-    { id: 7, date: '2024-02-12', fundName: 'Fidelity ILF - The United States Dollar Fund', yield: '4.3%', currency: 'USD' },
-    { id: 8, date: '2024-03-18', fundName: 'Fidelity ILF - The Sterling Fund', yield: '4.1%', currency: 'GBP' },
-    { id: 9, date: '2024-04-08', fundName: 'abrdn Liquidity Fund (Lux) - US Dollar Fund', yield: '3.8%', currency: 'USD' },
-    { id: 10, date: '2024-05-14', fundName: 'abrdn Liquidity Fund (Lux) - Sterling Fund', yield: '3.6%', currency: 'GBP' },
-    { id: 11, date: '2024-06-21', fundName: 'abrdn Liquidity Fund (Lux) - Euro Fund', yield: '3.9%', currency: 'EUR' },
-    { id: 12, date: '2024-07-27', fundName: 'BlackRock ICS US Treasury Fund', yield: '4.2%', currency: 'USD' },
-    { id: 13, date: '2024-08-22', fundName: 'BlackRock ICS Euro Government Liquidity Fund', yield: '4.0%', currency: 'EUR' },
-    { id: 14, date: '2024-09-13', fundName: 'BlackRock ICS Sterling Government Liquidity Fund', yield: '3.7%', currency: 'GBP' },
-    { id: 15, date: '2024-10-06', fundName: 'abrdn Liquidity Fund (Lux) - Euro Fund', yield: '3.8%', currency: 'EUR' },
-    { id: 16, date: '2024-11-10', fundName: 'Fidelity ILF - The Euro Fund', yield: '4.5%', currency: 'EUR' },
+    { id: 1, date: '2023-08-18', fundName: 'BlackRock ICS Euro Government Liquidity Fund', yieldAmount: '4,200 EUR', currency: 'EUR' },
+    { id: 2, date: '2023-09-14', fundName: 'Fidelity ILF - The United States Dollar Fund', yieldAmount: '6,500 USD', currency: 'USD' },
+    { id: 3, date: '2023-10-20', fundName: 'Fidelity ILF - The Sterling Fund', yieldAmount: '3,800 GBP', currency: 'GBP' },
+    { id: 4, date: '2023-11-10', fundName: 'abrdn Liquidity Fund (Lux) - Euro Fund', yieldAmount: '4,700 EUR', currency: 'EUR' },
+    { id: 5, date: '2023-12-24', fundName: 'BlackRock ICS US Treasury Fund', yieldAmount: '5,900 USD', currency: 'USD' },
+    { id: 6, date: '2024-01-15', fundName: 'Fidelity ILF - The Euro Fund', yieldAmount: '7,100 EUR', currency: 'EUR' },
+    { id: 7, date: '2024-02-12', fundName: 'Fidelity ILF - The United States Dollar Fund', yieldAmount: '6,200 USD', currency: 'USD' },
+    { id: 8, date: '2024-03-18', fundName: 'Fidelity ILF - The Sterling Fund', yieldAmount: '4,300 GBP', currency: 'GBP' },
+    { id: 9, date: '2024-04-08', fundName: 'abrdn Liquidity Fund (Lux) - US Dollar Fund', yieldAmount: '5,800 USD', currency: 'USD' },
+    { id: 10, date: '2024-05-14', fundName: 'abrdn Liquidity Fund (Lux) - Sterling Fund', yieldAmount: '3,600 GBP', currency: 'GBP' },
+    { id: 11, date: '2024-06-21', fundName: 'abrdn Liquidity Fund (Lux) - Euro Fund', yieldAmount: '4,500 EUR', currency: 'EUR' },
+    { id: 12, date: '2024-07-27', fundName: 'BlackRock ICS US Treasury Fund', yieldAmount: '6,300 USD', currency: 'USD' },
+    { id: 13, date: '2024-08-22', fundName: 'BlackRock ICS Euro Government Liquidity Fund', yieldAmount: '4,800 EUR', currency: 'EUR' },
+    { id: 14, date: '2024-09-13', fundName: 'BlackRock ICS Sterling Government Liquidity Fund', yieldAmount: '3,700 GBP', currency: 'GBP' },
+    { id: 15, date: '2024-10-06', fundName: 'abrdn Liquidity Fund (Lux) - Euro Fund', yieldAmount: '4,100 EUR', currency: 'EUR' },
+    { id: 16, date: '2024-11-10', fundName: 'Fidelity ILF - The Euro Fund', yieldAmount: '7,200 EUR', currency: 'EUR' },
   ];
 
   // Filtered data based on currency, month, and year
@@ -410,7 +411,7 @@ const SafeguardingSection: React.FC<SectionProps> = ({ funds, handleInvestClick,
               <TableRow key={yieldData.id}>
                 <TableCell>{yieldData.date}</TableCell>
                 <TableCell>{yieldData.fundName}</TableCell>
-                <TableCell>{yieldData.yield}</TableCell>
+                <TableCell>{yieldData.yieldAmount}</TableCell>
               </TableRow>
             ))}
           </TableBody>

@@ -26,6 +26,12 @@ const bankAccounts = [
     { id: 5, name: 'N26 Personal Vault', balance: 300000, currency: 'EUR',accountNumber: '0099887766', accountType: 'Savings', logo: 'https://storage.googleapis.com/gc-prd-institution_icons-production/DE/PNG/n26.png' },
   ];
 
+  const banksSafeguarding = [
+    { id:1,name: 'Banking Circle Master EURO', balance: 3000000, currency : "EUR", accountNumber: '****3344',accountType: 'Master', logo: `${process.env.PUBLIC_URL}/logo/bankingCircle.png` },
+    { id:2,name: 'Banking Circle Master USD', balance: 1000000, currency : "USD", accountNumber: '****6655', accountType: 'Master',logo: `${process.env.PUBLIC_URL}/logo/bankingCircle.png` },
+    { id: 3,name: 'Banking Circle Master GBP', balance: 1500000, currency: "GBP", accountNumber: '****8899', accountType: 'Master',logo: `${process.env.PUBLIC_URL}/logo/bankingCircle.png` },
+]
+
 
 
 export interface Fund {
@@ -36,6 +42,16 @@ export interface Fund {
   minInvestment: number;
   type: string;
   currency: string;
+  logo: string;
+}
+
+export interface Bank{
+  id: number;
+  name:string;
+  balance: number;
+  currency: string;
+  accountNumber: string;
+  accountType: string;
   logo: string;
 }
 
@@ -57,10 +73,11 @@ interface ModalProps {
   handleClose: () => void;
   selectedFund: any;
   handleSuccess: () => void;
+  banks: Bank[];
 }
 
 
-const InvestModal: React.FC<ModalProps> = ({ open, handleClose, selectedFund, handleSuccess }) => {
+const InvestModal: React.FC<ModalProps> = ({ open, handleClose, selectedFund, handleSuccess,banks }) => {
   const [selectedBank, setSelectedBank] = useState('');
   const [investmentAmount, setInvestmentAmount] = useState('');
 
@@ -101,7 +118,7 @@ const InvestModal: React.FC<ModalProps> = ({ open, handleClose, selectedFund, ha
       sx={{ mb: 2 }}
     >
       <MenuItem value="" disabled>Select a bank account</MenuItem>
-      {bankAccounts.map((account) => (
+      {banks.map((account) => (
         <MenuItem key={account.id} value={account.name}>
           {/* Container for logo and bank name */}
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -248,12 +265,14 @@ const TreasurySafeguardingPage = () => {
         handleClose={handleCloseModal}
         selectedFund={selectedFund}
         handleSuccess={handleSuccess}
+        banks= {selectedTab === 0? bankAccounts: banksSafeguarding }
       />
       <RedeemModal
         open={redeemModalOpen}
         handleClose={handleCloseModal}
         selectedFund={selectedFund}
         handleSuccess={handleSuccess}
+        banks= {selectedTab === 0? bankAccounts: banksSafeguarding }
       />
 
       {/* Success Snackbar */}

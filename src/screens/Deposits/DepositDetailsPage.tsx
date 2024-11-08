@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Box, Typography, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Divider, Grid, Pagination } from '@mui/material';
+import { Box, Typography, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Divider, Grid, Pagination, TextField, Modal } from '@mui/material';
 import { useLocation } from 'react-router-dom';
 import { jsPDF } from 'jspdf';
 import Papa from 'papaparse';
 import { saveAs } from 'file-saver';
+import ManageDepositModal from '../../components/Deposits/ManageDepositModal';
 
 const TOTAL_USERS_INVESTED = 10000;
 const generateRandomUserId = () => Math.floor(100000 + Math.random() * 900000);
@@ -23,6 +24,21 @@ const dummyTransactions = Array.from({ length: 100 }, (_, index) => ({
   amount: `${(Math.random() * 10000 + 1000).toFixed(0)} €`,
   date: generateRandomDate(),
 }));
+
+interface ManageDepositModalProps {
+  open: boolean;
+  onClose: () => void;
+  deposit: {
+    name: string;
+    amountInvested: string;
+    manager: string;
+    pricingPlans: {
+      Free: number;
+      Plus: number;
+      Pro: number;
+    };
+  };
+}
 
 const ITEMS_PER_PAGE = 10;
 
@@ -81,6 +97,8 @@ const DepositDetailsPage = () => {
     { Label: 'Earnings This Month', Value: earningsThisMonth },
     { Label: 'Earnings Today', Value: earningsToday },
   ];
+  
+
 
   return (
     <Box sx={{ padding: 4 }}>
@@ -180,6 +198,11 @@ const DepositDetailsPage = () => {
           <Pagination count={Math.ceil(dummyTransactions.length / ITEMS_PER_PAGE)} page={currentPage} onChange={(e, page) => setCurrentPage(page)} color="primary" />
         </Box>
       </Box>
+      <ManageDepositModal
+        open={showManageModal}
+        onClose={() => setShowManageModal(false)}
+        deposit={deposit}
+      />
     </Box>
   );
 };

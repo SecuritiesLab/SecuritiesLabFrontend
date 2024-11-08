@@ -18,8 +18,8 @@ const orderHistory = [
   ];
 
   const yieldHistory = [
-    { id: 1, date: '2024-10-15', fundName: 'abrdn Liquidity Fund (Lux) - US Dollar Fund', yield: '3.8%' },
-    { id: 2, date: '2024-10-17', fundName: 'Fidelity ILF - The Euro Fund', yield: '4.5%' },
+    { id: 1, date: '2024-10-15', fundName: 'abrdn Liquidity Fund (Lux) - US Dollar Fund', yield: '€7000' },
+    { id: 2, date: '2024-10-17', fundName: 'Fidelity ILF - The Euro Fund', yield: '€4500' },
   ];
   
 
