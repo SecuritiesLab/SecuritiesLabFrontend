@@ -24,7 +24,7 @@ export default function Balance() {
   return (
     <React.Fragment>
       <Title>{t('balance.title')}</Title>
-      <Typography component="p" variant="h4">{t('balance.amount')}</Typography>
+      <Typography component="p" variant="h4">€3,047,817</Typography>
       <Typography color="text.secondary" sx={{ flex: 1 }}>
         on {getFormattedDate()}
       </Typography>

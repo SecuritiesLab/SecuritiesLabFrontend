@@ -4,6 +4,7 @@ import { SectionProps } from '../../screens/TreasurySafeguarding/TreasurySafegua
 import { saveAs } from 'file-saver';
 import Papa from 'papaparse';
 import { jsPDF } from 'jspdf';
+import AnalyticsPieChart from '../Dashboard/SafeguardingAnalyticsPieChart';
 
 const currencyOptions = ['EUR', 'USD', 'GBP'];
 const monthOptions = [
@@ -23,9 +24,9 @@ const monthOptions = [
 const yearOptions = ['2023', '2024']; // Add more years as needed
 
 const banks = [
-    { name: 'Banking Circle Master EURO', balance: '€3,000,000', currency : "EUR", account: '****3344', logo: `${process.env.PUBLIC_URL}/logo/bankingCircle.png` },
-    { name: 'Banking Circle Master USD', balance: '$1,000,000', currency : "USD", account: '****6655', logo: `${process.env.PUBLIC_URL}/logo/bankingCircle.png` },
-    { name: 'Banking Circle Master GBP', balance: '£1,500,000', currency: "GBP", account: '****8899', logo: `${process.env.PUBLIC_URL}/logo/bankingCircle.png` },
+    { name: 'Banking Circle Master EURO', balance: '€3,000,000', currency : "EUR", account: '****3344', logo: `${process.env.PUBLIC_URL}/logo/BankingCircle.png` },
+    { name: 'Banking Circle Master USD', balance: '$1,000,000', currency : "USD", account: '****6655', logo: `${process.env.PUBLIC_URL}/logo/BankingCircle.png` },
+    { name: 'Banking Circle Master GBP', balance: '£1,500,000', currency: "GBP", account: '****8899', logo: `${process.env.PUBLIC_URL}/logo/BankingCircle.png` },
 ]
 
 const SafeguardingSection: React.FC<SectionProps> = ({ funds, handleInvestClick, handleRedeemClick }) => {
@@ -132,7 +133,9 @@ const SafeguardingSection: React.FC<SectionProps> = ({ funds, handleInvestClick,
       .filter((entry) => entry.action === 'Redeemed')
       .reduce((acc, entry) => acc + entry.amount, 0);
 
-    const totalYieldEarned = totalAmountInvested * 0.02
+    const totalYieldEarned = filteredYieldHistory
+    .filter((entry) => entry.currency === selectedCurrency)
+    .reduce((total, entry) => total + parseFloat(entry.yieldAmount.replace(/[^0-9.]/g, '')), 0);
 
     const totalAmountSafeguarded = totalAmountInvested + (totalAmountAvailable - totalAmountInvested)/2
 
@@ -149,65 +152,146 @@ const SafeguardingSection: React.FC<SectionProps> = ({ funds, handleInvestClick,
 
   const analyticsData = calculateAnalyticsData();
 
-  return (
-    <Box>
-      {/* Account Cards at Top */}
-      <Box
-        sx={{
-          display: 'flex',
-          overflowX: 'auto',
-          border: '1px solid #4a4a4a',
-          borderRadius: 2,
-          padding: 2,
-          backgroundColor: '#1e1e1e',
-          marginBottom: 3,
-        }}
-      >
-        <Card
-          sx={{
-            minWidth: 200,
-            minHeight: 160,
-            marginRight: 2,
-            cursor: 'pointer',
-            backgroundColor: 'lightblue',
-            color: '#000000',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)'
-          }}
-        >
-          <Typography variant="h6" color="black" textAlign='center'>+ Add Account</Typography>
-        </Card>
+  const calculateEarnings = () => {
+    const today = new Date();
+    const currentYear = today.getFullYear();
+    const currentMonth = today.getMonth() + 1; // Months are 0-based in JavaScript
+    const currentDate = today.toISOString().split('T')[0]; // Format: YYYY-MM-DD
+  
+    const earningsSinceInception = yieldHistory
+      .filter((entry) => entry.currency === selectedCurrency)
+      .reduce((total, entry) => total + parseFloat(entry.yieldAmount.replace(/[^0-9.]/g, '')), 0);
+  
+    const earningsThisYear = yieldHistory
+      .filter((entry) => {
+        const entryYear = new Date(entry.date).getFullYear();
+        return entry.currency === selectedCurrency && entryYear === currentYear;
+      })
+      .reduce((total, entry) => total + parseFloat(entry.yieldAmount.replace(/[^0-9.]/g, '')), 0);
+  
+    const earningsThisMonth = yieldHistory
+      .filter((entry) => {
+        const entryDate = new Date(entry.date);
+        const entryYear = entryDate.getFullYear();
+        const entryMonth = entryDate.getMonth() + 1;
+        return (
+          entry.currency === selectedCurrency &&
+          entryYear === currentYear &&
+          entryMonth === currentMonth
+        );
+      })
+      .reduce((total, entry) => total + parseFloat(entry.yieldAmount.replace(/[^0-9.]/g, '')), 0);
+  
+    const earningsToday = yieldHistory
+      .filter((entry) => entry.currency === selectedCurrency && entry.date === currentDate)
+      .reduce((total, entry) => total + parseFloat(entry.yieldAmount.replace(/[^0-9.]/g, '')), 0);
+  
+    // Return data in the required format
+    return [
+      { Label: 'Earnings Since Inception', Value: earningsSinceInception },
+      { Label: 'Earnings This Year', Value: earningsThisYear },
+      { Label: 'Earnings This Month', Value: earningsThisMonth },
+      { Label: 'Earnings Today', Value: earningsToday },
+    ];
+  };
+  
+  const historicalEarningsData = calculateEarnings();
 
-        {/* Dummy Accounts */}
-        {banks.map((account, index) => (
-          <Card
-            key={account.name}
-            sx={{
-              minWidth: 200,
-              minHeight: 160,
-              marginRight: 2,
-              backgroundColor: '#ffffff',
-              color: '#000000',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              padding: 2,
-              boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)'
-            }}
-          >
-            <Box sx={{ marginBottom: 2 }}>
-              <img src={account.logo} alt={`${account.name} logo`} style={{ width: 120, height: 60 }} />
-            </Box>
-            <CardContent sx={{ textAlign: 'center' }}>
-              <Typography variant="h6">{account.name}</Typography>
-              <Typography variant="body2">Balance: {account.balance}</Typography>
-              <Typography variant="body2">Account: {account.account}</Typography>
-            </CardContent>
-          </Card>
-        ))}
+  const paymentsDone = () => {
+    const bankForCurrency = banks.find(bank => bank.currency === selectedCurrency);
+    const totalAmountAvailable = bankForCurrency ? parseFloat(bankForCurrency.balance.replace(/[^0-9.-]+/g, "")) : 0;
+
+    return {
+      paymentsThisYear : Math.round(totalAmountAvailable * 0.33),
+      paymentsThisMonth: Math.round(totalAmountAvailable/12 * 0.33 ),
+      paymentsThisWeek: Math.round(totalAmountAvailable/84) ,
+      paymentsToday: Math.round(totalAmountAvailable/365 )
+    };
+  }
+
+  const paymentsDoneData = paymentsDone();
+
+  
+  return (
+    <Box sx={{ display: 'flex', minHeight: '50vh',flexDirection: { xs: 'column', lg: 'row' }, }}>
+    <Box sx={{ flex: 1, padding: 2, marginRight: { lg: '320px' }, mb: { xs: 3, lg: 0 }}}>
+    <Box
+  sx={{
+    border: '1px solid #4a4a4a',
+    borderRadius: 2,
+    borderWidth: 2,
+    padding: 3,
+    display: 'flex',
+    overflowX: 'auto', // Enables horizontal scroll
+    marginBottom: 4,
+    minWidth: 200,
+      minHeight: 200, // Ensure consistent height
+  }}
+>
+  {/* Add Account Card */}
+  <Card
+    sx={{
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginRight: 2,
+      cursor: 'pointer',
+      backgroundColor: 'lightblue',
+      borderRadius: 2,
+      minWidth: 200,
+      minHeight: 200, // Ensure consistent height
+      boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
+    }}
+  >
+    <Typography variant="h6" color="black" textAlign="center">
+      + Add Account
+    </Typography>
+  </Card>
+
+  {/* Bank Accounts */}
+  {banks.map((account) => (
+    <Card
+      key={account.name}
+      sx={{
+        minWidth: 200,
+        minHeight: 200, // Ensure consistent height
+        marginRight: 2,
+        cursor: 'pointer',
+        backgroundColor: '#ffffff',
+        color: '#000000',
+        display: 'flex',
+        flexDirection: 'column', // Stack logo on top of text
+        alignItems: 'center', // Center both logo and text
+        padding: 2,
+        borderRadius: 2,
+        boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', // Consistent shadow
+      }}
+    >
+      <Box sx={{ marginBottom: 1 }}>
+        <img
+          src={account.logo}
+          alt={`${account.name} logo`}
+          style={{
+            width: 60,
+            height: 60,
+            objectFit: 'contain',
+          }}
+        />
       </Box>
+      <CardContent sx={{ textAlign: 'center', padding: 0 }}>
+        <Typography variant="h6" noWrap>
+          {account.name}
+        </Typography>
+        <Typography variant="body2">
+          Balance: {account.balance}
+        </Typography>
+        <Typography variant="body2">
+          Account: {account.account}
+        </Typography>
+      </CardContent>
+    </Card>
+  ))}
+</Box>
 
       {/* Currency and Date Filters */}
       <Grid container spacing={2} sx={{ marginBottom: 2 }}>
@@ -291,7 +375,7 @@ const SafeguardingSection: React.FC<SectionProps> = ({ funds, handleInvestClick,
                   </Box>
 
                   <Box sx={{ minWidth: '30%' }}>
-                    <Button variant="contained" sx={{ marginRight: 1 }} onClick={() => handleInvestClick(fund)}>Invest</Button>
+                    <Button variant="contained" sx={{ marginRight: 1, marginBottom:1 }} onClick={() => handleInvestClick(fund)}>Invest</Button>
                     <Button variant="outlined" onClick={() => handleRedeemClick(fund)}>Redeem</Button>
                   </Box>
                 </Box>
@@ -302,7 +386,7 @@ const SafeguardingSection: React.FC<SectionProps> = ({ funds, handleInvestClick,
 
         {/* Analytics */}
         <Grid item xs={12} md={6}>
-          <Box sx={{ border: '1px solid #4a4a4a', borderRadius: 2, padding: 2, backgroundColor: '#1e1e1e', height: 500 }}>
+          <Box sx={{ border: '1px solid #4a4a4a', borderRadius: 2, padding: 2, backgroundColor: '#1e1e1e', height: 500, overflowY: 'auto' }}>
             <Typography variant="h6" sx={{ color: 'lightblue', display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
               Analytics
               <Box>
@@ -327,27 +411,69 @@ const SafeguardingSection: React.FC<SectionProps> = ({ funds, handleInvestClick,
               </Grid>
               <Grid item xs={6}>
                 <Box sx={{ padding: 2, backgroundColor: '#2e2e2e', borderRadius: 1 }}>
-                  <Typography variant="subtitle1" color="lightgray">Total Amount Redeemed</Typography>
-                  <Typography variant="h6" sx={{ color: 'lightblue' }}>{analyticsData.totalAmountRedeemed}</Typography>
-                </Box>
-              </Grid>
-              <Grid item xs={6}>
-                <Box sx={{ padding: 2, backgroundColor: '#2e2e2e', borderRadius: 1 }}>
                   <Typography variant="subtitle1" color="lightgray">Total Yield Earned</Typography>
                   <Typography variant="h6" sx={{ color: 'lightblue' }}>{analyticsData.totalYieldEarned}</Typography>
                 </Box>
               </Grid>
-
-              <Grid item xs={6}>
-                <Box sx={{ padding: 2, backgroundColor: '#2e2e2e', borderRadius: 1 }}>
-                  <Typography variant="subtitle1" color="lightgray">Total Amount that can be safeguarded</Typography>
-                  <Typography variant="h6" sx={{ color: 'lightblue' }}>{analyticsData.totalAmountSafeguarded}</Typography>
-                </Box>
-              </Grid>
             </Grid>
+            <Grid item xs={12} md={6} sx={{paddingTop: 5}}>
+  <AnalyticsPieChart
+    totalAmountAvailable={parseFloat(analyticsData.totalAmountAvailable.replace(/[^0-9.-]+/g, ''))}
+    totalAmountInvested={parseFloat(analyticsData.totalAmountInvested.replace(/[^0-9.-]+/g, ''))}
+    paymentsMade={paymentsDoneData.paymentsThisYear}
+  />
+</Grid>
           </Box>
         </Grid>
       </Grid>
+
+      <Box sx={{ border: '1px solid #4a4a4a', borderRadius: 2, padding: 3, backgroundColor: '#1e1e1e', mt: 3, mb: 3 }}>
+        <Typography variant="h6" sx={{ color: 'lightblue', display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
+          Payments Done
+        <Box>
+                <Button onClick={() => downloadCSV(historicalEarningsData, 'historicalEarningsData.csv')}>CSV</Button>
+                <Button onClick={() => downloadPDF('historicalEarningsData', historicalEarningsData)}>PDF</Button>
+              </Box>
+        </Typography>
+        <Divider sx={{ my: 1, backgroundColor: 'lightblue' }} />
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', padding: 2 }}>
+            <Box sx={{ textAlign: 'center' }}>
+              <Typography variant="subtitle1" color="lightgray">Payments This Year</Typography>
+              <Typography variant="h6" sx={{ color: 'lightblue' }}>{paymentsDoneData.paymentsThisYear}</Typography>
+            </Box>
+            <Box  sx={{ textAlign: 'center' }}>
+            <Typography variant="subtitle1" color="lightgray">Payments This Month</Typography>
+            <Typography variant="h6" sx={{ color: 'lightblue' }}>{paymentsDoneData.paymentsThisMonth}</Typography>
+          </Box>
+          <Box sx={{ textAlign: 'center' }}>
+          <Typography variant="subtitle1" color="lightgray">Payments This Week</Typography>
+          <Typography variant="h6" sx={{ color: 'lightblue' }}>{paymentsDoneData.paymentsThisWeek}</Typography>
+        </Box>
+        <Box sx={{ textAlign: 'center' }}>
+          <Typography variant="subtitle1" color="lightgray">Payments Today</Typography>
+          <Typography variant="h6" sx={{ color: 'lightblue' }}>{paymentsDoneData.paymentsToday}</Typography>
+        </Box>
+        </Box>
+      </Box>
+
+      <Box sx={{ border: '1px solid #4a4a4a', borderRadius: 2, padding: 3, backgroundColor: '#1e1e1e', mt: 3, mb: 3 }}>
+        <Typography variant="h6" sx={{ color: 'lightblue', display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
+          Historical Earnings
+        <Box>
+                <Button onClick={() => downloadCSV(historicalEarningsData, 'historicalEarningsData.csv')}>CSV</Button>
+                <Button onClick={() => downloadPDF('historicalEarningsData', historicalEarningsData)}>PDF</Button>
+              </Box>
+        </Typography>
+        <Divider sx={{ my: 1, backgroundColor: 'lightblue' }} />
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', padding: 2 }}>
+          {historicalEarningsData.map((item, index) => (
+            <Box key={index} sx={{ textAlign: 'center' }}>
+              <Typography variant="subtitle1" color="lightgray">{item.Label}</Typography>
+              <Typography variant="h6" sx={{ color: 'lightblue' }}>{item.Value} {selectedCurrency }</Typography>
+            </Box>
+          ))}
+        </Box>
+      </Box>
 
       {/* Order and Yield History */}
       <Grid container spacing={2} sx={{ marginTop: 3 }}>
@@ -420,7 +546,9 @@ const SafeguardingSection: React.FC<SectionProps> = ({ funds, handleInvestClick,
     </Box>
   </Grid>
 </Grid>
+</Box>
     </Box>
+  
   );
 };
 

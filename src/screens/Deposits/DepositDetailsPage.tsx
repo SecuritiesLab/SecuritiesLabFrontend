@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Box, Typography, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Divider, Grid, Pagination, TextField, Modal } from '@mui/material';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { jsPDF } from 'jspdf';
 import Papa from 'papaparse';
 import { saveAs } from 'file-saver';
@@ -54,7 +54,8 @@ const DepositDetailsPage = () => {
   const earningsSinceInception = yieldGeneratedSoFar;
   const earningsThisYear = '€150,000';        
   const earningsThisMonth = '€20,000';         
-  const earningsToday = '€1,000';             
+  const earningsToday = '€1,000';  
+  const navigate = useNavigate();            
 
   const currentTransactions = dummyTransactions.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,
@@ -98,10 +99,28 @@ const DepositDetailsPage = () => {
     { Label: 'Earnings Today', Value: earningsToday },
   ];
   
+  const goBackToMainPage = () => {
+    navigate('/deposit'); // Update with the appropriate route for the main page
+  };
 
 
   return (
-    <Box sx={{ padding: 4 }}>
+    <Box sx={{ padding: 2 }}>
+       <Button
+        variant="contained"
+        onClick={goBackToMainPage}
+        sx={{
+          marginBottom: 2,
+          backgroundColor: 'lightblue',
+          color: 'black',
+          '&:hover': {
+            backgroundColor: '#1e88e5',
+            color: 'white',
+          },
+        }}
+      >
+        Back
+      </Button>
       <Typography variant="h4" sx={{ mb: 2 }}>{deposit.name}</Typography>
 
       <Grid container spacing={3}>
@@ -112,9 +131,9 @@ const DepositDetailsPage = () => {
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
               <Typography>Manager: {deposit.manager}</Typography>
               <Typography>Deposit Amount: {deposit.amountInvested}</Typography>
-              <Typography>Yield for Free Users: {deposit.pricingPlans.Free}%</Typography>
-              <Typography>Yield for Plus Users: {deposit.pricingPlans.Plus}%</Typography>
-              <Typography>Yield for Pro Users: {deposit.pricingPlans.Pro}%</Typography>
+              <Typography>Yield for Free Users: {deposit.pricingPlans.Free}</Typography>
+              <Typography>Yield for Plus Users: {deposit.pricingPlans.Plus}</Typography>
+              <Typography>Yield for Pro Users: {deposit.pricingPlans.Pro}</Typography>
             </Box>
             <Button variant="contained" onClick={() => setShowManageModal(true)} sx={{ mt: 2 }}>
               Manage Deposit

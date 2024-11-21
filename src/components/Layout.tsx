@@ -164,18 +164,37 @@ const Layout: React.FC = () => {
         </AppBar>
 
         <Drawer variant="permanent" open={open}>
-          <Toolbar
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'flex-end',
-              px: [1],
-            }}
-          >
-            <IconButton onClick={toggleDrawer}>
-              <ChevronLeftIcon />
-            </IconButton>
-          </Toolbar>
+        <Toolbar
+  sx={{
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center', // Center everything in the toolbar
+    px: [1],
+    position: 'relative', // Set position for absolute placement of the arrow
+  }}
+>
+  {/* Logo in the center */}
+  <Box
+    component="img"
+    src={process.env.PUBLIC_URL + '/logo.png'}
+    alt="Logo"
+    sx={{
+      height: 50, // Adjust the height
+      width: 'auto', // Maintain aspect ratio
+    }}
+  />
+
+  {/* Arrow on the right */}
+  <IconButton
+    onClick={toggleDrawer}
+    sx={{
+      position: 'absolute', // Absolute positioning for the arrow
+      right: 0, // Move to the right side of the toolbar
+    }}
+  >
+    <ChevronLeftIcon />
+  </IconButton>
+</Toolbar>
           <Divider />
 
           {/* Sidebar List Items */}

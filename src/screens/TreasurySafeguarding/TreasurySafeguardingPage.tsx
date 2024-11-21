@@ -6,15 +6,15 @@ import SafeguardingSection from '../../components/TrasurySafeguarding/Safeguardi
 
 // Dummy MMF data (9 funds)
 const mmfFunds = [
-    { id: 1, name: 'Fidelity ILF - The Euro Fund', sector: 'Money Market', yield: '4.5%', minInvestment: 5000, type: 'Fund', currency: 'EUR', logo: `${process.env.PUBLIC_URL}/logo/fidelityColor.png` },
-    { id: 2, name: 'Fidelity ILF - The United States Dollar Fund', sector: 'Money Market', yield: '4.3%', minInvestment: 5000, type: 'Fund', currency: 'USD', logo: `${process.env.PUBLIC_URL}/logo/fidelityColor.png` },
-    { id: 3, name: 'Fidelity ILF - The Sterling Fund', sector: 'Money Market', yield: '4.1%', minInvestment: 5000, type: 'Fund', currency: 'GBP', logo: `${process.env.PUBLIC_URL}/logo/fidelityColor.png` },
-    { id: 4, name: 'abrdn Liquidity Fund (Lux) - US Dollar Fund', sector: 'Money Market', yield: '3.8%', minInvestment: 5000, type: 'Fund', currency: 'USD', logo: `${process.env.PUBLIC_URL}/logo/abrdn.png` },
-    { id: 5, name: 'abrdn Liquidity Fund (Lux) - Sterling Fund', sector: 'Money Market', yield: '3.6%', minInvestment: 5000, type: 'Fund', currency: 'GBP', logo: `${process.env.PUBLIC_URL}/logo/abrdn.png` },
-    { id: 6, name: 'abrdn Liquidity Fund (Lux) - Euro Fund', sector: 'Money Market', yield: '3.9%', minInvestment: 5000, type: 'Fund', currency: 'EUR', logo: `${process.env.PUBLIC_URL}/logo/abrdn.png` },
-    { id: 7, name: 'BlackRock ICS US Treasury Fund', sector: 'Money Market', yield: '4.2%', minInvestment: 5000, type: 'Fund', currency: 'USD', logo: `${process.env.PUBLIC_URL}/logo/blackrock1.png` },
-    { id: 8, name: 'BlackRock ICS Euro Government Liquidity Fund', sector: 'Money Market', yield: '4.0%', minInvestment: 5000, type: 'Fund', currency: 'EUR', logo: `${process.env.PUBLIC_URL}/logo/blackrock1.png` },
-    { id: 9, name: 'BlackRock ICS Sterling Government Liquidity Fund', sector: 'Money Market', yield: '3.7%', minInvestment: 5000, type: 'Fund', currency: 'GBP', logo: `${process.env.PUBLIC_URL}/logo/blackrock1.png` },
+    { id: 1, name: 'Fidelity ILF - The Euro Fund', sector: 'Money Market', yield: '4.5%', minInvestment: 5000, type: 'Fund', currency: 'EUR', logo: `${process.env.PUBLIC_URL}/logo/fidelityColor.png`, investment: 300000 },
+    { id: 2, name: 'Fidelity ILF - The United States Dollar Fund', sector: 'Money Market', yield: '4.3%', minInvestment: 5000, type: 'Fund', currency: 'USD', logo: `${process.env.PUBLIC_URL}/logo/fidelityColor.png`,investment: 300000 },
+    { id: 3, name: 'Fidelity ILF - The Sterling Fund', sector: 'Money Market', yield: '4.1%', minInvestment: 5000, type: 'Fund', currency: 'GBP', logo: `${process.env.PUBLIC_URL}/logo/fidelityColor.png`,investment: 300000 },
+    { id: 4, name: 'abrdn Liquidity Fund (Lux) - US Dollar Fund', sector: 'Money Market', yield: '3.8%', minInvestment: 5000, type: 'Fund', currency: 'USD', logo: `${process.env.PUBLIC_URL}/logo/abrdn.png`,investment: 500000 },
+    { id: 5, name: 'abrdn Liquidity Fund (Lux) - Sterling Fund', sector: 'Money Market', yield: '3.6%', minInvestment: 5000, type: 'Fund', currency: 'GBP', logo: `${process.env.PUBLIC_URL}/logo/abrdn.png`,investment: 500000 },
+    { id: 6, name: 'abrdn Liquidity Fund (Lux) - Euro Fund', sector: 'Money Market', yield: '3.9%', minInvestment: 5000, type: 'Fund', currency: 'EUR', logo: `${process.env.PUBLIC_URL}/logo/abrdn.png`,investment: 500000 },
+    { id: 7, name: 'BlackRock ICS US Treasury Fund', sector: 'Money Market', yield: '4.2%', minInvestment: 5000, type: 'Fund', currency: 'USD', logo: `${process.env.PUBLIC_URL}/logo/blackrock1.png`,investment: 200000 },
+    { id: 8, name: 'BlackRock ICS Euro Government Liquidity Fund', sector: 'Money Market', yield: '4.0%', minInvestment: 5000, type: 'Fund', currency: 'EUR', logo: `${process.env.PUBLIC_URL}/logo/blackrock1.png`,investment: 200000 },
+    { id: 9, name: 'BlackRock ICS Sterling Government Liquidity Fund', sector: 'Money Market', yield: '3.7%', minInvestment: 5000, type: 'Fund', currency: 'GBP', logo: `${process.env.PUBLIC_URL}/logo/blackrock1.png`,investment: 200000 },
   ];
 
 // Dummy bank accounts from the banking page
@@ -181,6 +181,8 @@ const RedeemModal: React.FC<ModalProps> = ({ open, handleClose, selectedFund, ha
     }}
   >
     <Typography variant="h6" mb={2}>Redeem from {selectedFund.name}</Typography>
+
+    <Typography>Redeemable Amount: {selectedFund.investment}€</Typography>
     
     {/* Amount to Redeem */}
     <TextField 
@@ -239,8 +241,13 @@ const TreasurySafeguardingPage = () => {
 
   return (
     <Box sx={{ padding: 2 }}>
-      <Tabs value={selectedTab} onChange={(e, newValue) => setSelectedTab(newValue)} centered>
-        <Tab label="Treasury" />
+      <Tabs sx={{
+    '& .MuiTab-root': {
+      marginX: 5,
+    },
+  }} value={selectedTab} onChange={(e, newValue) => setSelectedTab(newValue)} centered>
+        <Tab 
+    label="Operation" />
         <Tab label="Safeguarding" />
       </Tabs>
       <Divider sx={{ my: 2, backgroundColor: 'lightblue' }} />
