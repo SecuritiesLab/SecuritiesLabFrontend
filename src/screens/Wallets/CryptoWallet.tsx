@@ -80,49 +80,50 @@ const Wallet = () => {
       <Box sx={{  border: '1px solid #4a4a4a', borderRadius:2,  borderWidth:2, padding:3 ,display: 'flex', overflowX: 'auto', marginBottom: 4}}>
         {/* Add Wallet Card */}
         <Card
-        sx={{
-          minWidth: 150,
-          minHeight: 100,
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          marginRight: 2,
-          cursor: 'pointer',
-          backgroundColor: 'lightblue',
-          borderRadius: 2, // Optional, for a rounded look
-        }}
-          onClick={handleAddWallet}
-        >
-          <IconButton sx={{ color: '#FFFFFF', fontSize: '2rem' }}>
-            <AddIcon fontSize="large" />
-          </IconButton>
-          <Typography variant="body1" align="center">
-            Add Wallet
-          </Typography>
-        </Card>
-
+    sx={{
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginRight: 2,
+      cursor: 'pointer',
+      backgroundColor: 'lightblue',
+      borderRadius: 2,
+      minWidth: 200,
+      minHeight: 200, // Ensure consistent height
+      boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
+    }}
+  >
+    <Typography variant="h6" color="black" textAlign="center">
+      + Add Wallet
+    </Typography>
+  </Card>
         {wallets.map((wallet) => (
-          <Card
-            key={wallet.id}
-            sx={{
-              minWidth: 200,
-              minHeight: 160,
-              marginRight: 2,
-              cursor: 'pointer',
-              backgroundColor: '#ffffff',
-              color: '#000000',
-              display: 'flex',
-              flexDirection: 'column', // Stack logo on top of text
-              alignItems: 'center', // Center both logo and text
-              padding: 2,
-              boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)' 
-            }}
-          >
+         <Card
+         key={wallet.id}
+         sx={{
+           minWidth: 200,
+           minHeight: 200, // Ensure consistent height
+           marginRight: 2,
+           cursor: 'pointer',
+           backgroundColor: '#ffffff',
+           color: '#000000',
+           display: 'flex',
+           flexDirection: 'column', // Stack logo on top of text
+           alignItems: 'center', // Center both logo and text
+           padding: 2,
+           borderRadius: 2,
+           boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', // Consistent shadow
+         }}
+       >
                 <Box sx={{ marginBottom: 2 }}>
       <img
         src={wallet.logo}
         alt={`${wallet.name} logo`}
-        style={{ width: 60, height: 60 }} // Adjust logo size
+        style={{
+          width: 60,
+          height: 60,
+          objectFit: 'contain',
+        }}
       />
     </Box>
             <CardContent sx={{ textAlign: 'center' }}>
