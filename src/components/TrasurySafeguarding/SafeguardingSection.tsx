@@ -214,7 +214,7 @@ const SafeguardingSection: React.FC<SectionProps> = ({ funds, handleInvestClick,
   
   return (
     <Box sx={{ display: 'flex', minHeight: '50vh',flexDirection: { xs: 'column', lg: 'row' }, }}>
-    <Box sx={{ flex: 1, padding: 2, marginRight: { lg: '320px' }, mb: { xs: 3, lg: 0 }}}>
+    <Box sx={{ flex: 1, padding: 2}}>
     <Box
   sx={{
     border: '1px solid #4a4a4a',
@@ -253,8 +253,8 @@ const SafeguardingSection: React.FC<SectionProps> = ({ funds, handleInvestClick,
     <Card
       key={account.name}
       sx={{
-        minWidth: 200,
-        minHeight: 200, // Ensure consistent height
+        width: 200,
+        minHeight: 250, // Ensure consistent height
         marginRight: 2,
         cursor: 'pointer',
         backgroundColor: '#ffffff',
@@ -279,7 +279,7 @@ const SafeguardingSection: React.FC<SectionProps> = ({ funds, handleInvestClick,
         />
       </Box>
       <CardContent sx={{ textAlign: 'center', padding: 0 }}>
-        <Typography variant="h6" noWrap>
+        <Typography variant="h6">
           {account.name}
         </Typography>
         <Typography variant="body2">

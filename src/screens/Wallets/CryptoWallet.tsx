@@ -81,16 +81,15 @@ const Wallet = () => {
         {/* Add Wallet Card */}
         <Card
     sx={{
+      minWidth: 150,
+      minHeight: 100,
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
       marginRight: 2,
       cursor: 'pointer',
       backgroundColor: 'lightblue',
-      borderRadius: 2,
-      minWidth: 200,
-      minHeight: 200, // Ensure consistent height
-      boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
+      borderRadius: 2, // Optional, for a rounded look
     }}
   >
     <Typography variant="h6" color="black" textAlign="center">
@@ -101,28 +100,26 @@ const Wallet = () => {
          <Card
          key={wallet.id}
          sx={{
-           minWidth: 200,
-           minHeight: 200, // Ensure consistent height
-           marginRight: 2,
-           cursor: 'pointer',
-           backgroundColor: '#ffffff',
-           color: '#000000',
-           display: 'flex',
-           flexDirection: 'column', // Stack logo on top of text
-           alignItems: 'center', // Center both logo and text
-           padding: 2,
-           borderRadius: 2,
-           boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', // Consistent shadow
-         }}
+          width: 200,
+          minHeight: 250,
+          marginRight: 2,
+          cursor: 'pointer',
+          backgroundColor: '#ffffff',
+          color: '#000000',
+          display: 'flex',
+          flexDirection: 'column', // Stack logo on top of text
+          alignItems: 'center', // Center both logo and text
+          padding: '8px',
+          boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)' 
+        }}
        >
                 <Box sx={{ marginBottom: 2 }}>
       <img
         src={wallet.logo}
         alt={`${wallet.name} logo`}
         style={{
-          width: 60,
+          width: 100,
           height: 60,
-          objectFit: 'contain',
         }}
       />
     </Box>
