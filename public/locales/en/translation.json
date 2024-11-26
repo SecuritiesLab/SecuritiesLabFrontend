@@ -204,10 +204,10 @@
             "columns": {
               "statementDate": "Statement Date",
               "balance": "Balance",
-              "yieldGenerated": "Yield Generated(€)",
-              "fees": "Fees (€)",
-              "netYield": "Net Yield (€)",
-              "yieldPercentage": "Yield (%)"
+              "yieldGenerated": "Yield Generated",
+              "fees": "Fees",
+              "netYield": "Net Yield",
+              "yieldPercentage": "Yield"
             },
             "seeMore": "See more statements"
           },

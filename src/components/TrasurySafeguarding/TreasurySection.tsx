@@ -196,7 +196,7 @@ const TreasurySection: React.FC<SectionProps> = ({ funds, handleInvestClick, han
       </Grid>
     </Grid>
         <Paper sx={{ paddingTop: 2, display: 'flex', flexDirection: 'column', width:'70%', height:'70%' }}>
-          <EuroFundsPieChart />
+          <EuroFundsPieChart currency='EUR' />
         </Paper>
   </Box>
 </Grid>

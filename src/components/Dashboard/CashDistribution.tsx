@@ -3,12 +3,25 @@ import { PieChart } from '@mui/x-charts/PieChart';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
-const CashDistributionPieChart = () => {
+interface CashDistributionPieChartProps {
+  currency: 'EUR' | 'USD' | 'GBP';
+}
+
+const CashDistributionPieChart: React.FC<CashDistributionPieChartProps> = ({ currency }) => {
+  // Currency symbols
+  const currencySymbols = {
+    EUR: '€',
+    USD: '$',
+    GBP: '£',
+  };
+
+  const symbol = currencySymbols[currency];
+
   // Data for the pie chart
   const data = [
-    { id: 'Cash Unused', value: 1000000, label: 'Cash Unused', color: '#4caf50' },
-    { id: 'Investment', value: 1000000, label: 'Investment', color: '#2196f3' },
-    { id: 'Yield', value: 47817, label: 'Yield', color: '#ff5722' },
+    { id: 'Cash Unused', value: 1000000, label: `Cash Unused (${symbol}1,000,000)`, color: '#4caf50' },
+    { id: 'Investment', value: 1000000, label: `Investment (${symbol}1,000,000)`, color: '#2196f3' },
+    { id: 'Yield', value: 47817, label: `Yield (${symbol}47,817)`, color: '#ff5722' },
   ];
 
   return (
@@ -32,7 +45,7 @@ const CashDistributionPieChart = () => {
           textAlign: 'center',
         }}
       >
-        Cash Distribution
+        Cash Distribution ({currency})
       </Typography>
       <Box
         sx={{
@@ -41,7 +54,7 @@ const CashDistributionPieChart = () => {
           alignItems: 'center',
           width: '100%',
           height: '100%',
-          marginLeft: 5
+          marginLeft: 5,
         }}
       >
         <PieChart
