@@ -1,5 +1,5 @@
-import React from 'react';
-import { Box, Typography, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Card, Grid, Divider } from '@mui/material';
+import React, {useState} from 'react';
+import { Box, Grid, FormControl,InputLabel, Select, MenuItem, SelectChangeEvent } from '@mui/material';
 import { SectionProps } from '../../screens/TreasurySafeguarding/TreasurySafeguardingPage';
 import { saveAs } from 'file-saver';
 import Papa from 'papaparse';
@@ -11,14 +11,15 @@ import TreasuryHistoricalEarnings from './TreasuryHistoricalEarnings';
 import TransactionOrderHistory from './TransactionOrderHistory';
 import TransactionYieldHistory from './TransactionYieldHistory';
 
-const analyticsData = 
-  {  totalAmountAvailable: "1,000,000€",
-    totalAmountInvested: "500,000€",
-    totalAmountRedeemed: "200,000€",
-    totalYieldEarned: "20,000€"}
-
-    // Dummy data for orders and yield history (separate for Treasury and Safeguarding)
-    const orderHistory = [
+const currencyData = {
+  EUR: {
+    analytics: {
+      totalAmountAvailable: '1,000,000€',
+      totalAmountInvested: '500,000€',
+      totalAmountRedeemed: '200,000€',
+      totalYieldEarned: '20,000€',
+    },
+    orderHistory: [
       { id: 1, date: '2024-10-01', fundName: 'Fidelity ILF - The Euro Fund', action: 'Invested', amount: '€150000' },
       { id: 2, date: '2024-10-02', fundName: 'abrdn Liquidity Fund (Lux) - Euro Fund', action: 'Redeemed', amount: '€50000' },
       { id: 3, date: '2024-10-03', fundName: 'BlackRock ICS Euro Government Liquidity Fund', action: 'Invested', amount: '€200000' },
@@ -39,9 +40,8 @@ const analyticsData =
       { id: 18, date: '2024-10-18', fundName: 'BlackRock ICS Euro Government Liquidity Fund', action: 'Redeemed', amount: '€20000' },
       { id: 19, date: '2024-10-19', fundName: 'Fidelity ILF - The Euro Fund', action: 'Invested', amount: '€100000' },
       { id: 20, date: '2024-10-20', fundName: 'abrdn Liquidity Fund (Lux) - Euro Fund', action: 'Redeemed', amount: '€90000' },
-    ];
-
-    const yieldHistory = [
+    ],
+    yieldHistory: [
       { id: 1, date: '2024-10-01', fundName: 'Fidelity ILF - The Euro Fund', yield: '€1500' },
       { id: 2, date: '2024-10-02', fundName: 'abrdn Liquidity Fund (Lux) - Euro Fund', yield: '€2500' },
       { id: 3, date: '2024-10-03', fundName: 'BlackRock ICS Euro Government Liquidity Fund', yield: '€2000' },
@@ -62,16 +62,79 @@ const analyticsData =
       { id: 18, date: '2024-10-18', fundName: 'BlackRock ICS Euro Government Liquidity Fund', yield: '€1500' },
       { id: 19, date: '2024-10-19', fundName: 'Fidelity ILF - The Euro Fund', yield: '€1900' },
       { id: 20, date: '2024-10-20', fundName: 'abrdn Liquidity Fund (Lux) - Euro Fund', yield: '€2900' },
-    ];
-  
+    ],
+  },
+  USD: {
+    analytics: {
+      totalAmountAvailable: '$1,000,000',
+      totalAmountInvested: '$600,000',
+      totalAmountRedeemed: '$250,000',
+      totalYieldEarned: '$24,000',
+    },
+    orderHistory: [
+      { id: 1, date: '2024-10-01', fundName: 'Vanguard USD Liquidity Fund', action: 'Invested', amount: '$200000' },
+      { id: 2, date: '2024-10-02', fundName: 'Schwab USD Fund', action: 'Redeemed', amount: '$75000' },
+      // Add more USD data...
+    ],
+    yieldHistory: [
+      { id: 1, date: '2024-10-01', fundName: 'Vanguard USD Liquidity Fund', yield: '$3000' },
+      { id: 2, date: '2024-10-02', fundName: 'Schwab USD Fund', yield: '$1500' },
+      // Add more USD data...
+    ],
+  },
+  GBP: {
+    analytics: {
+      totalAmountAvailable: '£1,000,000',
+      totalAmountInvested: '£450,000',
+      totalAmountRedeemed: '£180,000',
+      totalYieldEarned: '£18,000',
+    },
+    orderHistory: [
+      { id: 1, date: '2024-10-01', fundName: 'Fidelity GBP Liquidity Fund', action: 'Invested', amount: '£100000' },
+      { id: 2, date: '2024-10-02', fundName: 'BlackRock GBP Fund', action: 'Redeemed', amount: '£50000' },
+      // Add more GBP data...
+    ],
+    yieldHistory: [
+      { id: 1, date: '2024-10-01', fundName: 'Fidelity GBP Liquidity Fund', yield: '£1500' },
+      { id: 2, date: '2024-10-02', fundName: 'BlackRock GBP Fund', yield: '£1200' },
+      // Add more GBP data...
+    ],
+  },
+};
+
+const currencyEarningsData = {
+  EUR: {
+    yieldGeneratedSoFar: '€47,817',
+    earningsSinceInception: '€47,817',
+    earningsThisYear: '€32,069',
+    earningsThisMonth: '€4,070',
+    earningsToday: '€135',
+  },
+  USD: {
+    yieldGeneratedSoFar: '$50,000',
+    earningsSinceInception: '$50,000',
+    earningsThisYear: '$33,500',
+    earningsThisMonth: '$4,500',
+    earningsToday: '$150',
+  },
+  GBP: {
+    yieldGeneratedSoFar: '£42,500',
+    earningsSinceInception: '£42,500',
+    earningsThisYear: '£30,000',
+    earningsThisMonth: '£3,800',
+    earningsToday: '£120',
+  },
+};
 
 const TreasurySection: React.FC<SectionProps> = ({ funds, handleInvestClick, handleRedeemClick }) => {
 
-  const yieldGeneratedSoFar = '€47,817';
+  const [selectedCurrency, setSelectedCurrency] = useState<'EUR' | 'USD' | 'GBP'>('EUR');
+
+  const yieldGeneratedSoFar = currencyEarningsData[selectedCurrency].yieldGeneratedSoFar;
   const earningsSinceInception = yieldGeneratedSoFar;
-  const earningsThisYear = '€32,069';        
-  const earningsThisMonth = '€4,070';         
-  const earningsToday = '€135';  
+  const earningsThisYear = currencyEarningsData[selectedCurrency].earningsThisYear;        
+  const earningsThisMonth = currencyEarningsData[selectedCurrency].earningsThisMonth;         
+  const earningsToday = currencyEarningsData[selectedCurrency].earningsToday;  
 
 
 
@@ -83,29 +146,26 @@ const TreasurySection: React.FC<SectionProps> = ({ funds, handleInvestClick, han
   ];
 
 
-  const downloadCSV = (data: Array<{ [key: string]: string | number }>, filename: string) => {
-    const csv = Papa.unparse(data);
-    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-    saveAs(blob, filename);
-  };
   
   const euroFunds = funds.filter((fund) => fund.currency === 'EUR');
-  // PDF Download
-  const downloadPDF = (title: string, data: Array<{ [key: string]: string | number }>) => {
-    const doc = new jsPDF();
-    doc.setFontSize(18);
-    doc.text(title, 10, 10);
-    doc.setFontSize(12);
-  
-    data.forEach((item, index) => {
-      const y = 20 + index * 10;
-      doc.text(`${Object.values(item).join(' | ')}`, 10, y);
-    });
-  
-    doc.save(`${title}.pdf`);
+
+  const handleCurrencyChange = (event: SelectChangeEvent<'EUR' | 'USD' | 'GBP'>) => {
+    setSelectedCurrency(event.target.value as 'EUR' | 'USD' | 'GBP');
   };
+
+  const currentData = currencyData[selectedCurrency];
+
     return (
     <Box>
+
+<FormControl fullWidth variant="outlined" sx={{ marginBottom: 3 }}>
+        <InputLabel>Currency</InputLabel>
+        <Select value={selectedCurrency} onChange={handleCurrencyChange} label="Currency">
+          <MenuItem value="EUR">Euro (€)</MenuItem>
+          <MenuItem value="USD">US Dollar ($)</MenuItem>
+          <MenuItem value="GBP">British Pound (£)</MenuItem>
+        </Select>
+      </FormControl>
       {/* Funds List */}
       <Grid container spacing={3}>
         <Grid item xs={12} md={6}>
@@ -118,7 +178,7 @@ const TreasurySection: React.FC<SectionProps> = ({ funds, handleInvestClick, han
 
         {/* Analytics */}
         <Grid item xs={12} md={6}>
-        <TreasuryAnalytics analyticsData={analyticsData} />
+        <TreasuryAnalytics analyticsData={currentData.analytics} />
 </Grid>
       </Grid>
 
@@ -129,10 +189,10 @@ const TreasurySection: React.FC<SectionProps> = ({ funds, handleInvestClick, han
       {/* Order and Yield History */}
       <Grid container spacing={2} sx={{ marginTop: 3 }}>
   <Grid item xs={12} md={6}>
-    <TransactionOrderHistory data={orderHistory} />
+    <TransactionOrderHistory data={currentData.orderHistory} />
   </Grid>
   <Grid item xs={12} md={6}>
-    <TransactionYieldHistory data={yieldHistory} />
+    <TransactionYieldHistory data={currentData.yieldHistory} />
   </Grid>
 </Grid>
     </Box>

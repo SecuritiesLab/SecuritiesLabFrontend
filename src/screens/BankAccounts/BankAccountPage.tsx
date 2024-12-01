@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Card, CardContent, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton, TextField, MenuItem, Dialog, DialogTitle, DialogContent, Button, CircularProgress, Modal, FormControl,
-  InputLabel,Select, InputAdornment, Divider, DialogActions, ButtonGroup
+  InputLabel,Select, InputAdornment, Divider, DialogActions, ButtonGroup,
+  SelectChangeEvent
  } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import { ArrowDownward, ArrowUpward } from '@mui/icons-material';
@@ -104,9 +105,9 @@ const BankAccountsPage = () => {
       setOpenBankDialog(true); // Open the AddBankAccount dialog
     };
 
-    const handleCurrencyChange = (currency: 'EUR' | 'USD' | 'GBP') => {
-      setSelectedCurrency(currency);
-      setSelectedBankId(null); // Reset selected bank when switching currencies
+
+    const handleCurrencyChange = (event: SelectChangeEvent<'EUR' | 'USD' | 'GBP'>) => {
+      setSelectedCurrency(event.target.value as 'EUR' | 'USD' | 'GBP');
     };
 
     const getDisplayedBalance = () => {
@@ -133,26 +134,14 @@ const BankAccountsPage = () => {
     Company Bank Accounts
   </Typography>
   <Divider sx={{ my: 2, backgroundColor: 'lightblue' }} />
-  <ButtonGroup sx={{ mb: 2 }}>
-            <Button
-              variant={selectedCurrency === 'EUR' ? 'contained' : 'outlined'}
-              onClick={() => handleCurrencyChange('EUR')}
-            >
-              EUR
-            </Button>
-            <Button
-              variant={selectedCurrency === 'USD' ? 'contained' : 'outlined'}
-              onClick={() => handleCurrencyChange('USD')}
-            >
-              USD
-            </Button>
-            <Button
-              variant={selectedCurrency === 'GBP' ? 'contained' : 'outlined'}
-              onClick={() => handleCurrencyChange('GBP')}
-            >
-              GBP
-            </Button>
-          </ButtonGroup>
+  <FormControl fullWidth variant="outlined" sx={{ marginBottom: 3 }}>
+        <InputLabel>Currency</InputLabel>
+        <Select value={selectedCurrency} onChange={handleCurrencyChange} label="Currency">
+          <MenuItem value="EUR">Euro (€)</MenuItem>
+          <MenuItem value="USD">US Dollar ($)</MenuItem>
+          <MenuItem value="GBP">British Pound (£)</MenuItem>
+        </Select>
+      </FormControl>
 </Box>
 
 <BankAccountList
