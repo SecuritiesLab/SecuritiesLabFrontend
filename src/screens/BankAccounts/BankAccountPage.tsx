@@ -118,6 +118,13 @@ const BankAccountsPage = () => {
       }
       return accounts.reduce((acc, bank) => acc + bank.balance, 0);
     };
+
+    const symbols: Record<string, string> = {
+      EUR: '€',
+      USD: '$',
+      GBP: '£',
+    };
+  
   
 
   return (
@@ -174,7 +181,7 @@ const BankAccountsPage = () => {
 <Box sx={{ border: '1px solid #4a4a4a', borderRadius: 2, padding: 2, marginBottom: 3 }}>
           <Typography variant="h6" sx={{ color: 'lightblue', marginBottom: 2 }}>Account Details</Typography>
           <Typography variant="body2">
-            Balance: {selectedCurrency} {getDisplayedBalance().toLocaleString()}
+            Balance: {symbols[selectedCurrency]} {getDisplayedBalance().toLocaleString()}
           </Typography>
           {selectedBankId && (
             <>
