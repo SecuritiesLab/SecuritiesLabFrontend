@@ -46,7 +46,7 @@ export default function Balances({ currency }: BalancesProps) {
 
   return (
     <React.Fragment>
-      <Title>Balances ({currencyLabel})</Title>
+      <Title>Balances ({currency})</Title>
       <div style={{ width: '100%', flexGrow: 1, overflow: 'hidden' }}>
         <LineChart
           dataset={data}

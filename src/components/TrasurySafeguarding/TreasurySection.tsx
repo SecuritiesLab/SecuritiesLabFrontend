@@ -14,10 +14,10 @@ import TransactionYieldHistory from './TransactionYieldHistory';
 const currencyData = {
   EUR: {
     analytics: {
-      totalAmountAvailable: '1,000,000€',
-      totalAmountInvested: '500,000€',
-      totalAmountRedeemed: '200,000€',
-      totalYieldEarned: '20,000€',
+      totalAmountAvailable: '€1,000,000',
+      totalAmountInvested: '€500,000',
+      totalAmountRedeemed: '€200,000',
+      totalYieldEarned: '€20,000',
     },
     orderHistory: [
       { id: 1, date: '2024-10-01', fundName: 'Fidelity ILF - The Euro Fund', action: 'Invested', amount: '€150000' },
