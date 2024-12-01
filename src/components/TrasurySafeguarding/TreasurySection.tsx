@@ -5,6 +5,7 @@ import { saveAs } from 'file-saver';
 import Papa from 'papaparse';
 import { jsPDF } from 'jspdf';
 import EuroFundsPieChart from '../Dashboard/EuroFundsPieChart';
+import FundList from './FundList';
 
 const analyticsData = 
   {  totalAmountAvailable: "1,000,000€",
@@ -104,50 +105,11 @@ const TreasurySection: React.FC<SectionProps> = ({ funds, handleInvestClick, han
       {/* Funds List */}
       <Grid container spacing={3}>
         <Grid item xs={12} md={6}>
-          <Box
-            sx={{
-              border: '1px solid #4a4a4a',
-              borderRadius: 2,
-              padding: 2,
-              backgroundColor: '#1e1e1e',
-              height: 500,
-              overflowY: 'auto'
-            }}
-          >
-     {euroFunds.map((fund, index) => (
-  <Card
-    key={fund.id}
-    sx={{
-      marginBottom: 2,
-      padding: 2,
-      height: 'auto',
-    }}
-  >
-    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-      {/* Left side: Logo and text */}
-      <Box sx={{ display: 'flex', alignItems: 'center', minWidth: '70%' }}>
-        <img
-          src={fund.logo}
-          alt={`${fund.name} logo`}
-          style={{ width: '80px', height: '80px', marginRight: '24px', objectFit: 'contain' }}
-        />
-        <Box>
-          <Typography variant="h6">{fund.name}</Typography>
-          <Typography variant="body2">
-            Sector: {fund.sector} | Yield: {fund.yield} | Minimum Investment: {fund.currency} {fund.minInvestment}
-          </Typography>
-        </Box>
-      </Box>
-
-      {/* Right side: Buttons */}
-      <Box sx={{ minWidth: '30%' }}>
-        <Button variant="contained" sx={{ marginRight: 1, marginBottom:1 }} onClick={() => handleInvestClick(fund)}>Invest</Button>
-        <Button variant="outlined" onClick={() => handleRedeemClick(fund)}>Redeem</Button>
-      </Box>
-    </Box>
-  </Card>
-))}
-          </Box>
+        <FundList
+            funds={euroFunds}
+            handleInvestClick={handleInvestClick}
+            handleRedeemClick={handleRedeemClick}
+          />
         </Grid>
 
         {/* Analytics */}
