@@ -18,11 +18,24 @@ const CashDistributionPieChart: React.FC<CashDistributionPieChartProps> = ({ cur
   const symbol = currencySymbols[currency];
 
   // Data for the pie chart
-  const data = [
-    { id: 'Cash Unused', value: 1000000, label: `Cash Unused (${symbol}1,000,000)`, color: '#4caf50' },
+  const data = {
+    EUR:[
+    { id: 'Cash Unused', value: 2000000, label: `Cash Unused (${symbol}2,000,000)`, color: '#4caf50' },
     { id: 'Investment', value: 1000000, label: `Investment (${symbol}1,000,000)`, color: '#2196f3' },
     { id: 'Yield', value: 47817, label: `Yield (${symbol}47,817)`, color: '#ff5722' },
-  ];
+  ],
+    USD:[
+      { id: 'Cash Unused', value: 1050000, label: `Cash Unused (${symbol}1,000,000)`, color: '#4caf50' },
+      { id: 'Investment', value: 1000000, label: `Investment (${symbol}1,000,000)`, color: '#2196f3' },
+      { id: 'Yield', value: 47817, label: `Yield (${symbol}47,817)`, color: '#ff5722' },
+    ],
+    GBP:[
+      { id: 'Cash Unused', value: 500000, label: `Cash Unused (${symbol}1,000,000)`, color: '#4caf50' },
+      { id: 'Investment', value: 1000000, label: `Investment (${symbol}1,000,000)`, color: '#2196f3' },
+      { id: 'Yield', value: 47817, label: `Yield (${symbol}47,817)`, color: '#ff5722' },
+    ]};
+
+    const filteredData = data[currency]
 
   return (
     <Box
@@ -60,7 +73,7 @@ const CashDistributionPieChart: React.FC<CashDistributionPieChartProps> = ({ cur
         <PieChart
           series={[
             {
-              data: data.map(({ id, value, label, color }) => ({
+              data: filteredData.map(({ id, value, label, color }) => ({
                 id,
                 value,
                 label,

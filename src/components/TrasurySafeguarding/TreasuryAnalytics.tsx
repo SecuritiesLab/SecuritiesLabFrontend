@@ -8,10 +8,11 @@ interface AnalyticsProps {
     totalAmountInvested: string;
     totalAmountRedeemed: string;
     totalYieldEarned: string;
-  };
+  },
+  currency: 'EUR' | 'USD' | 'GBP';
 }
 
-const TreasuryAnalytics: React.FC<AnalyticsProps> = ({ analyticsData }) => {
+const TreasuryAnalytics: React.FC<AnalyticsProps> = ({ analyticsData, currency }) => {
   return (
     <Box
       sx={{
@@ -65,7 +66,7 @@ const TreasuryAnalytics: React.FC<AnalyticsProps> = ({ analyticsData }) => {
           height: '70%',
         }}
       >
-        <EuroFundsPieChart currency="EUR" />
+        <EuroFundsPieChart currency={currency} />
       </Paper>
     </Box>
   );

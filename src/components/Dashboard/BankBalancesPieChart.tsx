@@ -27,18 +27,12 @@ const BankBalancesPieChart: React.FC<BankBalancesPieChartProps> = ({ currency })
       { id: 5, name: 'N26 Personal Vault', balance: 300000, accountNumber: '0099887766', accountType: 'Savings', logo: 'https://storage.googleapis.com/gc-prd-institution_icons-production/DE/PNG/n26.png' },
     ],
     USD: [
-      { id: 1, name: 'Chase Checking', balance: 150000, accountNumber: '0011223344', accountType: 'Checking', logo: 'https://cdn-logos.gocardless.com/ais/CHASE.png' },
-      { id: 2, name: 'Bank of America Savings', balance: 320000, accountNumber: '9988776655', accountType: 'Savings', logo: 'https://cdn-logos.gocardless.com/ais/BANKOFAMERICA.png' },
-      { id: 3, name: 'Revolut Business', balance: 800000, accountNumber: '5566778899', accountType: 'Business', logo: 'https://storage.googleapis.com/gc-prd-institution_icons-production/UK/PNG/revolut.png' },
-      { id: 4, name: 'Wise Startup', balance: 450000, accountNumber: '7766554433', accountType: 'Business', logo: 'https://storage.googleapis.com/gc-prd-institution_icons-production/UK/PNG/wise.png' },
-      { id: 5, name: 'Wells Fargo Vault', balance: 280000, accountNumber: '0099887766', accountType: 'Savings', logo: 'https://cdn-logos.gocardless.com/ais/WELLSFARGO.png' },
+      { id: 1, name: 'HSBC Business', balance: 150000, accountNumber: '1122334455', accountType: 'Business', logo: 'https://storage.googleapis.com/gc-prd-institution_icons-production/UK/PNG/hsbcpersonal.png' },
+      { id: 2, name: 'Wise Startup', balance: 50000, accountNumber: '6677889900', accountType: 'Personal', logo: 'https://storage.googleapis.com/gc-prd-institution_icons-production/UK/PNG/wise.png' },
     ],
     GBP: [
-      { id: 1, name: 'Barclays Checking', balance: 100000, accountNumber: '0011223344', accountType: 'Checking', logo: 'https://cdn-logos.gocardless.com/ais/BARCLAYS.png' },
-      { id: 2, name: 'HSBC Savings', balance: 310000, accountNumber: '9988776655', accountType: 'Savings', logo: 'https://cdn-logos.gocardless.com/ais/HSBC.png' },
-      { id: 3, name: 'Revolut Business', balance: 750000, accountNumber: '5566778899', accountType: 'Business', logo: 'https://storage.googleapis.com/gc-prd-institution_icons-production/UK/PNG/revolut.png' },
-      { id: 4, name: 'Wise Startup', balance: 460000, accountNumber: '7766554433', accountType: 'Business', logo: 'https://storage.googleapis.com/gc-prd-institution_icons-production/UK/PNG/wise.png' },
-      { id: 5, name: 'N26 Personal Vault', balance: 250000, accountNumber: '0099887766', accountType: 'Savings', logo: 'https://storage.googleapis.com/gc-prd-institution_icons-production/DE/PNG/n26.png' },
+      { id: 1, name: 'HSBC Current', balance: 80000, accountNumber: '5566778899', accountType: 'Current', logo: 'https://storage.googleapis.com/gc-prd-institution_icons-production/UK/PNG/hsbcpersonal.png' },
+      { id: 2, name: 'Barclays Savings', balance: 120000, accountNumber: '0099887766', accountType: 'Savings', logo: 'https://storage.googleapis.com/gc-prd-institution_icons-production/UK/PNG/barclayscorporate.png' },
     ],
   };
 

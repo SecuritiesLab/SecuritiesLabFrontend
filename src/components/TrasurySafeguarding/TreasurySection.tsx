@@ -178,7 +178,7 @@ const TreasurySection: React.FC<SectionProps> = ({ funds, handleInvestClick, han
 
         {/* Analytics */}
         <Grid item xs={12} md={6}>
-        <TreasuryAnalytics analyticsData={currentData.analytics} />
+        <TreasuryAnalytics analyticsData={currentData.analytics} currency={selectedCurrency} />
 </Grid>
       </Grid>
 

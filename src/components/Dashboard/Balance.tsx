@@ -26,8 +26,8 @@ function getFormattedDate() {
 function getBalance(currency: 'EUR' | 'USD' | 'GBP') {
   const balances = {
     EUR: 3047817,
-    USD: 2027345,
-    GBP: 1567345,
+    USD: 2097817,
+    GBP: 1547817,
   };
 
   const symbols = {

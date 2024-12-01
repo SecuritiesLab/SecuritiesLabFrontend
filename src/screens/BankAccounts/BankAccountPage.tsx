@@ -31,12 +31,12 @@ const bankAccountsData = {
   { id: 4, name: 'Wise Startup', balance: 500000, accountNumber: '7766554433', accountType: 'Business', logo: 'https://storage.googleapis.com/gc-prd-institution_icons-production/UK/PNG/wise.png' },
   { id: 5, name: 'N26 Personal Vault', balance: 300000, accountNumber: '0099887766', accountType: 'Savings', logo: 'https://storage.googleapis.com/gc-prd-institution_icons-production/DE/PNG/n26.png' }, ],
   USD: [
-    { id: 3, name: 'HSBC Business', balance: 150000, accountNumber: '1122334455', accountType: 'Business', logo: 'https://storage.googleapis.com/gc-prd-institution_icons-production/UK/PNG/hsbcpersonal.png' },
-    { id: 4, name: 'Wise Startup', balance: 50000, accountNumber: '6677889900', accountType: 'Personal', logo: 'https://storage.googleapis.com/gc-prd-institution_icons-production/UK/PNG/wise.png' },
+    { id: 6, name: 'HSBC Business', balance: 150000, accountNumber: '1122334455', accountType: 'Business', logo: 'https://storage.googleapis.com/gc-prd-institution_icons-production/UK/PNG/hsbcpersonal.png' },
+    { id: 7, name: 'Wise Startup', balance: 50000, accountNumber: '6677889900', accountType: 'Personal', logo: 'https://storage.googleapis.com/gc-prd-institution_icons-production/UK/PNG/wise.png' },
   ],
   GBP: [
-    { id: 5, name: 'HSBC Current', balance: 80000, accountNumber: '5566778899', accountType: 'Current', logo: 'https://storage.googleapis.com/gc-prd-institution_icons-production/UK/PNG/hsbcpersonal.png' },
-    { id: 6, name: 'Barclays Savings', balance: 120000, accountNumber: '0099887766', accountType: 'Savings', logo: 'https://storage.googleapis.com/gc-prd-institution_icons-production/UK/PNG/barclayscorporate.png' },
+    { id: 8, name: 'HSBC Current', balance: 80000, accountNumber: '5566778899', accountType: 'Current', logo: 'https://storage.googleapis.com/gc-prd-institution_icons-production/UK/PNG/hsbcpersonal.png' },
+    { id: 9, name: 'Barclays Savings', balance: 120000, accountNumber: '0099887766', accountType: 'Savings', logo: 'https://storage.googleapis.com/gc-prd-institution_icons-production/UK/PNG/barclayscorporate.png' },
   ],
 };
 
