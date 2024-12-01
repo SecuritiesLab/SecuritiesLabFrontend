@@ -45,6 +45,11 @@ export default function MonthlyRevenue({ currency }: MonthlyRevenueProps) {
   const theme = useTheme();
   const { t } = useTranslation();
   const symbol = currencySymbols[currency];
+  const currencyLabel = {
+    EUR: 'Euros (€)',
+    USD: 'Dollars ($)',
+    GBP: 'Pounds (£)',
+  }[currency];
 
   return (
     <React.Fragment>
@@ -68,7 +73,7 @@ export default function MonthlyRevenue({ currency }: MonthlyRevenueProps) {
           ]}
           yAxis={[
             {
-              label: `${t('monthlyRevenue.label', 'Revenue')} (${symbol})`,
+              label: `${currencyLabel}`,
               labelStyle: {
                 ...(theme.typography.body1 as ChartsTextStyle),
                 fill: theme.palette.text.primary,

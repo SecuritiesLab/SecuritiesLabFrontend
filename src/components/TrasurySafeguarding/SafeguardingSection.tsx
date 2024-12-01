@@ -211,90 +211,15 @@ const SafeguardingSection: React.FC<SectionProps> = ({ funds, handleInvestClick,
 
   const paymentsDoneData = paymentsDone();
 
+  const filteredBanks = banks.filter((bank) => selectedCurrency === '' || bank.currency === selectedCurrency);
+
   
   return (
     <Box sx={{ display: 'flex', minHeight: '50vh',flexDirection: { xs: 'column', lg: 'row' }, }}>
     <Box sx={{ flex: 1, padding: 2}}>
-    <Box
-  sx={{
-    border: '1px solid #4a4a4a',
-    borderRadius: 2,
-    borderWidth: 2,
-    padding: 3,
-    display: 'flex',
-    overflowX: 'auto', // Enables horizontal scroll
-    marginBottom: 4,
-    minWidth: 200,
-      minHeight: 200, // Ensure consistent height
-  }}
->
-  {/* Add Account Card */}
-  <Card
-    sx={{
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      marginRight: 2,
-      cursor: 'pointer',
-      backgroundColor: 'lightblue',
-      borderRadius: 2,
-      minWidth: 200,
-      minHeight: 200, // Ensure consistent height
-      boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
-    }}
-  >
-    <Typography variant="h6" color="black" textAlign="center">
-      + Add Account
-    </Typography>
-  </Card>
 
-  {/* Bank Accounts */}
-  {banks.map((account) => (
-    <Card
-      key={account.name}
-      sx={{
-        width: 200,
-        minHeight: 250, // Ensure consistent height
-        marginRight: 2,
-        cursor: 'pointer',
-        backgroundColor: '#ffffff',
-        color: '#000000',
-        display: 'flex',
-        flexDirection: 'column', // Stack logo on top of text
-        alignItems: 'center', // Center both logo and text
-        padding: 2,
-        borderRadius: 2,
-        boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', // Consistent shadow
-      }}
-    >
-      <Box sx={{ marginBottom: 1 }}>
-        <img
-          src={account.logo}
-          alt={`${account.name} logo`}
-          style={{
-            width: 60,
-            height: 60,
-            objectFit: 'contain',
-          }}
-        />
-      </Box>
-      <CardContent sx={{ textAlign: 'center', padding: 0 }}>
-        <Typography variant="h6">
-          {account.name}
-        </Typography>
-        <Typography variant="body2">
-          Balance: {account.balance}
-        </Typography>
-        <Typography variant="body2">
-          Account: {account.account}
-        </Typography>
-      </CardContent>
-    </Card>
-  ))}
-</Box>
-
-      {/* Currency and Date Filters */}
-      <Grid container spacing={2} sx={{ marginBottom: 2 }}>
+            {/* Currency and Date Filters */}
+            <Grid container spacing={2} sx={{ marginBottom: 2 }}>
         <Grid item xs={4}>
           <TextField
             select
@@ -343,6 +268,84 @@ const SafeguardingSection: React.FC<SectionProps> = ({ funds, handleInvestClick,
           </TextField>
         </Grid>
       </Grid>
+
+    <Box
+  sx={{
+    border: '1px solid #4a4a4a',
+    borderRadius: 2,
+    borderWidth: 2,
+    padding: 3,
+    display: 'flex',
+    overflowX: 'auto', // Enables horizontal scroll
+    marginBottom: 4,
+    minWidth: 200,
+      minHeight: 200, // Ensure consistent height
+  }}
+>
+  {/* Add Account Card */}
+  <Card
+    sx={{
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginRight: 2,
+      cursor: 'pointer',
+      backgroundColor: 'lightblue',
+      borderRadius: 2,
+      minWidth: 200,
+      minHeight: 200, // Ensure consistent height
+      boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
+    }}
+  >
+    <Typography variant="h6" color="black" textAlign="center">
+      + Add Account
+    </Typography>
+  </Card>
+
+  {/* Bank Accounts */}
+  {filteredBanks.map((account) => (
+    <Card
+      key={account.name}
+      sx={{
+        width: 200,
+        minHeight: 300, // Ensure consistent height
+        marginRight: 2,
+        cursor: 'pointer',
+        backgroundColor: '#ffffff',
+        color: '#000000',
+        display: 'flex',
+        flexDirection: 'column', // Stack logo on top of text
+        alignItems: 'center', // Center both logo and text
+        padding: 2,
+        borderRadius: 2,
+        boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', // Consistent shadow
+      }}
+    >
+      <Box sx={{ marginBottom: 1 }}>
+        <img
+          src={account.logo}
+          alt={`${account.name} logo`}
+          style={{
+            width: 60,
+            height: 60,
+            objectFit: 'contain',
+          }}
+        />
+      </Box>
+      <CardContent sx={{ textAlign: 'center', padding: 0 }}>
+        <Typography variant="h6">
+          {account.name}
+        </Typography>
+        <Typography variant="body2">
+          Balance: {account.balance}
+        </Typography>
+        <Typography variant="body2">
+          Account: {account.account}
+        </Typography>
+      </CardContent>
+    </Card>
+  ))}
+</Box>
 
       {/* Funds List */}
       <Grid container spacing={3}>

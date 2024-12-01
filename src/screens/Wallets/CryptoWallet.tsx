@@ -101,7 +101,7 @@ const Wallet = () => {
          key={wallet.id}
          sx={{
           width: 200,
-          minHeight: 250,
+          height: 300,
           marginRight: 2,
           cursor: 'pointer',
           backgroundColor: '#ffffff',
