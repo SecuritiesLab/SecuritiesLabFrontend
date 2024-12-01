@@ -32,13 +32,23 @@ export const MainListItems = () => {
     navigate('/safeguarding?tab=0');
   };
 
+  const handleOperationClick = () => {
+    navigate('/safeguarding?tab=0');
+  };
+
+
   const handleSafeguardingClick = () => {
     navigate('/safeguarding?tab=1');
   };
 
 
-  const getSelectedStyle = (path: string) => {
-    // Exact match for specific paths to highlight only the active item
+  const getSelectedStyle = (path: string, tab?: string) => {
+    if (tab !== undefined) {
+      const currentTab = new URLSearchParams(location.search).get('tab');
+      return location.pathname === path && currentTab === tab
+        ? { color: 'lightblue', fontWeight: 'bold' }
+        : {};
+    }
     return location.pathname === path ? { color: 'lightblue', fontWeight: 'bold' } : {};
   };
 
@@ -63,7 +73,7 @@ export const MainListItems = () => {
         <ListItemText primary="Accounts" />
       </ListItemButton>
 
-       <ListItemButton onClick={handleTreasuryClick} sx={getSelectedStyle('/treasury')}>
+      <ListItemButton onClick={handleTreasuryClick} sx={getSelectedStyle('/treasury')}>
         <ListItemIcon>
           <LayersIcon sx={getSelectedStyle('/treasury')} />
         </ListItemIcon>
@@ -72,9 +82,22 @@ export const MainListItems = () => {
       </ListItemButton>
 
       <Collapse in={openTreasury} timeout="auto" unmountOnExit>
-        <ListItemButton sx={{ pl: 4, ...getSelectedStyle('/safeguarding') }} onClick={handleSafeguardingClick}>
+        <ListItemButton
+          sx={{ pl: 4, ...getSelectedStyle('/safeguarding', '0') }}
+          onClick={() => navigate('/safeguarding?tab=0')}
+        >
           <ListItemIcon>
-            <SecurityIcon sx={getSelectedStyle('/safeguarding')} />
+            <SecurityIcon sx={getSelectedStyle('/safeguarding', '0')} />
+          </ListItemIcon>
+          <ListItemText primary="Operation" />
+        </ListItemButton>
+
+        <ListItemButton
+          sx={{ pl: 4, ...getSelectedStyle('/safeguarding', '1') }}
+          onClick={() => navigate('/safeguarding?tab=1')}
+        >
+          <ListItemIcon>
+            <SecurityIcon sx={getSelectedStyle('/safeguarding', '1')} />
           </ListItemIcon>
           <ListItemText primary="Safeguarding" />
         </ListItemButton>
