@@ -6,6 +6,10 @@ import Papa from 'papaparse';
 import { jsPDF } from 'jspdf';
 import EuroFundsPieChart from '../Dashboard/EuroFundsPieChart';
 import FundList from './FundList';
+import TreasuryAnalytics from './TreasuryAnalytics';
+import TreasuryHistoricalEarnings from './TreasuryHistoricalEarnings';
+import TransactionOrderHistory from './TransactionOrderHistory';
+import TransactionYieldHistory from './TransactionYieldHistory';
 
 const analyticsData = 
   {  totalAmountAvailable: "1,000,000€",
@@ -114,181 +118,21 @@ const TreasurySection: React.FC<SectionProps> = ({ funds, handleInvestClick, han
 
         {/* Analytics */}
         <Grid item xs={12} md={6}>
-  <Box
-    sx={{
-      border: '1px solid #4a4a4a',
-      borderRadius: 2,
-      padding: 2,
-      backgroundColor: '#1e1e1e',
-      height: 500,
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center', 
-      overflowY: 'auto'
-    }}
-  >
-    <Typography
-      variant="h6"
-      sx={{
-        color: 'lightblue',
-        mb: 1,
-      }}
-    >
-      Analytics
-    </Typography>
-    <Divider sx={{ my: 1, backgroundColor: 'lightblue', width: '100%' }} />
-    <Grid container spacing={2} sx={{ marginTop: 2 }}>
-      <Grid item xs={12}>
-        <Box
-          sx={{
-            padding: 2,
-            backgroundColor: '#2e2e2e',
-            borderRadius: 1,
-            textAlign: 'center',
-            width: '100%',
-          }}
-        >
-          <Typography variant="subtitle1" color="lightgray">
-            Total Amount Available
-          </Typography>
-          <Typography variant="h4" sx={{ color: 'lightblue' }}>
-            1,000,000€
-          </Typography>
-        </Box>
-      </Grid>
-    </Grid>
-        <Paper sx={{ paddingTop: 2, display: 'flex', flexDirection: 'column', width:'70%', height:'70%' }}>
-          <EuroFundsPieChart currency='EUR' />
-        </Paper>
-  </Box>
+        <TreasuryAnalytics analyticsData={analyticsData} />
 </Grid>
       </Grid>
 
-      <Box sx={{ border: '1px solid #4a4a4a', borderRadius: 2, padding: 3, backgroundColor: '#1e1e1e', mt: 3, mb: 3 }}>
-        <Typography variant="h6" sx={{ color: 'lightblue', display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
-          Historical Earnings
-        <Box>
-                <Button onClick={() => downloadCSV(historicalEarningsData, 'historicalEarningsData.csv')}>CSV</Button>
-                <Button onClick={() => downloadPDF('historicalEarningsData', historicalEarningsData)}>PDF</Button>
-              </Box>
-        </Typography>
-        <Divider sx={{ my: 1, backgroundColor: 'lightblue' }} />
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', padding: 2 }}>
-          {historicalEarningsData.map((item, index) => (
-            <Box key={index} sx={{ textAlign: 'center' }}>
-              <Typography variant="subtitle1" color="lightgray">{item.Label}</Typography>
-              <Typography variant="h6" sx={{ color: 'lightblue' }}>{item.Value}</Typography>
-            </Box>
-          ))}
-        </Box>
-      </Box>
+      <Box>
+  <TreasuryHistoricalEarnings data={historicalEarningsData} />
+</Box>
 
       {/* Order and Yield History */}
       <Grid container spacing={2} sx={{ marginTop: 3 }}>
   <Grid item xs={12} md={6}>
-    <Box sx={{ border: '1px solid #4a4a4a', borderRadius: 2, padding: 2 }}>
-      <Typography
-        variant="h6"
-        sx={{
-          color: 'lightblue',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          mb: 1,
-        }}
-      >
-        Order History
-        <Box>
-          <Button onClick={() => downloadCSV(orderHistory, 'Order_history.csv')}>
-            CSV
-          </Button>
-          <Button onClick={() => downloadPDF('Order_history', orderHistory)}>
-            PDF
-          </Button>
-        </Box>
-      </Typography>
-      <Divider sx={{ my: 1, backgroundColor: 'lightblue' }} />
-      <TableContainer
-        component={Paper}
-        sx={{
-          maxHeight: 300, // Set max height for scrollable table
-          overflow: 'auto', // Enable scrolling
-        }}
-      >
-        <Table stickyHeader>
-          <TableHead>
-            <TableRow>
-              <TableCell>Date</TableCell>
-              <TableCell>Fund</TableCell>
-              <TableCell>Action</TableCell>
-              <TableCell>Amount</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {orderHistory.map((txn) => (
-              <TableRow key={txn.id}>
-                <TableCell>{txn.date}</TableCell>
-                <TableCell>{txn.fundName}</TableCell>
-                <TableCell>{txn.action}</TableCell>
-                <TableCell>{txn.amount}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </Box>
+    <TransactionOrderHistory data={orderHistory} />
   </Grid>
-
   <Grid item xs={12} md={6}>
-    <Box sx={{ border: '1px solid #4a4a4a', borderRadius: 2, padding: 2 }}>
-      <Typography
-        variant="h6"
-        sx={{
-          color: 'lightblue',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          mb: 1,
-        }}
-      >
-        Yield History
-        <Box>
-          <Button onClick={() => downloadCSV(yieldHistory, 'Yield_history.csv')}>
-            CSV
-          </Button>
-          <Button onClick={() => downloadPDF('Yield_history', yieldHistory)}>
-            PDF
-          </Button>
-        </Box>
-      </Typography>
-      <Divider sx={{ my: 1, backgroundColor: 'lightblue' }} />
-      <TableContainer
-        component={Paper}
-        sx={{
-          maxHeight: 300, // Set max height for scrollable table
-          overflow: 'auto', // Enable scrolling
-        }}
-      >
-        <Table stickyHeader>
-          <TableHead>
-            <TableRow>
-              <TableCell>Date</TableCell>
-              <TableCell>Fund</TableCell>
-              <TableCell>Yield</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {yieldHistory.map((yieldData) => (
-              <TableRow key={yieldData.id}>
-                <TableCell>{yieldData.date}</TableCell>
-                <TableCell>{yieldData.fundName}</TableCell>
-                <TableCell>{yieldData.yield}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </Box>
+    <TransactionYieldHistory data={yieldHistory} />
   </Grid>
 </Grid>
     </Box>
