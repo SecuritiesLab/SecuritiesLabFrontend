@@ -5,7 +5,7 @@ import { PieChart } from '@mui/x-charts/PieChart';
 interface AnalyticsPieChartProps {
   totalAmountAvailable: number;
   totalAmountInvested: number;
-  paymentsMade: number;
+  paymentsMade: number | string;
 }
 
 const AnalyticsPieChart: React.FC<AnalyticsPieChartProps> = ({
@@ -13,11 +13,22 @@ const AnalyticsPieChart: React.FC<AnalyticsPieChartProps> = ({
   totalAmountInvested,
   paymentsMade,
 }) => {
-  const difference = totalAmountAvailable - paymentsMade - totalAmountInvested;
+
+  const parseAmount = (value: number | string): number => {
+    if (typeof value === 'string') {
+      return parseFloat(value.replace(/,/g, '')); // Remove commas and parse as float
+    }
+    return value;
+  };
+
+  const paymentsMadeNumber = parseAmount(paymentsMade)
+
+  
+  const difference = totalAmountAvailable - paymentsMadeNumber - totalAmountInvested;
 
   const data = [
     { id: 'Amount Invested', value: totalAmountInvested, label: `Invested: €${totalAmountInvested.toLocaleString()}` },
-    { id: 'Payments Made', value: paymentsMade, label: `Payments: €${paymentsMade.toLocaleString()}` },
+    { id: 'Payments Made', value: paymentsMadeNumber, label: `Payments: €${paymentsMadeNumber.toLocaleString()}` },
     { id: 'Unused', value: difference, label: `Unused: €${difference.toLocaleString()}` },
   ];
 

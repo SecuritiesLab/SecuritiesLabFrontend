@@ -151,7 +151,6 @@ const SafeguardingSection: React.FC<SectionProps> = ({ funds, handleInvestClick,
 
 
   const analyticsData = calculateAnalyticsData();
-
   const calculateEarnings = () => {
     const today = new Date();
     const currentYear = today.getFullYear();
@@ -186,12 +185,12 @@ const SafeguardingSection: React.FC<SectionProps> = ({ funds, handleInvestClick,
       .filter((entry) => entry.currency === selectedCurrency && entry.date === currentDate)
       .reduce((total, entry) => total + parseFloat(entry.yieldAmount.replace(/[^0-9.]/g, '')), 0);
   
-    // Return data in the required format
+    // Return data with formatted values
     return [
-      { Label: 'Earnings Since Inception', Value: earningsSinceInception },
-      { Label: 'Earnings This Year', Value: earningsThisYear },
-      { Label: 'Earnings This Month', Value: earningsThisMonth },
-      { Label: 'Earnings Today', Value: earningsToday },
+      { Label: 'Earnings Since Inception', Value: earningsSinceInception.toLocaleString() },
+      { Label: 'Earnings This Year', Value: earningsThisYear.toLocaleString() },
+      { Label: 'Earnings This Month', Value: earningsThisMonth.toLocaleString() },
+      { Label: 'Earnings Today', Value: earningsToday.toLocaleString() },
     ];
   };
   
@@ -199,16 +198,19 @@ const SafeguardingSection: React.FC<SectionProps> = ({ funds, handleInvestClick,
 
   const paymentsDone = () => {
     const bankForCurrency = banks.find(bank => bank.currency === selectedCurrency);
-    const totalAmountAvailable = bankForCurrency ? parseFloat(bankForCurrency.balance.replace(/[^0-9.-]+/g, "")) : 0;
-
+    const totalAmountAvailable = bankForCurrency
+      ? parseFloat(bankForCurrency.balance.replace(/[^0-9.-]+/g, ""))
+      : 0;
+  
+    const formatter = new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 });
+  
     return {
-      paymentsThisYear : Math.round(totalAmountAvailable * 0.33),
-      paymentsThisMonth: Math.round(totalAmountAvailable/12 * 0.33 ),
-      paymentsThisWeek: Math.round(totalAmountAvailable/84) ,
-      paymentsToday: Math.round(totalAmountAvailable/365 )
+      paymentsThisYear: `${formatter.format(Math.round(totalAmountAvailable * 0.33))} ${selectedCurrency}`,
+      paymentsThisMonth: `${formatter.format(Math.round(totalAmountAvailable / 12 * 0.33))} ${selectedCurrency}`,
+      paymentsThisWeek: `${formatter.format(Math.round(totalAmountAvailable / 84))} ${selectedCurrency}`,
+      paymentsToday: `${formatter.format(Math.round(totalAmountAvailable / 365))} ${selectedCurrency}`,
     };
-  }
-
+  };
   const paymentsDoneData = paymentsDone();
 
   const filteredBanks = banks.filter((bank) => selectedCurrency === '' || bank.currency === selectedCurrency);
