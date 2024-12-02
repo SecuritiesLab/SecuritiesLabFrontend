@@ -5,6 +5,10 @@ import { ChartsTextStyle } from '@mui/x-charts/ChartsText';
 import Title from './Title';
 import { useTranslation } from 'react-i18next';
 
+interface MonthlyRevenueProps {
+  currency: 'EUR' | 'USD' | 'GBP';
+}
+
 // Generate Sales Data
 function createData(
   time: string,
@@ -19,10 +23,10 @@ const data = [
   createData('01.10.2023', 3900.1),
   createData('01.11.2023', 7815.31),
   createData('01.12.2023', 11745.79),
-  createData('01.01.2024', 15691.60),
-  createData('01.02.2024', 19652.80),
+  createData('01.01.2024', 15691.6),
+  createData('01.02.2024', 19652.8),
   createData('01.03.2024', 23629.45),
-  createData('01.04.2024', 27621.60),
+  createData('01.04.2024', 27621.6),
   createData('01.05.2024', 31629.32),
   createData('01.06.2024', 35652.67),
   createData('01.07.2024', 39691.72),
@@ -31,13 +35,25 @@ const data = [
   createData('01.10.2024'),
 ];
 
-export default function MonthlyRevenue() {
+const currencySymbols = {
+  EUR: '€',
+  USD: '$',
+  GBP: '£',
+};
+
+export default function MonthlyRevenue({ currency }: MonthlyRevenueProps) {
   const theme = useTheme();
   const { t } = useTranslation();
+  const symbol = currencySymbols[currency];
+  const currencyLabel = {
+    EUR: 'Euros (€)',
+    USD: 'Dollars ($)',
+    GBP: 'Pounds (£)',
+  }[currency];
 
   return (
     <React.Fragment>
-      <Title>{t('monthlyRevenue.title')}</Title>
+      <Title>{t('monthlyRevenue.title', 'Monthly Revenue')} ({currency})</Title>
       <div style={{ width: '100%', flexGrow: 1, overflow: 'hidden' }}>
         <LineChart
           dataset={data}
@@ -57,7 +73,7 @@ export default function MonthlyRevenue() {
           ]}
           yAxis={[
             {
-              label: t('monthlyRevenue.label'),
+              label: `${currencyLabel}`,
               labelStyle: {
                 ...(theme.typography.body1 as ChartsTextStyle),
                 fill: theme.palette.text.primary,

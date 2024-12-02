@@ -190,7 +190,7 @@
           },
           "balance": {
             "title": "Balance",
-            "amount": "$1,047,817.03",
+            "amount": "€1,047,817",
             "date": "on 11 September, 2024",
             "viewBalance": "View balance"
           },
@@ -204,22 +204,22 @@
             "columns": {
               "statementDate": "Statement Date",
               "balance": "Balance",
-              "yieldGenerated": "Yield Generated($)",
-              "fees": "Fees ($)",
-              "netYield": "Net Yield ($)",
-              "yieldPercentage": "Yield (%)"
+              "yieldGenerated": "Yield Generated",
+              "fees": "Fees",
+              "netYield": "Net Yield",
+              "yieldPercentage": "Yield"
             },
             "seeMore": "See more statements"
           },
           "revenue": {
             "title": "Revenue",
-            "amount": "$47,817.03",
+            "amount": "€47,817",
             "date": "on 11 September, 2024",
             "details": "Revenue details"
           },
           "yieldGenerated": {
             "title": "Yield Generated",
-            "amount": "$53,130.02",
+            "amount": "€53,130",
             "date": "on 11 September, 2024",
             "viewDetails": "View details"
           },

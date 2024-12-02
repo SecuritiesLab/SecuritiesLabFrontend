@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 import Title from './Title';
 import { useTranslation } from 'react-i18next';
 
-interface YieldProps {
+interface InvestmentProps {
   currency: 'EUR' | 'USD' | 'GBP'; // Currency type
 }
 
@@ -22,14 +22,8 @@ function getFormattedDate() {
   });
 }
 
-// Function to get yield details based on currency
-function getYieldDetails(currency: 'EUR' | 'USD' | 'GBP') {
-  const yields = {
-    EUR: 53130,
-    USD: 53130,
-    GBP: 53130,
-  };
-
+// Function to get investment details based on currency
+function getInvestmentDetails(currency: 'EUR' | 'USD' | 'GBP') {
   const symbols = {
     EUR: '€',
     USD: '$',
@@ -37,18 +31,18 @@ function getYieldDetails(currency: 'EUR' | 'USD' | 'GBP') {
   };
 
   return {
-    amount: yields[currency],
+    amount: 1000000, // Fixed 1,000,000 investment amount for all currencies
     symbol: symbols[currency],
   };
 }
 
-export default function Yield({ currency }: YieldProps) {
+export default function Investment({ currency }: InvestmentProps) {
   const { t } = useTranslation();
-  const { amount, symbol } = getYieldDetails(currency);
+  const { amount, symbol } = getInvestmentDetails(currency);
 
   return (
     <React.Fragment>
-      <Title>{t('yieldGenerated.title', 'Yield Generated')}</Title>
+      <Title>{t('investment.title', 'Investment')}</Title>
       <Typography component="p" variant="h4">
         {symbol}
         {amount.toLocaleString('en-GB')}
@@ -58,7 +52,7 @@ export default function Yield({ currency }: YieldProps) {
       </Typography>
       <div>
         <Link color="primary" href="#" onClick={preventDefault}>
-          {t('yieldGenerated.viewDetails', 'View Details')}
+          {t('investment.viewInvestments', 'View Investments')}
         </Link>
       </div>
     </React.Fragment>

@@ -7,9 +7,9 @@ export async function getAccessToken() {
 }
 
 // Call backend to get available banks
-export async function getBanks(accessToken: string) {
+export async function getBanks(accessToken: string, countryCode: string) {
     console.log(accessToken)
-  const response = await axiosInstance.get(`/gocardless/getBanks?accessToken=${accessToken}`
+  const response = await axiosInstance.get(`/gocardless/getBanks?accessToken=${accessToken}&countryCode=${countryCode}`
   );
   return response.data;
 }
@@ -34,7 +34,7 @@ const generateUniqueReference = () => {
 // Call backend to create requisition
 export async function createRequisition(accessToken: string, institutionId: string, agreementId: string) {
   const response = await axiosInstance.post(`/gocardless/createRequisition?accessToken=${accessToken}`, {
-    redirect: 'https://securitieslab.eu/accounts',
+    redirect: 'http://localhost:3000/#/redirect',
     institution_id: institutionId,
     reference: generateUniqueReference(),
     agreement: agreementId,
@@ -58,5 +58,6 @@ export async function getAccountTransactions(accessToken: string, accountId: str
 
 // Function to redirect user to authenticate with their bank
 export function redirectToBankAuth(url: string) {
-    window.location.href = url; // Redirect the user to the bank authentication page
+    window.location.href = url; 
   }
+

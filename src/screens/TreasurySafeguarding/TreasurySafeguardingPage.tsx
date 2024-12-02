@@ -1,40 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Typography, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Modal, TextField, Card, Snackbar, Alert, MenuItem, Tabs, Tab } from '@mui/material';
+import { Box, Typography, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Modal, TextField, Card, Snackbar, Alert, MenuItem, Tabs, Tab,Grid,Divider } from '@mui/material';
 import { useLocation } from 'react-router-dom';
+import TreasurySection from '../../components/TrasurySafeguarding/TreasurySection';
+import SafeguardingSection from '../../components/TrasurySafeguarding/SafeguardingSection';
 
 // Dummy MMF data (9 funds)
 const mmfFunds = [
-    { id: 1, name: 'Fidelity ILF - The Euro Fund', sector: 'Money Market', yield: '4.5%', minInvestment: 5000, type: 'Fund', currency: 'EUR', logo: `${process.env.PUBLIC_URL}/logo/fidelityColor.png` },
-    { id: 2, name: 'Fidelity ILF - The United States Dollar Fund', sector: 'Money Market', yield: '4.3%', minInvestment: 5000, type: 'Fund', currency: 'USD', logo: `${process.env.PUBLIC_URL}/logo/fidelityColor.png` },
-    { id: 3, name: 'Fidelity ILF - The Sterling Fund', sector: 'Money Market', yield: '4.1%', minInvestment: 5000, type: 'Fund', currency: 'GBP', logo: `${process.env.PUBLIC_URL}/logo/fidelityColor.png` },
-    { id: 4, name: 'abrdn Liquidity Fund (Lux) - US Dollar Fund', sector: 'Money Market', yield: '3.8%', minInvestment: 5000, type: 'Fund', currency: 'USD', logo: `${process.env.PUBLIC_URL}/logo/abrdn.png` },
-    { id: 5, name: 'abrdn Liquidity Fund (Lux) - Sterling Fund', sector: 'Money Market', yield: '3.6%', minInvestment: 5000, type: 'Fund', currency: 'GBP', logo: `${process.env.PUBLIC_URL}/logo/abrdn.png` },
-    { id: 6, name: 'abrdn Liquidity Fund (Lux) - Euro Fund', sector: 'Money Market', yield: '3.9%', minInvestment: 5000, type: 'Fund', currency: 'EUR', logo: `${process.env.PUBLIC_URL}/logo/abrdn.png` },
-    { id: 7, name: 'BlackRock ICS US Treasury Fund', sector: 'Money Market', yield: '4.2%', minInvestment: 5000, type: 'Fund', currency: 'USD', logo: `${process.env.PUBLIC_URL}/logo/blackrock1.png` },
-    { id: 8, name: 'BlackRock ICS Euro Government Liquidity Fund', sector: 'Money Market', yield: '4.0%', minInvestment: 5000, type: 'Fund', currency: 'EUR', logo: `${process.env.PUBLIC_URL}/logo/blackrock1.png` },
-    { id: 9, name: 'BlackRock ICS Sterling Government Liquidity Fund', sector: 'Money Market', yield: '3.7%', minInvestment: 5000, type: 'Fund', currency: 'GBP', logo: `${process.env.PUBLIC_URL}/logo/blackrock1.png` },
+    { id: 1, name: 'Fidelity ILF - The Euro Fund', sector: 'Money Market', yield: '4.5%', minInvestment: 5000, type: 'Fund', currency: 'EUR', logo: `${process.env.PUBLIC_URL}/logo/fidelityColor.png`, investment: 300000 },
+    { id: 2, name: 'Fidelity ILF - The United States Dollar Fund', sector: 'Money Market', yield: '4.3%', minInvestment: 5000, type: 'Fund', currency: 'USD', logo: `${process.env.PUBLIC_URL}/logo/fidelityColor.png`,investment: 300000 },
+    { id: 3, name: 'Fidelity ILF - The Sterling Fund', sector: 'Money Market', yield: '4.1%', minInvestment: 5000, type: 'Fund', currency: 'GBP', logo: `${process.env.PUBLIC_URL}/logo/fidelityColor.png`,investment: 300000 },
+    { id: 4, name: 'abrdn Liquidity Fund (Lux) - US Dollar Fund', sector: 'Money Market', yield: '3.8%', minInvestment: 5000, type: 'Fund', currency: 'USD', logo: `${process.env.PUBLIC_URL}/logo/abrdn.png`,investment: 500000 },
+    { id: 5, name: 'abrdn Liquidity Fund (Lux) - Sterling Fund', sector: 'Money Market', yield: '3.6%', minInvestment: 5000, type: 'Fund', currency: 'GBP', logo: `${process.env.PUBLIC_URL}/logo/abrdn.png`,investment: 500000 },
+    { id: 6, name: 'abrdn Liquidity Fund (Lux) - Euro Fund', sector: 'Money Market', yield: '3.9%', minInvestment: 5000, type: 'Fund', currency: 'EUR', logo: `${process.env.PUBLIC_URL}/logo/abrdn.png`,investment: 500000 },
+    { id: 7, name: 'BlackRock ICS US Treasury Fund', sector: 'Money Market', yield: '4.2%', minInvestment: 5000, type: 'Fund', currency: 'USD', logo: `${process.env.PUBLIC_URL}/logo/blackrock1.png`,investment: 200000 },
+    { id: 8, name: 'BlackRock ICS Euro Government Liquidity Fund', sector: 'Money Market', yield: '4.0%', minInvestment: 5000, type: 'Fund', currency: 'EUR', logo: `${process.env.PUBLIC_URL}/logo/blackrock1.png`,investment: 200000 },
+    { id: 9, name: 'BlackRock ICS Sterling Government Liquidity Fund', sector: 'Money Market', yield: '3.7%', minInvestment: 5000, type: 'Fund', currency: 'GBP', logo: `${process.env.PUBLIC_URL}/logo/blackrock1.png`,investment: 200000 },
   ];
-
-// Dummy data for orders and yield history (separate for Treasury and Safeguarding)
-const initialTreasuryOrderHistory = [
-  { id: 1, date: '2024-10-10', fundName: 'Fidelity ILF - The Euro Fund', action: 'Invested', amount: '€100000' },
-  { id: 2, date: '2024-10-12', fundName: 'BlackRock ICS US Treasury Fund', action: 'Redeemed', amount: '€30000' },
-];
-
-const initialSafeguardingOrderHistory = [
-  { id: 1, date: '2024-10-14', fundName: 'Fidelity ILF - The Euro Fund', action: 'Invested', amount: '€500000' },
-  { id: 2, date: '2024-10-15', fundName: 'BlackRock ICS Euro Government Liquidity Fund', action: 'Redeemed', amount: '€250000' },
-];
-
-const initialTreasuryYieldHistory = [
-  { id: 1, date: '2024-10-15', fundName: 'abrdn Liquidity Fund (Lux) - US Dollar Fund', yield: '3.8%' },
-  { id: 2, date: '2024-10-17', fundName: 'Fidelity ILF - The Euro Fund', yield: '4.5%' },
-];
-
-const initialSafeguardingYieldHistory = [
-  { id: 1, date: '2024-10-18', fundName: 'BlackRock ICS Euro Government Liquidity Fund', yield: '4.0%' },
-  { id: 2, date: '2024-10-19', fundName: 'Fidelity ILF - The Euro Fund', yield: '4.5%' },
-];
 
 // Dummy bank accounts from the banking page
 const bankAccounts = [
@@ -45,21 +26,58 @@ const bankAccounts = [
     { id: 5, name: 'N26 Personal Vault', balance: 300000, currency: 'EUR',accountNumber: '0099887766', accountType: 'Savings', logo: 'https://storage.googleapis.com/gc-prd-institution_icons-production/DE/PNG/n26.png' },
   ];
 
-interface OrderHistoryEntry {
+  const banksSafeguarding = [
+    { id:1,name: 'Banking Circle Master EURO', balance: 3000000, currency : "EUR", accountNumber: '****3344',accountType: 'Master', logo: `${process.env.PUBLIC_URL}/logo/bankingCircle.png` },
+    { id:2,name: 'Banking Circle Master USD', balance: 1000000, currency : "USD", accountNumber: '****6655', accountType: 'Master',logo: `${process.env.PUBLIC_URL}/logo/bankingCircle.png` },
+    { id: 3,name: 'Banking Circle Master GBP', balance: 1500000, currency: "GBP", accountNumber: '****8899', accountType: 'Master',logo: `${process.env.PUBLIC_URL}/logo/bankingCircle.png` },
+]
+
+
+
+export interface Fund {
+  id: number;
+  name: string;
+  sector: string;
+  yield: string;
+  minInvestment: number;
+  type: string;
+  currency: string;
+  logo: string;
+}
+
+export interface Bank{
+  id: number;
+  name:string;
+  balance: number;
+  currency: string;
+  accountNumber: string;
+  accountType: string;
+  logo: string;
+}
+
+export interface YieldHistoryEntry {
   id: number;
   date: string;
   fundName: string;
-  action: string;
-  amount: string;
+  yield: string;
+}
+
+export interface SectionProps {
+  funds: Fund[];
+  handleInvestClick: (fund: Fund) => void;
+  handleRedeemClick: (fund: Fund) => void;
 }
 
 interface ModalProps {
   open: boolean;
   handleClose: () => void;
   selectedFund: any;
+  handleSuccess: () => void;
+  banks: Bank[];
 }
 
-const InvestModal: React.FC<ModalProps> = ({ open, handleClose, selectedFund }) => {
+
+const InvestModal: React.FC<ModalProps> = ({ open, handleClose, selectedFund, handleSuccess,banks }) => {
   const [selectedBank, setSelectedBank] = useState('');
   const [investmentAmount, setInvestmentAmount] = useState('');
 
@@ -70,6 +88,7 @@ const InvestModal: React.FC<ModalProps> = ({ open, handleClose, selectedFund }) 
   const handleConfirmInvest = () => {
     console.log(`Investing ${investmentAmount} in ${selectedFund.name} from ${selectedBank}`);
     handleClose(); // Close modal after confirming
+    handleSuccess()
   };
 
   return (
@@ -99,7 +118,7 @@ const InvestModal: React.FC<ModalProps> = ({ open, handleClose, selectedFund }) 
       sx={{ mb: 2 }}
     >
       <MenuItem value="" disabled>Select a bank account</MenuItem>
-      {bankAccounts.map((account) => (
+      {banks.map((account) => (
         <MenuItem key={account.id} value={account.name}>
           {/* Container for logo and bank name */}
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -133,7 +152,7 @@ const InvestModal: React.FC<ModalProps> = ({ open, handleClose, selectedFund }) 
   );
 };
 
-const RedeemModal: React.FC<ModalProps> = ({ open, handleClose, selectedFund }) => {
+const RedeemModal: React.FC<ModalProps> = ({ open, handleClose, selectedFund, handleSuccess }) => {
   const [redeemAmount, setRedeemAmount] = useState('');
 
   if (!selectedFund) {
@@ -143,6 +162,7 @@ const RedeemModal: React.FC<ModalProps> = ({ open, handleClose, selectedFund }) 
   const handleConfirmRedeem = () => {
     console.log(`Redeeming ${redeemAmount} from ${selectedFund.name}`);
     handleClose(); // Close modal after confirming
+    handleSuccess();
   };
 
   return (
@@ -161,6 +181,8 @@ const RedeemModal: React.FC<ModalProps> = ({ open, handleClose, selectedFund }) 
     }}
   >
     <Typography variant="h6" mb={2}>Redeem from {selectedFund.name}</Typography>
+
+    <Typography>Redeemable Amount: {selectedFund.investment}€</Typography>
     
     {/* Amount to Redeem */}
     <TextField 
@@ -181,136 +203,84 @@ const RedeemModal: React.FC<ModalProps> = ({ open, handleClose, selectedFund }) 
 };
 
 const TreasurySafeguardingPage = () => {
-    const location = useLocation(); 
-  const [selectedTab, setSelectedTab] = useState(0); // Track selected tab
-  const [selectedFund, setSelectedFund] = useState<any>(null);
+  const [selectedTab, setSelectedTab] = useState(0);
+  const [selectedFund, setSelectedFund] = useState<Fund | null>(null);
   const [investModalOpen, setInvestModalOpen] = useState(false);
   const [redeemModalOpen, setRedeemModalOpen] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const location = useLocation();
 
-  const [treasuryOrderHistory, setTreasuryOrderHistory] = useState<OrderHistoryEntry[]>(initialTreasuryOrderHistory);
-  const [safeguardingOrderHistory, setSafeguardingOrderHistory] = useState<OrderHistoryEntry[]>(initialSafeguardingOrderHistory);
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const tab = searchParams.get('tab');
+    setSelectedTab(tab ? parseInt(tab, 10) : 0); // Fallback to 0 if `tab` is not in the URL
+  }, [location.search]); 
 
-  const [treasuryYieldHistory, setTreasuryYieldHistory] = useState(initialTreasuryYieldHistory);
-  const [safeguardingYieldHistory, setSafeguardingYieldHistory] = useState(initialSafeguardingYieldHistory);
 
-    // Handle URL query to redirect to a specific tab
-    useEffect(() => {
-        const params = new URLSearchParams(location.search);  // Parse query params from URL
-        const tabParam = params.get('tab');  // e.g. `?tab=1` for Safeguarding tab
-        if (tabParam) {
-          setSelectedTab(Number(tabParam));  // Set the tab programmatically based on the param
-        }
-      }, [location]);
-      
-  const handleInvestClick = (fund: any) => {
+  const handleInvestClick = (fund: Fund) => {
     setSelectedFund(fund);
     setInvestModalOpen(true);
   };
 
-  const handleRedeemClick = (fund: any) => {
+  const handleRedeemClick = (fund: Fund) => {
     setSelectedFund(fund);
     setRedeemModalOpen(true);
   };
 
-  const filteredFunds = selectedTab === 0 ? mmfFunds : mmfFunds.filter(fund => fund.currency === 'EUR');
-  const orderHistory = selectedTab === 0 ? treasuryOrderHistory : safeguardingOrderHistory;
-  const yieldHistory = selectedTab === 0 ? treasuryYieldHistory : safeguardingYieldHistory;
+  const handleCloseModal = () => {
+    setInvestModalOpen(false);
+    setRedeemModalOpen(false);
+    setSelectedFund(null);
+  };
+
+  const handleSuccess = () => {
+    setShowSuccess(true);
+    handleCloseModal();
+  };
+  
 
   return (
     <Box sx={{ padding: 2 }}>
-      <Typography variant="h5" gutterBottom>Treasury & Safeguarding Section</Typography>
-      
-      {/* Tabs */}
-      <Tabs value={selectedTab} onChange={(e, newValue) => setSelectedTab(newValue)} centered>
-        <Tab label="Treasury" />
+      <Tabs sx={{
+    '& .MuiTab-root': {
+      marginX: 5,
+    },
+  }} value={selectedTab} onChange={(e, newValue) => setSelectedTab(newValue)} centered>
+        <Tab 
+    label="Operation" />
         <Tab label="Safeguarding" />
       </Tabs>
-{/* List of funds */}
-<Box
-  sx={{
-    maxHeight: 400,  // Adjust the height to show 3 items (depending on the height of each item)
-    overflowY: 'auto',  // Enable vertical scroll
-    paddingRight: 2,  // Add padding for better scroll visibility
-  }}
->
-  {filteredFunds.map((fund) => (
-    <Card key={fund.id} sx={{ marginBottom: 2, padding: 2 }}>
-      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        {/* Left side: Logo and text */}
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <img
-            src={fund.logo}
-            alt={`${fund.name} logo`}
-            style={{ width: '80px', height: '80px', marginRight: '24px', objectFit: 'contain' }} // Increased logo size and margin
-          />
-          <Box>
-            <Typography variant="h6">{fund.name}</Typography>
-            <Typography variant="body2">Sector: {fund.sector} | Yield: {fund.yield} | Minimum Investment: €{fund.minInvestment}</Typography>
-          </Box>
-        </Box>
+      <Divider sx={{ my: 2, backgroundColor: 'lightblue' }} />
 
-        {/* Right side: Buttons */}
-        <Box>
-          <Button variant="contained" sx={{ marginRight: 1 }} onClick={() => handleInvestClick(fund)}>Invest</Button>
-          <Button variant="outlined" onClick={() => handleRedeemClick(fund)}>Redeem</Button>
-        </Box>
-      </Box>
-    </Card>
-  ))}
-</Box>
+      {selectedTab === 0 ? (
+        <TreasurySection
+        funds={mmfFunds}
+          handleInvestClick={handleInvestClick}
+          handleRedeemClick={handleRedeemClick}
+        />
+      ) : (
+        <SafeguardingSection
+        funds={mmfFunds}
+          handleInvestClick={handleInvestClick}
+          handleRedeemClick={handleRedeemClick}
+        />
+      )}
 
-      {/* Order History */}
-      <Typography variant="h6" gutterBottom>Order History</Typography>
-      <TableContainer component={Paper}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Date</TableCell>
-              <TableCell>Fund</TableCell>
-              <TableCell>Action</TableCell>
-              <TableCell>Amount</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {orderHistory.map((txn) => (
-              <TableRow key={txn.id}>
-                <TableCell>{txn.date}</TableCell>
-                <TableCell>{txn.fundName}</TableCell>
-                <TableCell>{txn.action}</TableCell>
-                <TableCell>{txn.amount}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-
-      {/* Yield History */}
-      <Typography variant="h6" gutterBottom sx={{ marginTop: 2 }}>Yield History</Typography>
-      <TableContainer component={Paper}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Date</TableCell>
-              <TableCell>Fund</TableCell>
-              <TableCell>Yield</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {yieldHistory.map((yieldData) => (
-              <TableRow key={yieldData.id}>
-                <TableCell>{yieldData.date}</TableCell>
-                <TableCell>{yieldData.fundName}</TableCell>
-                <TableCell>{yieldData.yield}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-
-      {/* Modals */}
-      <InvestModal open={investModalOpen} handleClose={() => setInvestModalOpen(false)} selectedFund={selectedFund} />
-      <RedeemModal open={redeemModalOpen} handleClose={() => setRedeemModalOpen(false)} selectedFund={selectedFund} />
+      {/* Modals for Investment and Redemption */}
+      <InvestModal
+        open={investModalOpen}
+        handleClose={handleCloseModal}
+        selectedFund={selectedFund}
+        handleSuccess={handleSuccess}
+        banks= {selectedTab === 0? bankAccounts: banksSafeguarding }
+      />
+      <RedeemModal
+        open={redeemModalOpen}
+        handleClose={handleCloseModal}
+        selectedFund={selectedFund}
+        handleSuccess={handleSuccess}
+        banks= {selectedTab === 0? bankAccounts: banksSafeguarding }
+      />
 
       {/* Success Snackbar */}
       <Snackbar open={showSuccess} autoHideDuration={3000} onClose={() => setShowSuccess(false)}>

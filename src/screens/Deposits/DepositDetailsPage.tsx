@@ -1,202 +1,227 @@
 import React, { useState } from 'react';
-import { Box, Typography, Button, TextField, Modal, Snackbar, Alert, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Pagination } from '@mui/material';
-import { useLocation } from 'react-router-dom';
+import { Box, Typography, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Divider, Grid, Pagination, TextField, Modal } from '@mui/material';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { jsPDF } from 'jspdf';
+import Papa from 'papaparse';
+import { saveAs } from 'file-saver';
+import ManageDepositModal from '../../components/Deposits/ManageDepositModal';
 
-// Dummy total users invested value
 const TOTAL_USERS_INVESTED = 10000;
-
-// Generate random 6-digit user ID
 const generateRandomUserId = () => Math.floor(100000 + Math.random() * 900000);
-
-// Generate random date within the last year
 const generateRandomDate = () => {
   const today = new Date();
   const lastYear = new Date(today);
   lastYear.setFullYear(today.getFullYear() - 1);
 
   const randomTime = lastYear.getTime() + Math.random() * (today.getTime() - lastYear.getTime());
-  return new Date(randomTime).toISOString().split('T')[0];  // Format as 'YYYY-MM-DD'
+  return new Date(randomTime).toISOString().split('T')[0];
 };
 
-// Dummy transaction data (50 transactions)
 const dummyTransactions = Array.from({ length: 100 }, (_, index) => ({
   id: index + 1,
-  user: generateRandomUserId(),  // Assign random 6-digit user ID
+  user: generateRandomUserId(),
   action: index % 2 === 0 ? 'Deposited' : 'Withdrew',
   amount: `${(Math.random() * 10000 + 1000).toFixed(0)} €`,
-  date: generateRandomDate(),  // Generate a random date in the last year
+  date: generateRandomDate(),
 }));
 
-const ITEMS_PER_PAGE = 10;  // Items per page for pagination
+interface ManageDepositModalProps {
+  open: boolean;
+  onClose: () => void;
+  deposit: {
+    name: string;
+    amountInvested: string;
+    manager: string;
+    pricingPlans: {
+      Free: number;
+      Plus: number;
+      Pro: number;
+    };
+  };
+}
+
+const ITEMS_PER_PAGE = 10;
 
 const DepositDetailsPage = () => {
-  const location = useLocation();  // To retrieve the deposit passed via state
-  const { deposit } = location.state;  // Access the deposit data passed from the previous page
+  const [currentPage, setCurrentPage] = useState(1);
+  const [showManageModal, setShowManageModal] = useState(false);
+  const location = useLocation();
+  const { deposit } = location.state;
+  const averageYield = '4.22%';
+  const expectedEarnings = '€373,600';
+  const totalUsersInvested = '10,000';
+  const yieldGeneratedSoFar = '€100,000';
+  const earningsSinceInception = yieldGeneratedSoFar;
+  const earningsThisYear = '€150,000';        
+  const earningsThisMonth = '€20,000';         
+  const earningsToday = '€1,000';  
+  const navigate = useNavigate();            
 
-  const [freeYield, setFreeYield] = useState(deposit.pricingPlans.Free);  // Yield for Free user type
-  const [plusYield, setPlusYield] = useState(deposit.pricingPlans.Plus);  // Yield for Plus user type
-  const [proYield, setProYield] = useState(deposit.pricingPlans.Pro);     // Yield for Pro user type
-
-  const [manager, setManager] = useState(deposit.manager);          // Manage the manager
-  const [amountInvested, setAmountInvested] = useState(deposit.amountInvested);  // Manage the invested amount
-  const [totalEarnings, setTotalEarnings] = useState(deposit.totalEarnings);     // Manage the total earnings
-
-  const [showSuccess, setShowSuccess] = useState(false);  // To show success message after managing
-  const [manageModalOpen, setManageModalOpen] = useState(false);  // Manage modal open/close
-  const [currentPage, setCurrentPage] = useState(1);  // Current page for pagination
-
-  // Handle updating the deposit information, including yields
-  const handleUpdateDeposit = () => {
-    // You can make API calls or logic to update deposit details
-    deposit.pricingPlans.Free = freeYield;
-    deposit.pricingPlans.Plus = plusYield;
-    deposit.pricingPlans.Pro = proYield;
-    deposit.manager = manager;
-    deposit.amountInvested = amountInvested;
-    deposit.totalEarnings = totalEarnings;
-
-    setShowSuccess(true);
-    setManageModalOpen(false);
-  };
-
-  // Calculate pagination slice for transactions
   const currentTransactions = dummyTransactions.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,
     currentPage * ITEMS_PER_PAGE
   );
 
+  // Download as CSV
+  const downloadCSV = (data: unknown[] | Papa.UnparseObject<unknown>, filename: string | undefined) => {
+    const csv = Papa.unparse(data);
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    saveAs(blob, filename);
+  };
+
+  // Download as PDF
+  const downloadPDF = (title: string | string[], data: any[]) => {
+    const doc = new jsPDF();
+    doc.setFontSize(18);
+    doc.text(title, 10, 10);
+    doc.setFontSize(12);
+
+    data.forEach((item, index) => {
+      const y = 20 + index * 10;
+      doc.text(`${Object.values(item).join(' | ')}`, 10, y);
+    });
+
+    doc.save(`${title}.pdf`);
+  };
+
+  // Prepare data for Analytics, Historical Analytics, and Transaction Table downloads
+  const analyticsData = [
+    { Label: 'Average Yield', Value: averageYield },
+    { Label: 'Expected Earnings', Value: expectedEarnings },
+    { Label: 'Total Users Invested', Value: totalUsersInvested },
+    { Label: 'Yield Generated So Far', Value: yieldGeneratedSoFar },
+  ];
+
+  const historicalEarningsData = [
+    { Label: 'Earnings Since Inception', Value: earningsSinceInception },
+    { Label: 'Earnings This Year', Value: earningsThisYear },
+    { Label: 'Earnings This Month', Value: earningsThisMonth },
+    { Label: 'Earnings Today', Value: earningsToday },
+  ];
+  
+  const goBackToMainPage = () => {
+    navigate('/deposit'); // Update with the appropriate route for the main page
+  };
+
+
   return (
-    <Box sx={{ padding: 4 }}>
-      {/* Deposit Information */}
-      <Typography variant="h4" gutterBottom>{deposit.name}</Typography>
-      <Typography variant="h6" gutterBottom>Manager: {deposit.manager}</Typography>
-      <Typography variant="h6" gutterBottom>Deposit Amount: {deposit.amountInvested}</Typography>
-      <Typography variant="h6" gutterBottom>Yield for Free Users: {deposit.pricingPlans.Free}%</Typography>
-      <Typography variant="h6" gutterBottom>Yield for Plus Users: {deposit.pricingPlans.Plus}%</Typography>
-      <Typography variant="h6" gutterBottom>Yield for Pro Users: {deposit.pricingPlans.Pro}%</Typography>
-      <Typography variant="h6" gutterBottom>Yield Generated so far: {deposit.totalEarnings}</Typography>
-      <Typography variant="h6" gutterBottom>Total Users Invested: {TOTAL_USERS_INVESTED}</Typography>
-
-      {/* Button to open the Manage modal */}
-      <Button variant="contained" onClick={() => setManageModalOpen(true)} sx={{ mt: 2 }}>
-        Manage Deposit
+    <Box sx={{ padding: 2 }}>
+       <Button
+        variant="contained"
+        onClick={goBackToMainPage}
+        sx={{
+          marginBottom: 2,
+          backgroundColor: 'lightblue',
+          color: 'black',
+          '&:hover': {
+            backgroundColor: '#1e88e5',
+            color: 'white',
+          },
+        }}
+      >
+        Back
       </Button>
+      <Typography variant="h4" sx={{ mb: 2 }}>{deposit.name}</Typography>
 
-      {/* Transactions Table */}
-      <Typography variant="h6" gutterBottom sx={{ mt: 4 }}>Transaction History</Typography>
-      <TableContainer component={Paper}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>User ID</TableCell>
-              <TableCell>Action</TableCell>
-              <TableCell>Amount</TableCell>
-              <TableCell>Date</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {currentTransactions.map((txn) => (
-              <TableRow key={txn.id}>
-                <TableCell>{txn.user}</TableCell>
-                <TableCell>{txn.action}</TableCell>
-                <TableCell>{txn.amount}</TableCell>
-                <TableCell>{txn.date}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      <Grid container spacing={3}>
+        <Grid item xs={12} md={6}>
+          <Box sx={{ border: '1px solid #4a4a4a', borderRadius: 2, padding: 3, backgroundColor: '#1e1e1e' }}>
+            <Typography variant="h6" sx={{ color: 'lightblue', mb: 1 }}>Deposit Details</Typography>
+            <Divider sx={{ my: 1, backgroundColor: 'lightblue' }} />
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+              <Typography>Manager: {deposit.manager}</Typography>
+              <Typography>Deposit Amount: {deposit.amountInvested}</Typography>
+              <Typography>Yield for Free Users: {deposit.pricingPlans.Free}</Typography>
+              <Typography>Yield for Plus Users: {deposit.pricingPlans.Plus}</Typography>
+              <Typography>Yield for Pro Users: {deposit.pricingPlans.Pro}</Typography>
+            </Box>
+            <Button variant="contained" onClick={() => setShowManageModal(true)} sx={{ mt: 2 }}>
+              Manage Deposit
+            </Button>
+          </Box>
+        </Grid>
 
-      {/* Pagination */}
-      <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
-        <Pagination
-          count={Math.ceil(dummyTransactions.length / ITEMS_PER_PAGE)}
-          page={currentPage}
-          onChange={(e, page) => setCurrentPage(page)}
-          color="primary"
-        />
+        <Grid item xs={12} md={6}>
+          <Box sx={{ border: '1px solid #4a4a4a', borderRadius: 2, padding: 3, backgroundColor: '#1e1e1e', maxHeight: 300, overflowY: 'auto' }}>
+            <Typography variant="h6" sx={{ color: 'lightblue', display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
+              Analytics
+              <Box>
+                <Button onClick={() => downloadCSV(analyticsData, 'Analytics.csv')}>CSV</Button>
+                <Button onClick={() => downloadPDF('Analytics', analyticsData)}>PDF</Button>
+              </Box>
+            </Typography>
+            <Divider sx={{ my: 1, backgroundColor: 'lightblue' }} />
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+              {analyticsData.map((item, index) => (
+                <Box key={index} sx={{ padding: 2, backgroundColor: '#2e2e2e', borderRadius: 1 }}>
+                  <Typography variant="subtitle1" color="lightgray">{item.Label}</Typography>
+                  <Typography variant="h6" sx={{ color: 'lightblue' }}>{item.Value}</Typography>
+                </Box>
+              ))}
+            </Box>
+          </Box>
+        </Grid>
+      </Grid>
+
+      <Box sx={{ border: '1px solid #4a4a4a', borderRadius: 2, padding: 3, backgroundColor: '#1e1e1e', mt: 3, mb: 3 }}>
+        <Typography variant="h6" sx={{ color: 'lightblue', display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
+          Historical Earnings
+        <Box>
+                <Button onClick={() => downloadCSV(historicalEarningsData, 'historicalEarningsData.csv')}>CSV</Button>
+                <Button onClick={() => downloadPDF('historicalEarningsData', historicalEarningsData)}>PDF</Button>
+              </Box>
+        </Typography>
+        <Divider sx={{ my: 1, backgroundColor: 'lightblue' }} />
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', padding: 2 }}>
+          {historicalEarningsData.map((item, index) => (
+            <Box key={index} sx={{ textAlign: 'center' }}>
+              <Typography variant="subtitle1" color="lightgray">{item.Label}</Typography>
+              <Typography variant="h6" sx={{ color: 'lightblue' }}>{item.Value}</Typography>
+            </Box>
+          ))}
+        </Box>
       </Box>
 
-      {/* Manage Deposit Modal */}
-      <Modal open={manageModalOpen} onClose={() => setManageModalOpen(false)}>
-        <Box sx={{
-          position: 'absolute',
-          top: '50%', left: '50%',
-          transform: 'translate(-50%, -50%)',
-          width: 400,
-          bgcolor: 'background.paper',
-          border: '2px solid #000',
-          boxShadow: 24,
-          p: 4,
-        }}>
-          <Typography variant="h6" mb={2}>Manage {deposit.name}</Typography>
-
-          {/* Free Yield Field */}
-          <TextField
-            fullWidth
-            label="Yield for Free Users (%)"
-            value={freeYield}
-            onChange={(e) => setFreeYield(e.target.value)}
-            sx={{ mb: 2 }}
-          />
-
-          {/* Plus Yield Field */}
-          <TextField
-            fullWidth
-            label="Yield for Plus Users (%)"
-            value={plusYield}
-            onChange={(e) => setPlusYield(e.target.value)}
-            sx={{ mb: 2 }}
-          />
-
-          {/* Pro Yield Field */}
-          <TextField
-            fullWidth
-            label="Yield for Pro Users (%)"
-            value={proYield}
-            onChange={(e) => setProYield(e.target.value)}
-            sx={{ mb: 2 }}
-          />
-
-          {/* Manager Field */}
-          <TextField
-            fullWidth
-            label="Manager"
-            value={manager}
-            onChange={(e) => setManager(e.target.value)}
-            sx={{ mb: 2 }}
-          />
-
-          {/* Amount Invested Field */}
-          <TextField
-            fullWidth
-            label="Amount Invested (€)"
-            value={amountInvested}
-            onChange={(e) => setAmountInvested(e.target.value)}
-            sx={{ mb: 2 }}
-          />
-
-          {/* Total Earnings Field */}
-          <TextField
-            fullWidth
-            label="Total Earnings (€)"
-            value={totalEarnings}
-            onChange={(e) => setTotalEarnings(e.target.value)}
-            sx={{ mb: 2 }}
-          />
-
-          <Button variant="contained" fullWidth onClick={handleUpdateDeposit}>
-            Update Deposit
-          </Button>
+      <Box sx={{ border: '1px solid #4a4a4a', borderRadius: 2, padding: 3, backgroundColor: '#1e1e1e', mt: 3 }}>
+      <Typography variant="h6" sx={{ color: 'lightblue', display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
+        Transaction History
+        <Box>
+                <Button onClick={() => downloadCSV(dummyTransactions, 'Transactions.csv')}>CSV</Button>
+                <Button onClick={() => downloadPDF('Transactions', dummyTransactions)}>PDF</Button>
+              </Box>
+              </Typography>
+        <Divider sx={{ my: 1, backgroundColor: 'lightblue' }} />
+        <TableContainer component={Paper} sx={{ maxHeight: 300 }}>
+          <Table stickyHeader>
+            <TableHead>
+              <TableRow>
+                <TableCell>User ID</TableCell>
+                <TableCell>Action</TableCell>
+                <TableCell>Amount</TableCell>
+                <TableCell>Date</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {currentTransactions.map((txn) => (
+                <TableRow key={txn.id}>
+                  <TableCell>{txn.user}</TableCell>
+                  <TableCell>{txn.action}</TableCell>
+                  <TableCell>{txn.amount}</TableCell>
+                  <TableCell>{txn.date}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
+          <Pagination count={Math.ceil(dummyTransactions.length / ITEMS_PER_PAGE)} page={currentPage} onChange={(e, page) => setCurrentPage(page)} color="primary" />
         </Box>
-      </Modal>
-
-      {/* Success Snackbar */}
-      <Snackbar open={showSuccess} autoHideDuration={3000} onClose={() => setShowSuccess(false)}>
-        <Alert onClose={() => setShowSuccess(false)} severity="success">
-          Deposit details updated successfully!
-        </Alert>
-      </Snackbar>
+      </Box>
+      <ManageDepositModal
+        open={showManageModal}
+        onClose={() => setShowManageModal(false)}
+        deposit={deposit}
+      />
     </Box>
   );
 };
