@@ -81,8 +81,8 @@ export default function Balances({ currency }: BalancesProps) {
           series={[
             {
               dataKey: 'amount',
-              showMark: false,
-              color: theme.palette.primary.light,
+              color: 'lightblue',
+              showMark: ({ index }) => index % 2 === 0,
             },
           ]}
           sx={{

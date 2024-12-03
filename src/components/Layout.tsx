@@ -111,7 +111,7 @@ const Layout: React.FC = () => {
       case '/accounts':
         return 'Accounts';
       case '/deposit':
-        return 'Earned Deposits';
+        return 'Deposit as a Service';
       case '/documentation':
         return 'API Documentation';
       case '/settings':

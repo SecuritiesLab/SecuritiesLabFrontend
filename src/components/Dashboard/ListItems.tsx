@@ -20,6 +20,9 @@ import CommentBankIcon from '@mui/icons-material/CommentBank';
 import { Link } from '@mui/material';
 import SavingsIcon from '@mui/icons-material/Savings';
 import WalletIcon from '@mui/icons-material/Wallet';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import CurrencyBitcoinIcon from '@mui/icons-material/CurrencyBitcoin';
+import PolylineIcon from '@mui/icons-material/Polyline';
 
 // Main menu items
 export const MainListItems = () => {
@@ -61,21 +64,21 @@ export const MainListItems = () => {
     <React.Fragment>
       <ListItemButton onClick={() => navigate('/dashboard')} sx={getSelectedStyle('/dashboard')}>
         <ListItemIcon>
-          <HomeIcon sx={getSelectedStyle('/dashboard')} />
+          <DashboardIcon sx={getSelectedStyle('/dashboard')} />
         </ListItemIcon>
         <ListItemText primary="Home" />
       </ListItemButton>
 
       <ListItemButton onClick={() => navigate('/accounts')} sx={getSelectedStyle('/accounts')}>
         <ListItemIcon>
-          <AccountBalanceIcon sx={getSelectedStyle('/accounts')} />
+          <WalletIcon sx={getSelectedStyle('/accounts')} />
         </ListItemIcon>
         <ListItemText primary="Accounts" />
       </ListItemButton>
 
       <ListItemButton onClick={handleTreasuryClick} sx={getSelectedStyle('/treasury')}>
         <ListItemIcon>
-          <LayersIcon sx={getSelectedStyle('/treasury')} />
+          <AccountBalanceIcon sx={getSelectedStyle('/treasury')} />
         </ListItemIcon>
         <ListItemText primary="Treasury" />
         {openTreasury ? <ExpandLessIcon /> : <ExpandMoreIcon />}
@@ -87,7 +90,7 @@ export const MainListItems = () => {
           onClick={() => navigate('/safeguarding?tab=0')}
         >
           <ListItemIcon>
-            <SecurityIcon sx={getSelectedStyle('/safeguarding', '0')} />
+            <LayersIcon sx={getSelectedStyle('/safeguarding', '0')} />
           </ListItemIcon>
           <ListItemText primary="Operation" />
         </ListItemButton>
@@ -105,14 +108,14 @@ export const MainListItems = () => {
 
       <ListItemButton onClick={() => navigate('/deposit')} sx={getSelectedStyle('/deposit')}>
         <ListItemIcon>
-          <SavingsIcon sx={getSelectedStyle('/deposit')} />
+          <PolylineIcon sx={getSelectedStyle('/deposit')} />
         </ListItemIcon>
-        <ListItemText primary="Deposit" />
+        <ListItemText primary="DaaS" />
       </ListItemButton>
 
       <ListItemButton onClick={() => navigate('/wallet')} sx={getSelectedStyle('/wallet')}>
         <ListItemIcon>
-          <WalletIcon sx={getSelectedStyle('/wallet')} />
+          <CurrencyBitcoinIcon sx={getSelectedStyle('/wallet')} />
         </ListItemIcon>
         <ListItemText primary="Wallet" />
       </ListItemButton>

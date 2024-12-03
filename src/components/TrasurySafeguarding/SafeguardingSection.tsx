@@ -421,7 +421,7 @@ const SafeguardingSection: React.FC<SectionProps> = ({ funds, handleInvestClick,
                 </Box>
               </Grid>
             </Grid>
-            <Grid item xs={12} md={6} sx={{paddingTop: 5}}>
+            <Grid item xs={12} md={8} sx={{paddingTop: 5}}>
   <AnalyticsPieChart
     totalAmountAvailable={parseFloat(analyticsData.totalAmountAvailable.replace(/[^0-9.-]+/g, ''))}
     totalAmountInvested={parseFloat(analyticsData.totalAmountInvested.replace(/[^0-9.-]+/g, ''))}
