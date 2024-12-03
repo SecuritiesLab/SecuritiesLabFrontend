@@ -26,8 +26,10 @@ const RedirectPage = () => {
 
             console.log(accountId)
 
-            const details = await fetchAccountDetails(accessToken, accountId);
-            setAccountDetails(details);
+            //const details = await fetchAccountDetails(accessToken, accountId);
+            //console.log("details")
+            //console.log(details)
+            //setAccountDetails(details);
 
             const transactionsData = await fetchTransactions(accessToken, accountId);
             setTransactions(transactionsData);
