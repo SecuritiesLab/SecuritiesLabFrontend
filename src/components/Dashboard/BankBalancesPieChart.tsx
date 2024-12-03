@@ -82,7 +82,12 @@ const BankBalancesPieChart: React.FC<BankBalancesPieChartProps> = ({ currency })
           series={[
             {
               data,
-              innerRadius: 0.5, // Donut-style chart
+              innerRadius: 30,
+              outerRadius: 100,
+              paddingAngle: 5,
+              cornerRadius: 5,
+              startAngle: -45,
+              endAngle: 360,
             },
           ]}
           width={window.innerWidth > 400 ? 300 : 200}

@@ -73,7 +73,12 @@ const AnalyticsPieChart: React.FC<AnalyticsPieChartProps> = ({
                 value,
                 label,
               })),
-              innerRadius: 0.5, // Donut-style chart
+              innerRadius: 30,
+              outerRadius: 100,
+              paddingAngle: 5,
+              cornerRadius: 5,
+              startAngle: -45,
+              endAngle: 360,
             },
           ]}
           width={250} // Consistent chart width

@@ -106,13 +106,13 @@ const BusinessDepositsPage = () => {
 
   return (
     <Box sx={{ padding: 3 }}>
-      <Typography variant="h5" gutterBottom>Business Deposit Products</Typography>
+      <Typography variant="h5" gutterBottom>DaaS Dashboard</Typography>
 
       <Grid container spacing={3}>
         {/* Deposit Table */}
         <Grid item xs={12} md={8}>
           <Box sx={{ border: '1px solid #4a4a4a', borderRadius: 2, padding: 2, backgroundColor: '#1e1e1e', height: 500, overflowY: 'auto' }}>
-            <Typography variant="h6" sx={{ color: 'lightblue', marginBottom: 1 }}>Your Deposit Offerings</Typography>
+            <Typography variant="h6" sx={{ color: 'lightblue', marginBottom: 1 }}>Your DaaS Offerings</Typography>
             <Divider sx={{ my: 1, backgroundColor: 'lightblue' }} />
             <TableContainer component={Paper}>
               <Table>
