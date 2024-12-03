@@ -159,6 +159,9 @@ const BankAccountsPage = () => {
   selectedCurrency={selectedCurrency}
 />
 
+{openBankDialog && 
+  <AddBankAccount open={openBankDialog} onClose={() => setOpenBankDialog(false)} />}
+
       <Box sx={{ flex: 1 }}>
   <TransactionTable transactions={transactionsData[selectedCurrency]} bankAccounts={bankAccountsData[selectedCurrency]} />
 </Box>

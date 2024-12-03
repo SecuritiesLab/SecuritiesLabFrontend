@@ -56,6 +56,11 @@ export async function getAccountTransactions(accessToken: string, accountId: str
   return response.data.transactions;
 }
 
+export async function getAccountDetails(accessToken: string, accountId: string) {
+  const response = await axiosInstance.get(`/gocardless/getAccountDetails/${accountId}?accessToken=${accessToken}`, );
+  return response.data.transactions;
+}
+
 // Function to redirect user to authenticate with their bank
 export function redirectToBankAuth(url: string) {
     window.location.href = url; 
