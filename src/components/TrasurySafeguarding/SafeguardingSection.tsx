@@ -56,6 +56,14 @@ const SafeguardingSection: React.FC<SectionProps> = ({ funds, handleInvestClick,
     doc.save(`${title}.pdf`);
   };
 
+  const currencySymbols: Record<string, string> = {
+    EUR: '€',
+    USD: '$',
+    GBP: '£',
+  };
+  
+  const getCurrencySymbol = (currency: string) => currencySymbols[currency] || currency;
+
   const orderHistory = [
     { id: 1, date: '2023-08-15', fundName: 'BlackRock ICS Euro Government Liquidity Fund', action: 'Invested', amount: 100000, currency: 'EUR' },
     { id: 2, date: '2023-09-10', fundName: 'Fidelity ILF - The United States Dollar Fund', action: 'Redeemed', amount: 200000, currency: 'USD' },
@@ -77,22 +85,22 @@ const SafeguardingSection: React.FC<SectionProps> = ({ funds, handleInvestClick,
   
  
   const yieldHistory = [
-    { id: 1, date: '2023-08-18', fundName: 'BlackRock ICS Euro Government Liquidity Fund', yieldAmount: '4,200 EUR', currency: 'EUR' },
-    { id: 2, date: '2023-09-14', fundName: 'Fidelity ILF - The United States Dollar Fund', yieldAmount: '6,500 USD', currency: 'USD' },
-    { id: 3, date: '2023-10-20', fundName: 'Fidelity ILF - The Sterling Fund', yieldAmount: '3,800 GBP', currency: 'GBP' },
-    { id: 4, date: '2023-11-10', fundName: 'abrdn Liquidity Fund (Lux) - Euro Fund', yieldAmount: '4,700 EUR', currency: 'EUR' },
-    { id: 5, date: '2023-12-24', fundName: 'BlackRock ICS US Treasury Fund', yieldAmount: '5,900 USD', currency: 'USD' },
-    { id: 6, date: '2024-01-15', fundName: 'Fidelity ILF - The Euro Fund', yieldAmount: '7,100 EUR', currency: 'EUR' },
-    { id: 7, date: '2024-02-12', fundName: 'Fidelity ILF - The United States Dollar Fund', yieldAmount: '6,200 USD', currency: 'USD' },
-    { id: 8, date: '2024-03-18', fundName: 'Fidelity ILF - The Sterling Fund', yieldAmount: '4,300 GBP', currency: 'GBP' },
-    { id: 9, date: '2024-04-08', fundName: 'abrdn Liquidity Fund (Lux) - US Dollar Fund', yieldAmount: '5,800 USD', currency: 'USD' },
-    { id: 10, date: '2024-05-14', fundName: 'abrdn Liquidity Fund (Lux) - Sterling Fund', yieldAmount: '3,600 GBP', currency: 'GBP' },
-    { id: 11, date: '2024-06-21', fundName: 'abrdn Liquidity Fund (Lux) - Euro Fund', yieldAmount: '4,500 EUR', currency: 'EUR' },
-    { id: 12, date: '2024-07-27', fundName: 'BlackRock ICS US Treasury Fund', yieldAmount: '6,300 USD', currency: 'USD' },
-    { id: 13, date: '2024-08-22', fundName: 'BlackRock ICS Euro Government Liquidity Fund', yieldAmount: '4,800 EUR', currency: 'EUR' },
-    { id: 14, date: '2024-09-13', fundName: 'BlackRock ICS Sterling Government Liquidity Fund', yieldAmount: '3,700 GBP', currency: 'GBP' },
-    { id: 15, date: '2024-10-06', fundName: 'abrdn Liquidity Fund (Lux) - Euro Fund', yieldAmount: '4,100 EUR', currency: 'EUR' },
-    { id: 16, date: '2024-11-10', fundName: 'Fidelity ILF - The Euro Fund', yieldAmount: '7,200 EUR', currency: 'EUR' },
+    { id: 1, date: '2023-08-18', fundName: 'BlackRock ICS Euro Government Liquidity Fund', yieldAmount: '4,200', currency: 'EUR' },
+    { id: 2, date: '2023-09-14', fundName: 'Fidelity ILF - The United States Dollar Fund', yieldAmount: '6,500', currency: 'USD' },
+    { id: 3, date: '2023-10-20', fundName: 'Fidelity ILF - The Sterling Fund', yieldAmount: '3,800', currency: 'GBP' },
+    { id: 4, date: '2023-11-10', fundName: 'abrdn Liquidity Fund (Lux) - Euro Fund', yieldAmount: '4,700', currency: 'EUR' },
+    { id: 5, date: '2023-12-24', fundName: 'BlackRock ICS US Treasury Fund', yieldAmount: '5,900', currency: 'USD' },
+    { id: 6, date: '2024-01-15', fundName: 'Fidelity ILF - The Euro Fund', yieldAmount: '7,100', currency: 'EUR' },
+    { id: 7, date: '2024-02-12', fundName: 'Fidelity ILF - The United States Dollar Fund', yieldAmount: '6,200', currency: 'USD' },
+    { id: 8, date: '2024-03-18', fundName: 'Fidelity ILF - The Sterling Fund', yieldAmount: '4,300', currency: 'GBP' },
+    { id: 9, date: '2024-04-08', fundName: 'abrdn Liquidity Fund (Lux) - US Dollar Fund', yieldAmount: '5,800', currency: 'USD' },
+    { id: 10, date: '2024-05-14', fundName: 'abrdn Liquidity Fund (Lux) - Sterling Fund', yieldAmount: '3,600', currency: 'GBP' },
+    { id: 11, date: '2024-06-21', fundName: 'abrdn Liquidity Fund (Lux) - Euro Fund', yieldAmount: '4,500', currency: 'EUR' },
+    { id: 12, date: '2024-07-27', fundName: 'BlackRock ICS US Treasury Fund', yieldAmount: '6,300', currency: 'USD' },
+    { id: 13, date: '2024-08-22', fundName: 'BlackRock ICS Euro Government Liquidity Fund', yieldAmount: '4,800', currency: 'EUR' },
+    { id: 14, date: '2024-09-13', fundName: 'BlackRock ICS Sterling Government Liquidity Fund', yieldAmount: '3,700', currency: 'GBP' },
+    { id: 15, date: '2024-10-06', fundName: 'abrdn Liquidity Fund (Lux) - Euro Fund', yieldAmount: '4,100', currency: 'EUR' },
+    { id: 16, date: '2024-11-10', fundName: 'Fidelity ILF - The Euro Fund', yieldAmount: '7,200', currency: 'EUR' },
   ];
 
   // Filtered data based on currency, month, and year
@@ -142,11 +150,11 @@ const SafeguardingSection: React.FC<SectionProps> = ({ funds, handleInvestClick,
 
 
     return {
-      totalAmountAvailable: `${totalAmountAvailable.toLocaleString()} ${selectedCurrency}`,
-      totalAmountInvested: `${totalAmountInvested.toLocaleString()} ${selectedCurrency}`,
-      totalAmountRedeemed: `${totalAmountRedeemed.toLocaleString()} ${selectedCurrency}`,
-      totalYieldEarned: `${totalYieldEarned.toLocaleString()} ${selectedCurrency}`,
-      totalAmountSafeguarded:`${totalAmountSafeguarded.toLocaleString()} ${selectedCurrency}`
+      totalAmountAvailable: `${totalAmountAvailable.toLocaleString()} ${getCurrencySymbol(selectedCurrency)}`,
+      totalAmountInvested: `${totalAmountInvested.toLocaleString()} ${getCurrencySymbol(selectedCurrency)}`,
+      totalAmountRedeemed: `${totalAmountRedeemed.toLocaleString()} ${getCurrencySymbol(selectedCurrency)}`,
+      totalYieldEarned: `${totalYieldEarned.toLocaleString()} ${getCurrencySymbol(selectedCurrency)}`,
+      totalAmountSafeguarded:`${totalAmountSafeguarded.toLocaleString()} ${getCurrencySymbol(selectedCurrency)}`
     };
   };
 
@@ -169,22 +177,9 @@ const SafeguardingSection: React.FC<SectionProps> = ({ funds, handleInvestClick,
       })
       .reduce((total, entry) => total + parseFloat(entry.yieldAmount.replace(/[^0-9.]/g, '')), 0);
   
-    const earningsThisMonth = yieldHistory
-      .filter((entry) => {
-        const entryDate = new Date(entry.date);
-        const entryYear = entryDate.getFullYear();
-        const entryMonth = entryDate.getMonth() + 1;
-        return (
-          entry.currency === selectedCurrency &&
-          entryYear === currentYear &&
-          entryMonth === currentMonth
-        );
-      })
-      .reduce((total, entry) => total + parseFloat(entry.yieldAmount.replace(/[^0-9.]/g, '')), 0);
+    const earningsThisMonth = 3000
   
-    const earningsToday = yieldHistory
-      .filter((entry) => entry.currency === selectedCurrency && entry.date === currentDate)
-      .reduce((total, entry) => total + parseFloat(entry.yieldAmount.replace(/[^0-9.]/g, '')), 0);
+    const earningsToday = 150
   
     // Return data with formatted values
     return [
@@ -206,10 +201,10 @@ const SafeguardingSection: React.FC<SectionProps> = ({ funds, handleInvestClick,
     const formatter = new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 });
   
     return {
-      paymentsThisYear: `${formatter.format(Math.round(totalAmountAvailable * 0.33))} ${selectedCurrency}`,
-      paymentsThisMonth: `${formatter.format(Math.round(totalAmountAvailable / 12 * 0.33))} ${selectedCurrency}`,
-      paymentsThisWeek: `${formatter.format(Math.round(totalAmountAvailable / 84))} ${selectedCurrency}`,
-      paymentsToday: `${formatter.format(Math.round(totalAmountAvailable / 365))} ${selectedCurrency}`,
+      paymentsThisYear: `${formatter.format(Math.round(totalAmountAvailable * 0.33))} ${getCurrencySymbol(selectedCurrency)}`,
+      paymentsThisMonth: `${formatter.format(Math.round(totalAmountAvailable / 12 * 0.33))} ${getCurrencySymbol(selectedCurrency)}`,
+      paymentsThisWeek: `${formatter.format(Math.round(totalAmountAvailable / 84))} ${getCurrencySymbol(selectedCurrency)}`,
+      paymentsToday: `${formatter.format(Math.round(totalAmountAvailable / 365))} ${getCurrencySymbol(selectedCurrency)}`,
     };
   };
   const paymentsDoneData = paymentsDone();
@@ -471,7 +466,7 @@ const SafeguardingSection: React.FC<SectionProps> = ({ funds, handleInvestClick,
           {historicalEarningsData.map((item, index) => (
             <Box key={index} sx={{ textAlign: 'center' }}>
               <Typography variant="subtitle1" color="lightgray">{item.Label}</Typography>
-              <Typography variant="h6" sx={{ color: 'lightblue' }}>{item.Value} {selectedCurrency }</Typography>
+              <Typography variant="h6" sx={{ color: 'lightblue' }}>{item.Value} {getCurrencySymbol(selectedCurrency)}</Typography>
             </Box>
           ))}
         </Box>
@@ -508,7 +503,7 @@ const SafeguardingSection: React.FC<SectionProps> = ({ funds, handleInvestClick,
                 <TableCell>{txn.date}</TableCell>
                 <TableCell>{txn.fundName}</TableCell>
                 <TableCell>{txn.action}</TableCell>
-                <TableCell>{txn.amount} {txn.currency}</TableCell>
+                <TableCell>{getCurrencySymbol(txn.currency)}{txn.amount}</TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -542,7 +537,7 @@ const SafeguardingSection: React.FC<SectionProps> = ({ funds, handleInvestClick,
               <TableRow key={yieldData.id}>
                 <TableCell>{yieldData.date}</TableCell>
                 <TableCell>{yieldData.fundName}</TableCell>
-                <TableCell>{yieldData.yieldAmount}</TableCell>
+                <TableCell>{getCurrencySymbol(yieldData.currency)}{yieldData.yieldAmount}</TableCell>
               </TableRow>
             ))}
           </TableBody>
