@@ -430,11 +430,7 @@ const SafeguardingSection: React.FC<SectionProps> = ({ funds, handleInvestClick,
   />
   <InvestmentDistributionPieChart currency="EUR"/>
 </Grid>
-          </Box>
-        </Grid>
-      </Grid>
-
-      <Box sx={{ border: '1px solid #4a4a4a', borderRadius: 2, padding: 3, backgroundColor: '#1e1e1e', mt: 3, mb: 3 }}>
+<Box sx={{ border: '1px solid #4a4a4a', borderRadius: 2, padding: 3, backgroundColor: '#1e1e1e', mt: 3, mb: 3 }}>
         <Typography variant="h6" sx={{ color: 'lightblue', display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
           Historical Turnover Data
         <Box>
@@ -462,7 +458,6 @@ const SafeguardingSection: React.FC<SectionProps> = ({ funds, handleInvestClick,
         </Box>
         </Box>
       </Box>
-
       <Box sx={{ border: '1px solid #4a4a4a', borderRadius: 2, padding: 3, backgroundColor: '#1e1e1e', mt: 3, mb: 3 }}>
         <Typography variant="h6" sx={{ color: 'lightblue', display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
           Historical Earnings
@@ -481,6 +476,9 @@ const SafeguardingSection: React.FC<SectionProps> = ({ funds, handleInvestClick,
           ))}
         </Box>
       </Box>
+          </Box>
+        </Grid>
+      </Grid>
 
       {/* Order and Yield History */}
       <Grid container spacing={2} sx={{ marginTop: 3 }}>
