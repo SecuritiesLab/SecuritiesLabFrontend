@@ -24,7 +24,7 @@ function getFormattedDate() {
 
 // Function to get revenue details based on currency
 function getRevenueDetails(currency: 'EUR' | 'USD' | 'GBP') {
-  const revenue = 47817; // Fixed revenue for all currencies
+  const revenue = 53013; // Fixed revenue for all currencies
   const symbols = {
     EUR: '€',
     USD: '$',

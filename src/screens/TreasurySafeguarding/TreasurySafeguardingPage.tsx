@@ -27,9 +27,9 @@ const bankAccounts = [
   ];
 
   const banksSafeguarding = [
-    { id:1,name: 'Banking Circle Master EURO', balance: 3000000, currency : "EUR", accountNumber: '****3344',accountType: 'Master', logo: `${process.env.PUBLIC_URL}/logo/bankingCircle.png` },
-    { id:2,name: 'Banking Circle Master USD', balance: 1000000, currency : "USD", accountNumber: '****6655', accountType: 'Master',logo: `${process.env.PUBLIC_URL}/logo/bankingCircle.png` },
-    { id: 3,name: 'Banking Circle Master GBP', balance: 1500000, currency: "GBP", accountNumber: '****8899', accountType: 'Master',logo: `${process.env.PUBLIC_URL}/logo/bankingCircle.png` },
+    { id:1,name: 'Banking Circle Master EURO', balance: 3000000, currency : "EUR", accountNumber: '****3344',accountType: 'Master', logo: `${process.env.PUBLIC_URL}/logo/BankingCircle.png` },
+    { id:2,name: 'Banking Circle Master USD', balance: 1000000, currency : "USD", accountNumber: '****6655', accountType: 'Master',logo: `${process.env.PUBLIC_URL}/logo/BankingCircle.png` },
+    { id: 3,name: 'Banking Circle Master GBP', balance: 1500000, currency: "GBP", accountNumber: '****8899', accountType: 'Master',logo: `${process.env.PUBLIC_URL}/logo/BankingCircle.png` },
 ]
 
 

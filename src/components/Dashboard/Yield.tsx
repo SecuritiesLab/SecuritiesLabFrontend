@@ -25,7 +25,7 @@ function getFormattedDate() {
 // Function to get yield details based on currency
 function getYieldDetails(currency: 'EUR' | 'USD' | 'GBP') {
   const yields = {
-    EUR: 53130,
+    EUR: 58903,
     USD: 53130,
     GBP: 53130,
   };

@@ -25,7 +25,7 @@ function getFormattedDate() {
 // Function to get dummy balance based on currency
 function getBalance(currency: 'EUR' | 'USD' | 'GBP') {
   const balances = {
-    EUR: 3047817,
+    EUR: 3053013,
     USD: 2097817,
     GBP: 1547817,
   };

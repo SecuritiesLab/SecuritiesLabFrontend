@@ -32,7 +32,9 @@ const data = [
   createData('01.07.2024', 39691.72),
   createData('01.08.2024', 43746.52),
   createData('01.09.2024', 47817.13),
-  createData('01.10.2024'),
+  createData('01.10.2024',56410.54),
+  createData('01.11.2024',65021.83),
+  createData('01.12.2024',73649.59),
 ];
 
 const currencySymbols = {
@@ -59,7 +61,7 @@ export default function MonthlyRevenue({ currency }: MonthlyRevenueProps) {
           dataset={data}
           margin={{
             top: 16,
-            right: 20,
+            right: 40,
             left: 70,
             bottom: 30,
           }}

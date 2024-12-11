@@ -13,7 +13,7 @@ const InvestmentDistributionPieChart: React.FC<InvestmentDistributionPieChartPro
     EUR: [
       {
         id: 1,
-        name: 'Fidelity ILF',
+        name: 'Fidelity ILF - The Euro Fund (30%)',
         sector: 'Money Market',
         yield: '4.5%',
         minInvestment: 5000,
@@ -24,7 +24,7 @@ const InvestmentDistributionPieChart: React.FC<InvestmentDistributionPieChartPro
       },
       {
         id: 2,
-        name: 'abrdn Liquidity Fund (Lux)',
+        name: 'abrdn Liquidity Fund (Lux) - Euro Fund (50%)',
         sector: 'Money Market',
         yield: '3.9%',
         minInvestment: 5000,
@@ -35,7 +35,7 @@ const InvestmentDistributionPieChart: React.FC<InvestmentDistributionPieChartPro
       },
       {
         id: 3,
-        name: 'BlackRock ICS Euro Government Liquidity Fund',
+        name: 'BlackRock ICS Euro Government Liquidity Fund (20%)',
         sector: 'Money Market',
         yield: '4.0%',
         minInvestment: 5000,
@@ -48,7 +48,7 @@ const InvestmentDistributionPieChart: React.FC<InvestmentDistributionPieChartPro
     USD: [
       {
         id: 1,
-        name: 'Fidelity USD Fund',
+        name: 'Fidelity ILF - The United States Dollar Fund (40%)',
         sector: 'Money Market',
         yield: '5.1%',
         minInvestment: 5000,
@@ -59,7 +59,7 @@ const InvestmentDistributionPieChart: React.FC<InvestmentDistributionPieChartPro
       },
       {
         id: 2,
-        name: 'abrdn Liquidity USD Fund',
+        name: 'abrdn Liquidity Fund (Lux) - US Dollar Fund (30%)',
         sector: 'Money Market',
         yield: '4.8%',
         minInvestment: 5000,
@@ -70,7 +70,7 @@ const InvestmentDistributionPieChart: React.FC<InvestmentDistributionPieChartPro
       },
       {
         id: 3,
-        name: 'BlackRock USD Liquidity Fund',
+        name: 'BlackRock ICS US Treasury Fund (30%)',
         sector: 'Money Market',
         yield: '5.0%',
         minInvestment: 5000,
@@ -83,7 +83,7 @@ const InvestmentDistributionPieChart: React.FC<InvestmentDistributionPieChartPro
     GBP: [
       {
         id: 1,
-        name: 'Fidelity GBP Fund',
+        name: 'Fidelity ILF - The Sterling Fund (35%)',
         sector: 'Money Market',
         yield: '4.3%',
         minInvestment: 5000,
@@ -94,7 +94,7 @@ const InvestmentDistributionPieChart: React.FC<InvestmentDistributionPieChartPro
       },
       {
         id: 2,
-        name: 'abrdn Liquidity GBP Fund',
+        name: 'abrdn Liquidity Fund (Lux) - Sterling Fund (40%)',
         sector: 'Money Market',
         yield: '3.7%',
         minInvestment: 5000,
@@ -105,7 +105,7 @@ const InvestmentDistributionPieChart: React.FC<InvestmentDistributionPieChartPro
       },
       {
         id: 3,
-        name: 'BlackRock GBP Liquidity Fund',
+        name: 'BlackRock ICS Sterling Government Liquidity Fund (25%)',
         sector: 'Money Market',
         yield: '4.1%',
         minInvestment: 5000,

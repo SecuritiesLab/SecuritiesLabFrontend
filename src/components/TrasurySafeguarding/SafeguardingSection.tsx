@@ -5,6 +5,7 @@ import { saveAs } from 'file-saver';
 import Papa from 'papaparse';
 import { jsPDF } from 'jspdf';
 import AnalyticsPieChart from '../Dashboard/SafeguardingAnalyticsPieChart';
+import InvestmentDistributionPieChart from '../Dashboard/EuroFundsPieChart';
 
 const currencyOptions = ['EUR', 'USD', 'GBP'];
 const monthOptions = [
@@ -66,12 +67,12 @@ const SafeguardingSection: React.FC<SectionProps> = ({ funds, handleInvestClick,
     { id: 8, date: '2024-03-20', fundName: 'Fidelity ILF - The Sterling Fund', action: 'Invested', amount: 400000, currency: 'GBP' },
     { id: 9, date: '2024-04-05', fundName: 'abrdn Liquidity Fund (Lux) - US Dollar Fund', action: 'Invested', amount: 200000, currency: 'USD' },
     { id: 10, date: '2024-05-12', fundName: 'abrdn Liquidity Fund (Lux) - Sterling Fund', action: 'Redeemed', amount: 150000, currency: 'GBP' },
-    { id: 11, date: '2024-06-18', fundName: 'abrdn Liquidity Fund (Lux) - Euro Fund', action: 'Invested', amount: 600000, currency: 'EUR' },
+    { id: 11, date: '2024-06-18', fundName: 'abrdn Liquidity Fund (Lux) - Euro Fund', action: 'Invested', amount: 300000, currency: 'EUR' },
     { id: 12, date: '2024-07-25', fundName: 'BlackRock ICS US Treasury Fund', action: 'Invested', amount: 300000, currency: 'USD' },
     { id: 13, date: '2024-08-30', fundName: 'BlackRock ICS Euro Government Liquidity Fund', action: 'Redeemed', amount: 400000, currency: 'EUR' },
     { id: 14, date: '2024-09-14', fundName: 'BlackRock ICS Sterling Government Liquidity Fund', action: 'Invested', amount: 350000, currency: 'GBP' },
     { id: 15, date: '2024-10-02', fundName: 'Fidelity ILF - The United States Dollar Fund', action: 'Redeemed', amount: 150000, currency: 'USD' },
-    { id: 16, date: '2024-11-05', fundName: 'Fidelity ILF - The Euro Fund', action: 'Invested', amount: 250000, currency: 'EUR' },
+    { id: 16, date: '2024-11-05', fundName: 'Fidelity ILF - The Euro Fund', action: 'Invested', amount: 100000, currency: 'EUR' },
   ];
   
  
@@ -187,10 +188,10 @@ const SafeguardingSection: React.FC<SectionProps> = ({ funds, handleInvestClick,
   
     // Return data with formatted values
     return [
-      { Label: 'Earnings Since Inception', Value: earningsSinceInception.toLocaleString() },
-      { Label: 'Earnings This Year', Value: earningsThisYear.toLocaleString() },
-      { Label: 'Earnings This Month', Value: earningsThisMonth.toLocaleString() },
-      { Label: 'Earnings Today', Value: earningsToday.toLocaleString() },
+      { Label: 'Since start', Value: earningsSinceInception.toLocaleString() },
+      { Label: '1 Year', Value: earningsThisYear.toLocaleString() },
+      { Label: '1 Month', Value: earningsThisMonth.toLocaleString() },
+      { Label: '24h', Value: earningsToday.toLocaleString() },
     ];
   };
   
@@ -421,12 +422,13 @@ const SafeguardingSection: React.FC<SectionProps> = ({ funds, handleInvestClick,
                 </Box>
               </Grid>
             </Grid>
-            <Grid item xs={12} md={8} sx={{paddingTop: 5}}>
+            <Grid item xs={12} md={8} sx={{paddingTop: 5, marginLeft:10}}>
   <AnalyticsPieChart
     totalAmountAvailable={parseFloat(analyticsData.totalAmountAvailable.replace(/[^0-9.-]+/g, ''))}
     totalAmountInvested={parseFloat(analyticsData.totalAmountInvested.replace(/[^0-9.-]+/g, ''))}
     paymentsMade={paymentsDoneData.paymentsThisYear}
   />
+  <InvestmentDistributionPieChart currency="EUR"/>
 </Grid>
           </Box>
         </Grid>
@@ -434,7 +436,7 @@ const SafeguardingSection: React.FC<SectionProps> = ({ funds, handleInvestClick,
 
       <Box sx={{ border: '1px solid #4a4a4a', borderRadius: 2, padding: 3, backgroundColor: '#1e1e1e', mt: 3, mb: 3 }}>
         <Typography variant="h6" sx={{ color: 'lightblue', display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
-          Payments Done
+          Historical Turnover Data
         <Box>
                 <Button onClick={() => downloadCSV(historicalEarningsData, 'historicalEarningsData.csv')}>CSV</Button>
                 <Button onClick={() => downloadPDF('historicalEarningsData', historicalEarningsData)}>PDF</Button>
@@ -443,19 +445,19 @@ const SafeguardingSection: React.FC<SectionProps> = ({ funds, handleInvestClick,
         <Divider sx={{ my: 1, backgroundColor: 'lightblue' }} />
         <Box sx={{ display: 'flex', justifyContent: 'space-between', padding: 2 }}>
             <Box sx={{ textAlign: 'center' }}>
-              <Typography variant="subtitle1" color="lightgray">Payments This Year</Typography>
+              <Typography variant="subtitle1" color="lightgray">1 Year</Typography>
               <Typography variant="h6" sx={{ color: 'lightblue' }}>{paymentsDoneData.paymentsThisYear}</Typography>
             </Box>
             <Box  sx={{ textAlign: 'center' }}>
-            <Typography variant="subtitle1" color="lightgray">Payments This Month</Typography>
+            <Typography variant="subtitle1" color="lightgray">1 Month</Typography>
             <Typography variant="h6" sx={{ color: 'lightblue' }}>{paymentsDoneData.paymentsThisMonth}</Typography>
           </Box>
           <Box sx={{ textAlign: 'center' }}>
-          <Typography variant="subtitle1" color="lightgray">Payments This Week</Typography>
+          <Typography variant="subtitle1" color="lightgray">1 Week</Typography>
           <Typography variant="h6" sx={{ color: 'lightblue' }}>{paymentsDoneData.paymentsThisWeek}</Typography>
         </Box>
         <Box sx={{ textAlign: 'center' }}>
-          <Typography variant="subtitle1" color="lightgray">Payments Today</Typography>
+          <Typography variant="subtitle1" color="lightgray">24h</Typography>
           <Typography variant="h6" sx={{ color: 'lightblue' }}>{paymentsDoneData.paymentsToday}</Typography>
         </Box>
         </Box>

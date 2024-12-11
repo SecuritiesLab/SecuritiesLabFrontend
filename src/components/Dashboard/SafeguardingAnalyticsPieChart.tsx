@@ -8,6 +8,12 @@ interface AnalyticsPieChartProps {
   paymentsMade: number | string;
 }
 
+interface DataItem {
+  id: string;
+  value: number;
+  label: string;
+}
+
 const AnalyticsPieChart: React.FC<AnalyticsPieChartProps> = ({
   totalAmountAvailable,
   totalAmountInvested,
@@ -24,13 +30,28 @@ const AnalyticsPieChart: React.FC<AnalyticsPieChartProps> = ({
   const paymentsMadeNumber = parseAmount(paymentsMade)
 
   
-  const difference = totalAmountAvailable - paymentsMadeNumber - totalAmountInvested;
+  const available = totalAmountAvailable - totalAmountInvested;
 
   const data = [
     { id: 'Amount Invested', value: totalAmountInvested, label: `Invested: €${totalAmountInvested.toLocaleString()}` },
-    { id: 'Payments Made', value: paymentsMadeNumber, label: `Payments: €${paymentsMadeNumber.toLocaleString()}` },
-    { id: 'Unused', value: difference, label: `Unused: €${difference.toLocaleString()}` },
+    { id: 'Banking Circle', value: totalAmountAvailable, label: `Banking Circle: €${totalAmountAvailable.toLocaleString()}` },
   ];
+
+  const calculatePercentages = (data: DataItem[]): DataItem[] => {
+    // Calculate the total value
+    const total = data.reduce((sum, item) => sum + item.value, 0);
+  
+    // Map through the data and calculate percentage for each item
+    return data.map((item) => {
+      const percentage = ((item.value / total) * 100).toFixed(2); // Calculate percentage and fix to 2 decimal places
+      return {
+        ...item,
+        label: `${item.label} (${percentage}%)`, // Append the percentage to the label
+      };
+    });
+  };
+
+  const updatedData = calculatePercentages(data);
 
   return (
     <Box
@@ -53,7 +74,7 @@ const AnalyticsPieChart: React.FC<AnalyticsPieChartProps> = ({
           textAlign: 'center',
         }}
       >
-        Financial Overview
+       Financial Overview
       </Typography>
       <Box
         sx={{
@@ -68,7 +89,7 @@ const AnalyticsPieChart: React.FC<AnalyticsPieChartProps> = ({
         <PieChart
           series={[
             {
-              data: data.map(({ id, value, label }) => ({
+              data: updatedData.map(({ id, value, label }) => ({
                 id,
                 value,
                 label,

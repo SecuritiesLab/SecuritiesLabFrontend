@@ -41,7 +41,19 @@ const rows = [
   createData(10, '1 Jul, 2024', 1039691.62, 4487.83, 448.78, 4039.05, 38000),
   createData(11, '1 Aug, 2024', 1043746.41, 4505.33, 450.53, 4054.8, 22000),
   createData(12, '1 Sep, 2024', 1047817.03, 4522.9, 452.29, 4070.61, 22000),
+  createData(13, '1 Oct, 2024', 1056410.54, 4532.26, 453.23, 4079.03, 18000),
+  createData(14, '1 Nov, 2024', 1065021.83, 4541.96, 454.20, 4087.76, 17500),
+  createData(15, '1 Dec, 2024', 1073649.59, 4551.67, 455.17, 4096.50, 15000),
 ];
+type FinancialData = {
+  monthIndex: number;
+  date: string;
+  principal: number;
+  interestEarned: number;
+  interestRate: number;
+  fee: number;
+  withdrawal: number;
+};
 
 function exportToCSV(currency: 'EUR' | 'USD' | 'GBP') {
   const symbol = currencySymbols[currency];

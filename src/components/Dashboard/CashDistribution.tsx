@@ -20,19 +20,19 @@ const CashDistributionPieChart: React.FC<CashDistributionPieChartProps> = ({ cur
   // Data for the pie chart
   const data = {
     EUR:[
-    { id: 'Cash Unused', value: 2000000, label: `Cash Unused (${symbol}2,000,000)`, color: '#4caf50' },
-    { id: 'Investment', value: 1000000, label: `Investment (${symbol}1,000,000)`, color: '#2196f3' },
-    { id: 'Yield', value: 47817, label: `Yield (${symbol}47,817)`, color: '#ff5722' },
+    { id: 'Cash Unused', value: 2000000, label: `Cash Unused (65.5%)`, color: '#4caf50' },
+    { id: 'Investment', value: 1000000, label: `Investment (32.75%)`, color: '#2196f3' },
+    { id: 'Yield', value: 53013, label: `Yield (1.74%)`, color: '#ff5722' },
   ],
     USD:[
-      { id: 'Cash Unused', value: 1050000, label: `Cash Unused (${symbol}1,000,000)`, color: '#4caf50' },
-      { id: 'Investment', value: 1000000, label: `Investment (${symbol}1,000,000)`, color: '#2196f3' },
-      { id: 'Yield', value: 47817, label: `Yield (${symbol}47,817)`, color: '#ff5722' },
+      { id: 'Cash Unused', value: 1050000, label: `Cash Unused (50.97%)`, color: '#4caf50' },
+      { id: 'Investment', value: 1000000, label: `Investment (48.53%)`, color: '#2196f3' },
+      { id: 'Yield', value: 47817, label: `Yield (2.32%)`, color: '#ff5722' },
     ],
     GBP:[
-      { id: 'Cash Unused', value: 500000, label: `Cash Unused (${symbol}1,000,000)`, color: '#4caf50' },
-      { id: 'Investment', value: 1000000, label: `Investment (${symbol}1,000,000)`, color: '#2196f3' },
-      { id: 'Yield', value: 47817, label: `Yield (${symbol}47,817)`, color: '#ff5722' },
+      { id: 'Cash Unused', value: 500000, label: `Cash Unused (32.91%)`, color: '#4caf50' },
+      { id: 'Investment', value: 1000000, label: `Investment (65.78%)`, color: '#2196f3' },
+      { id: 'Yield', value: 47817, label: `Yield (3.14%)`, color: '#ff5722' },
     ]};
 
     const filteredData = data[currency]

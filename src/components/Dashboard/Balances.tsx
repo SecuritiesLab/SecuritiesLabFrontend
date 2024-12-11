@@ -31,7 +31,9 @@ const data = [
   createData('01.07.2024', 1039691.62),
   createData('01.08.2024', 1043746.41),
   createData('01.09.2024', 1047817.03),
-  createData('01.10.2024'),
+  createData('01.10.2024',1056410.54),
+  createData('01.11.2024',1065021.83),
+  createData('01.12.2024',1073649.59),
 ];
 
 export default function Balances({ currency }: BalancesProps) {
@@ -46,13 +48,13 @@ export default function Balances({ currency }: BalancesProps) {
 
   return (
     <React.Fragment>
-      <Title>Balances ({currency})</Title>
+      <Title>Investment Balances ({currency})</Title>
       <div style={{ width: '100%', flexGrow: 1, overflow: 'hidden' }}>
         <LineChart
           dataset={data}
           margin={{
             top: 16,
-            right: 20,
+            right: 40,
             left: 90,
             bottom: 30,
           }}
