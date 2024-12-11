@@ -199,7 +199,7 @@
             "label": "Euros"
           },
           "companyStatements": {
-            "title": "Monthly Financial Statements - BlackRock ICS US Dollar Liquidity Fund (IE0004809582)",
+            "title": "Monthly Financial Statements - BlackRock ICS Euro Government Liquidity Fund",
             "exportCSV": "Export CSV",
             "columns": {
               "statementDate": "Statement Date",
